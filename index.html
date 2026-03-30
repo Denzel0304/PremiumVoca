@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>단어 시험 출제 시스템</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1714;
+    --paper: #f5f0e8;
+    --paper2: #ede8dc;
+    --accent: #8b2e2e;
+    --accent2: #c4703a;
+    --line: #ccc4b0;
+    --muted: #7a7060;
+    --success: #2e6b3e;
+    --card: #faf7f2;
+    --shadow: 0 2px 12px rgba(26,23,20,0.10);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 28px 48px 24px;
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+    border-bottom: 4px solid var(--accent);
+  }
+  .header-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    line-height: 1;
+  }
+  .header-sub {
+    font-size: 12px;
+    color: #aaa49a;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    margin-bottom: 2px;
+  }
+  .header-rule {
+    width: 1px;
+    height: 30px;
+    background: #444;
+    flex-shrink: 0;
+  }
+
+  /* ── MAIN LAYOUT ── */
+  main {
+    max-width: 860px;
+    margin: 48px auto;
+    padding: 0 24px 80px;
+  }
+
+  /* ── STEP CARD ── */
+  .step-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 32px 36px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+    position: relative;
+  }
+  .step-label {
+    position: absolute;
+    top: -11px;
+    left: 24px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    padding: 2px 10px;
+    border-radius: 2px;
+  }
+  .step-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 18px;
+    color: var(--ink);
+  }
+
+  /* ── FORM ELEMENTS ── */
+  label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+
+  select, input[type="text"], input[type="number"] {
+    width: 100%;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 15px;
+    padding: 10px 14px;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    background: #fff;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.15s;
+    -webkit-appearance: none;
+  }
+  select:focus, input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(139,46,46,0.10);
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .form-group { margin-bottom: 0; }
+
+  /* ── DAY INFO TABLE ── */
+  #dayInfoWrap {
+    display: none;
+    margin-top: 20px;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  #dayInfoWrap .info-header {
+    background: var(--paper2);
+    padding: 10px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+  }
+  #dayInfoTable {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+  }
+  .day-chip {
+    padding: 7px 14px;
+    font-size: 12px;
+    font-family: 'DM Mono', monospace;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    color: var(--ink);
+    min-width: 90px;
+    background: #fff;
+  }
+  .day-chip span {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  /* ── RANGE HINT ── */
+  .range-hint {
+    margin-top: 8px;
+    font-size: 11px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+  }
+  .range-hint b { color: var(--ink); }
+  .total-words-msg {
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--success);
+    font-weight: 500;
+    display: none;
+  }
+  .error-msg {
+    color: #c0392b;
+    font-size: 12px;
+    margin-top: 6px;
+    display: none;
+  }
+
+  /* ── OPTIONS GRID ── */
+  .options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .checkbox-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--accent);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  /* ── PDF OPTIONS ── */
+  .pdf-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 6px;
+  }
+  .pdf-btn-select {
+    padding: 8px 18px;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    background: #fff;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: 'Noto Sans KR', sans-serif;
+    transition: all 0.15s;
+    color: var(--ink);
+  }
+  .pdf-btn-select:hover, .pdf-btn-select.active {
+    background: var(--ink);
+    color: #fff;
+    border-color: var(--ink);
+  }
+
+  /* ── ACTION BUTTONS ── */
+  .action-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 32px;
+  }
+  .btn {
+    padding: 14px 32px;
+    font-size: 14px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 700;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    transition: all 0.18s;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    flex: 1;
+  }
+  .btn-primary:hover { background: #6e2222; }
+  .btn-primary:disabled { background: #bbb; cursor: not-allowed; }
+  .btn-outline {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--line);
+  }
+  .btn-outline:hover { background: var(--paper2); }
+
+  /* ── LOADING ── */
+  #loadingOverlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(245,240,232,0.85);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 16px;
+  }
+  #loadingOverlay.show { display: flex; }
+  .spinner {
+    width: 36px; height: 36px;
+    border: 3px solid var(--line);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    font-size: 11px;
+    color: var(--muted);
+    padding: 24px;
+    border-top: 1px solid var(--line);
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px;
+    background: var(--line);
+    margin: 20px 0;
+  }
+
+  @media (max-width: 600px) {
+    header { padding: 20px 20px 16px; }
+    main { padding: 0 12px 60px; }
+    .step-card { padding: 24px 18px; }
+    .form-row, .options-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="header-sub">PREMIUM VOCABULARY</div>
+    <div class="header-title">단어 시험 출제 시스템</div>
+  </div>
+  <div class="header-rule"></div>
+  <div style="font-size:13px;color:#aaa49a;font-weight:300;line-height:1.6;">
+    단어장을 선택하고<br>출제 범위를 설정하세요
+  </div>
+</header>
+
+<main>
+
+  <!-- STEP 1: 단어장 선택 -->
+  <div class="step-card">
+    <div class="step-label">STEP 1</div>
+    <div class="step-title">단어장 선택</div>
+    <div class="form-group">
+      <label>단어장</label>
+      <select id="vocaSelect">
+        <option value="">— 단어장을 선택하세요 —</option>
+      </select>
+    </div>
+
+    <div id="dayInfoWrap">
+      <div class="info-header">
+        <span>과별 단어 수</span>
+        <span id="totalDayCount" style="color:var(--accent)"></span>
+      </div>
+      <div id="dayInfoTable"></div>
+    </div>
+  </div>
+
+  <!-- STEP 2: 학생 정보 -->
+  <div class="step-card">
+    <div class="step-label">STEP 2</div>
+    <div class="step-title">학생 정보 <span style="font-size:12px;font-weight:400;color:var(--muted);">(선택)</span></div>
+    <div class="form-group">
+      <label>이름</label>
+      <input type="text" id="studentName" placeholder="이름을 입력하세요 (선택 사항)">
+    </div>
+  </div>
+
+  <!-- STEP 3: 출제 설정 -->
+  <div class="step-card">
+    <div class="step-label">STEP 3</div>
+    <div class="step-title">출제 설정</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>출제 범위</label>
+        <input type="text" id="rangeInput" placeholder="예: 1-5 / 1,3,7 / 1-5,7,9">
+        <div class="range-hint">연속: <b>1-5</b> &nbsp;|&nbsp; 선택: <b>1,3,7</b> &nbsp;|&nbsp; 혼합: <b>1-5,7,9</b></div>
+        <div class="error-msg" id="rangeError"></div>
+        <div class="total-words-msg" id="totalWordsMsg"></div>
+      </div>
+      <div class="form-group">
+        <label>출제 개수</label>
+        <input type="number" id="countInput" placeholder="숫자 입력" min="1">
+        <div class="error-msg" id="countError"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4: 출력 옵션 -->
+  <div class="step-card">
+    <div class="step-label">STEP 4</div>
+    <div class="step-title">출력 / 저장 옵션</div>
+    <div class="options-grid">
+      <label class="checkbox-item">
+        <input type="checkbox" id="chkPron"> 답지에 발음 표기
+        <span style="font-size:11px;color:var(--muted);margin-left:4px;">(desk / 책상[데스크])</span>
+      </label>
+      <label class="checkbox-item">
+        <input type="checkbox" id="chkAnswerPrint"> 인쇄 시 답지 포함
+      </label>
+    </div>
+
+    <div class="divider"></div>
+
+    <label>PDF 저장</label>
+    <div class="pdf-row">
+      <button class="pdf-btn-select active" id="pdfOpt1" onclick="selectPdfOpt(1)">문제지만</button>
+      <button class="pdf-btn-select" id="pdfOpt2" onclick="selectPdfOpt(2)">답지만</button>
+      <button class="pdf-btn-select" id="pdfOpt3" onclick="selectPdfOpt(3)">문제지 + 답지</button>
+    </div>
+  </div>
+
+  <div class="action-row">
+    <button class="btn btn-outline" onclick="resetAll()">초기화</button>
+    <button class="btn btn-primary" id="btnGenerate" onclick="generateExam()" disabled>시험지 생성</button>
+  </div>
+
+</main>
+
+<footer>PremiumVoca Exam System &nbsp;·&nbsp; Denzel0304</footer>
+
+<div id="loadingOverlay">
+  <div class="spinner"></div>
+  <div style="font-size:14px;color:var(--muted);">시험지 생성 중...</div>
+</div>
+
+<script>
+// ── 전역 상태 ──
+let vocaDB = null;       // 현재 로드된 단어장 전체 데이터
+let vocaIndex = [];      // index.json
+let pdfOption = 1;       // 1=문제지만, 2=답지만, 3=둘다
+const CACHE_PREFIX = 'pvoca_';
+
+// ── 초기화 ──
+window.addEventListener('DOMContentLoaded', async () => {
+  await loadIndex();
+  document.getElementById('rangeInput').addEventListener('input', onRangeChange);
+  document.getElementById('countInput').addEventListener('input', validateCount);
+  document.getElementById('vocaSelect').addEventListener('change', onVocaChange);
+});
+
+async function loadIndex() {
+  try {
+    const cached = localStorage.getItem(CACHE_PREFIX + 'index');
+    if (cached) {
+      vocaIndex = JSON.parse(cached);
+    } else {
+      const res = await fetch('data/index.json');
+      vocaIndex = await res.json();
+      localStorage.setItem(CACHE_PREFIX + 'index', JSON.stringify(vocaIndex));
+    }
+    const sel = document.getElementById('vocaSelect');
+    vocaIndex.forEach(v => {
+      const opt = document.createElement('option');
+      opt.value = v.id;
+      opt.textContent = v.title;
+      sel.appendChild(opt);
+    });
+  } catch(e) {
+    alert('단어장 목록을 불러오지 못했습니다.');
+  }
+}
+
+async function onVocaChange() {
+  const sel = document.getElementById('vocaSelect');
+  const id = sel.value;
+  if (!id) { vocaDB = null; hideDayInfo(); updateBtn(); return; }
+
+  showLoading();
+  try {
+    const cacheKey = CACHE_PREFIX + id;
+    const cached = localStorage.getItem(cacheKey);
+    if (cached) {
+      vocaDB = JSON.parse(cached);
+    } else {
+      const entry = vocaIndex.find(v => v.id === id);
+      const res = await fetch(entry.file);
+      vocaDB = await res.json();
+      localStorage.setItem(cacheKey, JSON.stringify(vocaDB));
+    }
+    showDayInfo();
+  } catch(e) {
+    alert('단어장을 불러오지 못했습니다.');
+  }
+  hideLoading();
+  updateBtn();
+}
+
+function showDayInfo() {
+  const wrap = document.getElementById('dayInfoWrap');
+  const table = document.getElementById('dayInfoTable');
+  const countEl = document.getElementById('totalDayCount');
+  wrap.style.display = 'block';
+  table.innerHTML = '';
+  countEl.textContent = `총 ${vocaDB.days.length}과`;
+  vocaDB.days.forEach(d => {
+    const chip = document.createElement('div');
+    chip.className = 'day-chip';
+    chip.innerHTML = `Day ${d.day} &nbsp;<span>${d.words.length}개</span>`;
+    table.appendChild(chip);
+  });
+}
+
+function hideDayInfo() {
+  document.getElementById('dayInfoWrap').style.display = 'none';
+}
+
+// ── 범위 파싱 ──
+function parseRange(str) {
+  if (!str.trim()) return null;
+  const parts = str.split(',').map(s => s.trim()).filter(Boolean);
+  const days = new Set();
+  for (const part of parts) {
+    if (part.includes('-')) {
+      const [a, b] = part.split('-').map(Number);
+      if (isNaN(a) || isNaN(b) || a > b) return null;
+      for (let i = a; i <= b; i++) days.add(i);
+    } else {
+      const n = Number(part);
+      if (isNaN(n) || n <= 0) return null;
+      days.add(n);
+    }
+  }
+  return [...days].sort((a,b) => a-b);
+}
+
+function getWordsFromDays(dayNums) {
+  if (!vocaDB) return [];
+  const words = [];
+  dayNums.forEach(n => {
+    const day = vocaDB.days.find(d => d.day === n);
+    if (day) day.words.forEach(w => words.push({ ...w, day: n }));
+  });
+  return words;
+}
+
+function onRangeChange() {
+  const val = document.getElementById('rangeInput').value;
+  const errEl = document.getElementById('rangeError');
+  const msgEl = document.getElementById('totalWordsMsg');
+  errEl.style.display = 'none';
+  msgEl.style.display = 'none';
+
+  if (!vocaDB || !val.trim()) { updateBtn(); return; }
+
+  const days = parseRange(val);
+  if (!days) {
+    errEl.textContent = '범위 형식이 올바르지 않습니다.';
+    errEl.style.display = 'block';
+    updateBtn(); return;
+  }
+
+  // 존재하는 과인지 확인
+  const maxDay = Math.max(...vocaDB.days.map(d => d.day));
+  const invalid = days.filter(n => !vocaDB.days.find(d => d.day === n));
+  if (invalid.length) {
+    errEl.textContent = `존재하지 않는 과입니다: Day ${invalid.join(', ')}`;
+    errEl.style.display = 'block';
+    updateBtn(); return;
+  }
+
+  const words = getWordsFromDays(days);
+  msgEl.textContent = `선택된 범위: Day ${days.join(', ')} — 총 ${words.length}개 단어`;
+  msgEl.style.display = 'block';
+
+  const countInput = document.getElementById('countInput');
+  countInput.max = words.length;
+  validateCount();
+  updateBtn();
+}
+
+function validateCount() {
+  const val = document.getElementById('rangeInput').value;
+  const count = parseInt(document.getElementById('countInput').value);
+  const errEl = document.getElementById('countError');
+  errEl.style.display = 'none';
+
+  if (!vocaDB || !val.trim()) { updateBtn(); return; }
+  const days = parseRange(val);
+  if (!days) { updateBtn(); return; }
+
+  const total = getWordsFromDays(days).length;
+  if (count > total) {
+    errEl.textContent = `최대 ${total}개까지 출제 가능합니다.`;
+    errEl.style.display = 'block';
+  }
+  updateBtn();
+}
+
+function updateBtn() {
+  const btn = document.getElementById('btnGenerate');
+  const hasVoca = !!vocaDB;
+  const rangeVal = document.getElementById('rangeInput').value.trim();
+  const countVal = parseInt(document.getElementById('countInput').value);
+  const hasRangeError = document.getElementById('rangeError').style.display === 'block';
+  const hasCountError = document.getElementById('countError').style.display === 'block';
+
+  const days = rangeVal ? parseRange(rangeVal) : null;
+  const total = (vocaDB && days) ? getWordsFromDays(days).length : 0;
+
+  btn.disabled = !(hasVoca && days && countVal >= 1 && countVal <= total && !hasRangeError && !hasCountError);
+}
+
+function selectPdfOpt(n) {
+  pdfOption = n;
+  [1,2,3].forEach(i => {
+    document.getElementById(`pdfOpt${i}`).classList.toggle('active', i === n);
+  });
+}
+
+function resetAll() {
+  document.getElementById('vocaSelect').value = '';
+  vocaDB = null;
+  hideDayInfo();
+  document.getElementById('studentName').value = '';
+  document.getElementById('rangeInput').value = '';
+  document.getElementById('countInput').value = '';
+  document.getElementById('rangeError').style.display = 'none';
+  document.getElementById('countError').style.display = 'none';
+  document.getElementById('totalWordsMsg').style.display = 'none';
+  document.getElementById('chkPron').checked = false;
+  document.getElementById('chkAnswerPrint').checked = false;
+  selectPdfOpt(1);
+  updateBtn();
+}
+
+function showLoading() { document.getElementById('loadingOverlay').classList.add('show'); }
+function hideLoading() { document.getElementById('loadingOverlay').classList.remove('show'); }
+
+// ── 셔플 ──
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+// ── 시험지 생성 → exam.html로 이동 ──
+function generateExam() {
+  const rangeVal = document.getElementById('rangeInput').value.trim();
+  const count = parseInt(document.getElementById('countInput').value);
+  const days = parseRange(rangeVal);
+  let pool = getWordsFromDays(days);
+  const selected = shuffle(pool).slice(0, count);
+
+  // 각 단어에 출제방향 랜덤 배정
+  const questions = selected.map(w => ({
+    ...w,
+    direction: Math.random() < 0.5 ? 'enKo' : 'koEn'
+    // enKo: 영어 보고 한글 쓰기
+    // koEn: 한글 보고 영어 쓰기
+  }));
+
+  const payload = {
+    vocaTitle: vocaDB.title,
+    studentName: document.getElementById('studentName').value.trim(),
+    rangeStr: rangeVal,
+    questions,
+    showPron: document.getElementById('chkPron').checked,
+    printAnswer: document.getElementById('chkAnswerPrint').checked,
+    pdfOption,
+  };
+
+  sessionStorage.setItem('examPayload', JSON.stringify(payload));
+  window.location.href = 'exam.html';
+}
+</script>
+</body>
+</html>
