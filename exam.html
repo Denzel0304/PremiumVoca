@@ -19,15 +19,15 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--paper); color:
 #toolbar {
   background: var(--ink); color: #fff;
   padding: 14px 32px;
-  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
   border-bottom: 3px solid var(--accent);
   position: sticky; top: 0; z-index: 100;
 }
-.toolbar-title { font-size: 15px; font-weight: 700; margin-right: 8px; }
+.toolbar-title { font-size: 15px; font-weight: 700; margin-right: 4px; }
 .tbtn {
-  padding: 8px 18px; border: 1px solid #555; background: transparent; color: #fff;
-  font-size: 13px; font-family: 'Noto Sans KR', sans-serif; font-weight: 500;
-  border-radius: 3px; cursor: pointer; transition: all 0.15s;
+  padding: 8px 14px; border: 1px solid #555; background: transparent; color: #fff;
+  font-size: 12px; font-family: 'Noto Sans KR', sans-serif; font-weight: 500;
+  border-radius: 3px; cursor: pointer; transition: all 0.15s; white-space: nowrap;
 }
 .tbtn:hover { background: #333; }
 .tbtn-primary { background: var(--accent); border-color: var(--accent); }
@@ -35,6 +35,9 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--paper); color:
 .tbtn-back { border-color: #888; color: #ccc; }
 .sep { width: 1px; height: 24px; background: #444; flex-shrink: 0; }
 .tb-spacer { flex: 1; }
+
+/* [9] 우측 정보: 범위·문항만 표시 */
+#tbInfo { font-size: 12px; color: #aaa; }
 
 /* ── 프리뷰 영역 ── */
 #preview {
@@ -48,9 +51,10 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--paper); color:
   box-shadow: 0 4px 24px rgba(0,0,0,0.13);
   border-radius: 2px;
   position: relative;
-  /* ① A4 비율 그대로 보여주기: 210:297 = 0.707 */
-  width: min(794px, 100%);   /* 96dpi 기준 A4 너비 */
+  width: min(794px, 100%);
 }
+
+/* [4] 문제지/답지 레이블 — 화면 + 인쇄 모두 표시 */
 .sheet-label {
   position: absolute; top: 10px; right: 10px;
   font-size: 10px; background: var(--accent); color: #fff;
@@ -59,10 +63,8 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--paper); color:
 
 /* =============================================
    시험지 내부 — 화면 + 인쇄 공용
-   핵심: 화면에서도 A4 픽셀 크기로 고정
    ============================================= */
 .exam-page {
-  /* 96dpi A4: 794 x 1123px */
   width: 794px;
   height: 1123px;
   padding: 36px 44px 32px 44px;
@@ -90,7 +92,6 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--paper); color:
   display: flex;
   align-items: center;
 }
-/* ⑧ 헤더 중앙 - 학원명 */
 .exam-header-center {
   width: 180px;
   padding: 0 10px;
@@ -153,18 +154,19 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--paper); color:
   height: 20px;
 }
 
-/* ⑦ 컬럼 너비: 번호 좁게, 단어 적당히, 답 넓게 */
-.col-num  { width: 22px; }
+/* [1] No. 컬럼 2배 너비 / 단어 컬럼 유지 / 줄어드는 부분은 답란 */
+.col-num  { width: 44px; }   /* 기존 22px → 44px */
 .col-word { width: 42%; }
-.col-ans  { } /* 나머지 */
+.col-ans  { }                /* 나머지 = 답란이 줄어듦 */
 
-/* ⑥ 번호 크게 */
+/* [1] 번호 폰트 크기 키우고 3자리도 안 잘리도록 */
 .td-num {
   text-align: center;
-  font-size: 12px;
+  font-size: 13px;           /* 기존 12px → 13px */
   font-weight: 700;
   color: #111;
   font-family: 'DM Mono', monospace;
+  white-space: nowrap;       /* 줄바꿈 방지 */
 }
 .td-word { font-size: 11px; word-break: break-all; }
 .td-ans  { font-size: 11px; color: #111; }
@@ -190,7 +192,15 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--paper); color:
     page-break-inside: avoid;
   }
   .sheet-wrapper:last-child { page-break-after: auto; }
-  .sheet-label { display: none !important; }
+
+  /* [4] 인쇄 시에도 sheet-label 표시 */
+  .sheet-label {
+    display: block !important;
+    position: absolute; top: 10px; right: 10px;
+    font-size: 10px; background: var(--accent) !important; color: #fff !important;
+    padding: 2px 8px; border-radius: 2px; font-weight: 700; letter-spacing: 0.1em;
+    z-index: 10;
+  }
 
   .exam-page {
     width: 210mm !important;
@@ -205,6 +215,40 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--paper); color:
 
   @page { size: A4 portrait; margin: 0; }
 }
+
+/* ── PDF 저장 옵션 드롭다운 스타일 ── */
+.pdf-dropdown {
+  position: relative;
+  display: inline-block;
+}
+.pdf-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background: #222;
+  border: 1px solid #444;
+  border-radius: 3px;
+  min-width: 160px;
+  z-index: 200;
+  overflow: hidden;
+}
+.pdf-dropdown-menu.open { display: block; }
+.pdf-dropdown-menu button {
+  display: block;
+  width: 100%;
+  padding: 10px 16px;
+  background: transparent;
+  color: #fff;
+  border: none;
+  text-align: left;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  border-bottom: 1px solid #333;
+}
+.pdf-dropdown-menu button:last-child { border-bottom: none; }
+.pdf-dropdown-menu button:hover { background: #333; }
 </style>
 </head>
 <body>
@@ -214,11 +258,22 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--paper); color:
   <div class="sep"></div>
   <span class="toolbar-title" id="tbTitle"></span>
   <div class="sep"></div>
-  <button class="tbtn tbtn-primary" onclick="doPrint()">🖨 인쇄</button>
+
+  <!-- [8] 인쇄 버튼 3개 -->
+  <button class="tbtn tbtn-primary" onclick="doPrint('all')">🖨 모두 인쇄</button>
+  <button class="tbtn" onclick="doPrint('question')">문제지 인쇄</button>
+  <button class="tbtn" onclick="doPrint('answer')">답지 인쇄</button>
+
   <div class="sep"></div>
-  <button class="tbtn" onclick="savePdf()">PDF 저장</button>
+
+  <!-- [6][8] PDF 저장 버튼 3개 -->
+  <button class="tbtn" onclick="savePdf('all')">💾 모두 저장</button>
+  <button class="tbtn" onclick="savePdf('question')">문제지 저장</button>
+  <button class="tbtn" onclick="savePdf('answer')">답지 저장</button>
+
   <div class="tb-spacer"></div>
-  <span id="tbInfo" style="font-size:12px;color:#aaa;"></span>
+  <!-- [9] 범위·문항 수만 표시 (출력옵션 제외) -->
+  <span id="tbInfo"></span>
 </div>
 
 <div id="preview"></div>
@@ -227,28 +282,28 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--paper); color:
 const raw = sessionStorage.getItem('examPayload');
 if (!raw) { alert('출제 데이터가 없습니다.'); location.href = 'index.html'; }
 const P = JSON.parse(raw);
-const { vocaTitle, studentName, academyName, rangeStr, questions, printAnswer, pdfOption } = P;
+const { vocaTitle, studentName, academyName, rangeStr, questions, enKoCount, koEnCount } = P;
 
 document.getElementById('tbTitle').textContent = vocaTitle;
+// [9] 범위와 문항 수만 표시
 document.getElementById('tbInfo').textContent =
-  `Day ${rangeStr} · ${questions.length}문항 · ${printAnswer ? '답지 포함' : '문제지만'}`;
+  `Day ${rangeStr} · ${questions.length}문항 (영한 ${enKoCount ?? '?'} / 한영 ${koEnCount ?? '?'})`;
 
-// ── 50개씩 페이지 분할 ──
+// ── [10] 빈 페이지 버그 수정: 실제 문항 수에 맞게 페이지 분할 ──
 function splitPages(qs) {
   const pages = [];
-  let i = 0;
-  do {
+  // 실제 문항만큼만 페이지를 생성, 50개 단위로 자름
+  for (let i = 0; i < qs.length; i += 50) {
     const chunk = qs.slice(i, i + 50);
+    // 50개 미만이면 null 패딩 (행 높이 균등 유지)
     while (chunk.length < 50) chunk.push(null);
     pages.push(chunk);
-    i += 50;
-  } while (i < qs.length);
+  }
   return pages;
 }
 
 const pages = splitPages(questions);
 
-// ② 발음 제거: enKo=영어→한글뜻, koEn=한글뜻→영어
 function questionText(q) {
   if (!q) return '';
   return q.direction === 'enKo' ? q.en : q.ko;
@@ -266,9 +321,9 @@ function makeTableHTML(half, startNum, isAnswer) {
     const aText = q ? answerText(q) : '';
     const ansTd = isAnswer
       ? `<td class="td-ans">${aText}</td>`
-      : `<td class="td-ans blank"></td>`;
+      : `<td class="td-ans blank">&nbsp;</td>`;
     rows += `<tr>
-      <td class="td-num">${num}</td>
+      <td class="td-num">${q ? num : ''}</td>
       <td class="td-word">${qText}</td>
       ${ansTd}
     </tr>`;
@@ -289,23 +344,25 @@ function makePageHTML(slots, pageIndex, isAnswer) {
   const left  = slots.slice(0, 25);
   const right = slots.slice(25, 50);
   const startNum = pageIndex * 50 + 1;
+  const labelText = isAnswer ? '답지' : '문제지';
+  const pageLabel = pages.length > 1 ? ` ${pageIndex + 1}` : '';
 
-  // ⑧ 학원명 헤더
   const academyHTML = `
     <div class="exam-header-center">
       <div class="hlabel">ACADEMY</div>
       <div class="hval">${academyName || ''}</div>
     </div>`;
 
-  const nameVal = studentName || '';
   return `
   <div class="exam-page" data-type="${isAnswer ? 'answer' : 'question'}">
+    <!-- [4] 레이블을 exam-page 안으로 이동해 인쇄 영역에 포함 -->
+    <div class="sheet-label" style="position:absolute;top:6px;right:10px;">${labelText}${pageLabel}</div>
     <div class="exam-header">
       <div class="exam-header-left">${vocaTitle}</div>
       ${academyHTML}
       <div class="exam-header-right">
         <div class="hrow"><span class="hkey">범위</span><span>Day ${rangeStr}</span></div>
-        <div class="hrow"><span class="hkey">이름</span><span>${nameVal}</span></div>
+        <div class="hrow"><span class="hkey">이름</span><span>${studentName || ''}</span></div>
       </div>
     </div>
     <div class="exam-body">
@@ -324,49 +381,58 @@ function render() {
     const wrap = document.createElement('div');
     wrap.className = 'sheet-wrapper';
     wrap.dataset.role = 'question';
-    wrap.innerHTML = `<div class="sheet-label">문제지${pages.length > 1 ? ' ' + (pi+1) : ''}</div>`
-                   + makePageHTML(slots, pi, false);
+    wrap.style.position = 'relative';
+    wrap.innerHTML = makePageHTML(slots, pi, false);
     preview.appendChild(wrap);
   });
 
   // 답지
   pages.forEach((slots, pi) => {
     const wrap = document.createElement('div');
-    wrap.className = 'sheet-wrapper' + (!printAnswer ? ' no-print' : '');
+    wrap.className = 'sheet-wrapper';
     wrap.dataset.role = 'answer';
-    wrap.innerHTML = `<div class="sheet-label">답지${pages.length > 1 ? ' ' + (pi+1) : ''}</div>`
-                   + makePageHTML(slots, pi, true);
+    wrap.style.position = 'relative';
+    wrap.innerHTML = makePageHTML(slots, pi, true);
     preview.appendChild(wrap);
   });
 }
 
 render();
 
-function doPrint() {
-  document.querySelectorAll('[data-role="answer"]').forEach(el => {
-    el.classList.toggle('no-print', !printAnswer);
-  });
+// [8] 인쇄: 'all' | 'question' | 'answer'
+function doPrint(mode) {
+  applyVisibility(mode);
   window.print();
+  // 인쇄 후 복원
+  setTimeout(() => restoreVisibility(), 500);
 }
 
-function savePdf() {
+// [6][8] PDF 저장 (브라우저 인쇄 → PDF)
+function savePdf(mode) {
+  applyVisibility(mode);
+  setTimeout(() => {
+    window.print();
+    setTimeout(() => restoreVisibility(), 500);
+  }, 200);
+}
+
+function applyVisibility(mode) {
   const qEls = document.querySelectorAll('[data-role="question"]');
   const aEls = document.querySelectorAll('[data-role="answer"]');
-  if (pdfOption === 1) {
+  if (mode === 'question') {
     qEls.forEach(el => el.classList.remove('no-print'));
     aEls.forEach(el => el.classList.add('no-print'));
-  } else if (pdfOption === 2) {
+  } else if (mode === 'answer') {
     qEls.forEach(el => el.classList.add('no-print'));
     aEls.forEach(el => el.classList.remove('no-print'));
-  } else {
+  } else { // all
     qEls.forEach(el => el.classList.remove('no-print'));
     aEls.forEach(el => el.classList.remove('no-print'));
   }
-  setTimeout(() => {
-    window.print();
-    qEls.forEach(el => el.classList.remove('no-print'));
-    aEls.forEach(el => el.classList.toggle('no-print', !printAnswer));
-  }, 200);
+}
+
+function restoreVisibility() {
+  document.querySelectorAll('[data-role]').forEach(el => el.classList.remove('no-print'));
 }
 </script>
 </body>
