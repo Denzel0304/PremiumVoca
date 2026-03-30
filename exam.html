@@ -1,546 +1,443 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>시험지 미리보기</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --ink: #1a1714;
-      --paper: #f5f0e8;
-      --accent: #8b2e2e;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>시험지 출력</title>
+<style>
+  body {
+    margin: 0;
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f3f4f6;
+  }
+  .toolbar {
+    padding: 16px;
+    background: white;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .toolbar button {
+    padding: 10px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    background: #fff;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .toolbar button:hover {
+    background: #f9fafb;
+  }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+  .page-container {
+    padding: 20px 0 40px;
+  }
 
+  .sheet-wrapper {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 0 auto 20px auto;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    position: relative;
+    page-break-after: auto;
+    break-after: auto;
+  }
+
+  .sheet-wrapper.print-page-break {
+    page-break-after: always;
+    break-after: page;
+  }
+
+  .sheet-wrapper.print-page-last {
+    page-break-after: auto !important;
+    break-after: auto !important;
+  }
+
+  .sheet {
+    padding: 16mm 14mm 14mm 14mm;
+    box-sizing: border-box;
+    min-height: 297mm;
+  }
+
+  .sheet-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+  }
+
+  .sheet-title {
+    font-size: 24px;
+    font-weight: 700;
+  }
+
+  .sheet-sub {
+    font-size: 13px;
+    color: #4b5563;
+    margin-top: 4px;
+  }
+
+  .sheet-page-label {
+    font-size: 13px;
+    color: #6b7280;
+    white-space: nowrap;
+  }
+
+  table.exam-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-size: 15px;
+  }
+
+  table.exam-table th,
+  table.exam-table td {
+    border: 1px solid #111827;
+    padding: 8px 10px;
+    text-align: center;
+    vertical-align: middle;
+    height: 38px;
+    box-sizing: border-box;
+  }
+
+  table.exam-table th {
+    background: #f9fafb;
+    font-weight: 700;
+  }
+
+  td.word {
+    text-align: left;
+    padding-left: 12px;
+  }
+
+  td.blank {
+    color: transparent;
+  }
+
+  .answer-grid {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-size: 14px;
+  }
+
+  .answer-grid td,
+  .answer-grid th {
+    border: 1px solid #111827;
+    padding: 7px 6px;
+    text-align: center;
+    vertical-align: middle;
+    height: 34px;
+    box-sizing: border-box;
+  }
+
+  .answer-grid th {
+    background: #f9fafb;
+    font-weight: 700;
+  }
+
+  .answer-grid td.answer-word {
+    text-align: left;
+    padding-left: 10px;
+  }
+
+  .answer-grid td.empty-cell {
+    color: transparent;
+  }
+
+  .hidden-print-target {
+    display: none !important;
+  }
+
+  @media print {
     body {
-      font-family: 'Noto Sans KR', sans-serif;
-      background: var(--paper);
-      color: var(--ink);
+      background: white;
     }
-
-    #toolbar {
-      background: var(--ink);
-      color: #fff;
-      padding: 14px 32px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      border-bottom: 3px solid var(--accent);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    .toolbar-title {
-      font-size: 15px;
-      font-weight: 700;
-      margin-right: 4px;
-    }
-
-    .tbtn {
-      padding: 8px 14px;
-      border: 1px solid #555;
-      background: transparent;
-      color: #fff;
-      font-size: 12px;
-      font-family: 'Noto Sans KR', sans-serif;
-      font-weight: 500;
-      border-radius: 3px;
-      cursor: pointer;
-      transition: all 0.15s;
-      white-space: nowrap;
-    }
-
-    .tbtn:hover { background: #333; }
-    .tbtn-primary { background: var(--accent); border-color: var(--accent); }
-    .tbtn-primary:hover { background: #6e2222; }
-    .tbtn-back { border-color: #888; color: #ccc; }
-
-    .sep {
-      width: 1px;
-      height: 24px;
-      background: #444;
-      flex-shrink: 0;
-    }
-
-    .tb-spacer { flex: 1; }
-    #tbInfo { font-size: 12px; color: #aaa; }
-
-    #preview {
-      padding: 32px 24px 60px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 40px;
-    }
-
-    .sheet-wrapper {
-      background: #fff;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.13);
-      border-radius: 2px;
-      position: relative;
-      width: min(794px, 100%);
-    }
-
-    .sheet-label {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      font-size: 10px;
-      background: var(--accent);
-      color: #fff;
-      padding: 2px 8px;
-      border-radius: 2px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      z-index: 10;
-    }
-
-    .exam-page {
-      width: 794px;
-      height: 1123px;
-      padding: 36px 44px 32px 44px;
-      font-family: 'Noto Sans KR', sans-serif;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-
-    .exam-header {
-      display: flex;
-      align-items: stretch;
-      border: 2.5px solid #111;
-      margin-bottom: 5px;
-      flex-shrink: 0;
-      height: 58px;
-    }
-
-    .exam-header-left {
-      flex: 1;
-      padding: 0 14px;
-      font-size: 17px;
-      font-weight: 700;
-      border-right: 1.5px solid #111;
-      display: flex;
-      align-items: center;
-    }
-
-    .exam-header-center {
-      width: 180px;
-      padding: 0 10px;
-      font-size: 13px;
-      border-right: 1.5px solid #111;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 2px;
-    }
-
-    .exam-header-center .hlabel {
-      font-size: 9px;
-      font-weight: 700;
-      color: #888;
-      letter-spacing: 0.06em;
-    }
-
-    .exam-header-center .hval {
-      font-size: 13px;
-      font-weight: 500;
-    }
-
-    .exam-header-right {
-      width: 190px;
-      display: flex;
-      flex-direction: column;
-      font-size: 12px;
-    }
-
-    .exam-header-right .hrow {
-      padding: 0 10px;
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      border-bottom: 1px solid #ccc;
-      flex: 1;
-    }
-
-    .exam-header-right .hrow:last-child { border-bottom: none; }
-
-    .exam-header-right .hkey {
-      font-weight: 700;
-      color: #555;
-      min-width: 36px;
-      font-size: 10px;
-    }
-
-    .exam-body {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0 6px;
-      flex: 1;
-      min-height: 0;
-    }
-
-    .exam-table {
-      width: 100%;
-      border-collapse: collapse;
-      table-layout: fixed;
-      border: 2px solid #111;
-      height: 100%;
-    }
-
-    .exam-table th,
-    .exam-table td {
-      border: 0.6px solid #999;
-      font-size: 11px;
-      padding: 0 5px;
-      line-height: 1.3;
-      overflow: hidden;
-    }
-
-    .exam-table th {
-      background: #edeae2;
-      text-align: center;
-      font-weight: 700;
-      font-size: 10px;
-      letter-spacing: 0.05em;
-      padding: 3px 4px;
-      border-bottom: 1.5px solid #888;
-      height: 20px;
-    }
-
-    .col-num { width: 44px; }
-    .col-word { width: 42%; }
-    .col-ans { width: auto; }
-
-    .td-num {
-      text-align: center;
-      font-size: 13px;
-      font-weight: 700;
-      color: #111;
-      font-family: 'DM Mono', monospace;
-      white-space: nowrap;
-    }
-
-    .td-word {
-      font-size: 11px;
-      word-break: break-all;
-    }
-
-    .td-ans {
-      font-size: 11px;
-      color: #111;
-    }
-
-    .td-ans.blank { color: transparent; }
-    tbody .exam-table tbody tr { height: calc((100% - 20px) / 25); }
-
-    .no-print {
+    .toolbar {
       display: none !important;
     }
-
-    @media print {
-      @page {
-        size: A4 portrait;
-        margin: 0;
-      }
-
-      html, body {
-        background: #fff !important;
-      }
-
-      body {
-        margin: 0;
-      }
-
-      #toolbar {
-        display: none !important;
-      }
-
-      #preview {
-        padding: 0 !important;
-        gap: 0 !important;
-      }
-
-      .sheet-wrapper {
-        box-shadow: none !important;
-        border-radius: 0 !important;
-        width: 210mm !important;
-        margin: 0 !important;
-        break-inside: avoid;
-        page-break-inside: avoid;
-      }
-
-      .sheet-wrapper.print-page-break {
-        break-after: page;
-        page-break-after: always;
-      }
-
-      .sheet-wrapper.print-page-last {
-        break-after: auto;
-        page-break-after: auto;
-      }
-
-      .sheet-label {
-        display: block !important;
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        font-size: 10px;
-        background: var(--accent) !important;
-        color: #fff !important;
-        padding: 2px 8px;
-        border-radius: 2px;
-        font-weight: 700;
-        letter-spacing: 0.1em;
-        z-index: 10;
-      }
-
-      .exam-page {
-        width: 210mm !important;
-        height: 297mm !important;
-        padding: 10mm 12mm 9mm 12mm !important;
-        overflow: hidden;
-        break-inside: avoid;
-        page-break-inside: avoid;
-      }
-
-      .exam-table {
-        height: 100%;
-        break-inside: avoid;
-        page-break-inside: avoid;
-      }
+    .page-container {
+      padding: 0;
     }
-  </style>
+    .sheet-wrapper {
+      margin: 0 auto;
+      box-shadow: none;
+      width: 210mm;
+      min-height: auto;
+    }
+    .sheet {
+      min-height: auto;
+    }
+    .hidden-print-target {
+      display: none !important;
+    }
+  }
+</style>
 </head>
 <body>
-  <div id="toolbar">
-    <button class="tbtn tbtn-back" onclick="history.back()">← 돌아가기</button>
-    <div class="sep"></div>
-    <span class="toolbar-title" id="tbTitle"></span>
-    <div class="sep"></div>
-
-    <button class="tbtn tbtn-primary" onclick="doPrint('all')">🖨 모두 인쇄</button>
-    <button class="tbtn" onclick="doPrint('question')">문제지 인쇄</button>
-    <button class="tbtn" onclick="doPrint('answer')">답지 인쇄</button>
-
-    <div class="sep"></div>
-
-    <button class="tbtn" onclick="savePdf('all')">💾 모두 저장</button>
-    <button class="tbtn" onclick="savePdf('question')">문제지 저장</button>
-    <button class="tbtn" onclick="savePdf('answer')">답지 저장</button>
-
-    <div class="tb-spacer"></div>
-    <span id="tbInfo"></span>
+  <div class="toolbar">
+    <button onclick="printQuestions()">문제지만 인쇄</button>
+    <button onclick="saveQuestions()">문제지만 저장</button>
+    <button onclick="printAnswers()">답지만 인쇄</button>
+    <button onclick="saveAnswers()">답지만 저장</button>
+    <button onclick="printAllSheets()">전체 인쇄</button>
+    <button onclick="saveAllSheets()">전체 저장</button>
   </div>
 
-  <div id="preview"></div>
+  <div class="page-container" id="pageContainer"></div>
 
-  <script>
-    const raw = sessionStorage.getItem('examPayload');
-    if (!raw) {
-      alert('시험 데이터가 없습니다. 다시 생성해주세요.');
-      location.href = 'index.html';
-    }
+<script>
+const raw = sessionStorage.getItem('examData');
+if (!raw) {
+  alert('시험지 데이터가 없습니다.');
+}
+const examData = raw ? JSON.parse(raw) : {
+  title: '시험지',
+  subtitle: '',
+  itemsPerPage: 50,
+  answerItemsPerPage: 50,
+  items: []
+};
 
-    const P = JSON.parse(raw);
-    const { vocaTitle, studentName, academyName, rangeStr, questions, enKoCount, koEnCount } = P;
+const pageContainer = document.getElementById('pageContainer');
 
-    document.getElementById('tbTitle').textContent = vocaTitle || '';
-    document.getElementById('tbInfo').textContent = `Day ${rangeStr || ''} · ${questions.length}문항 · 영한 ${enKoCount ?? 0} / 한영 ${koEnCount ?? 0}`;
+function escapeHtml(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
 
-    function escapeHtml(value) {
-      return String(value ?? '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;');
-    }
+function chunkArray(arr, size) {
+  const result = [];
+  for (let i = 0; i < arr.length; i += size) {
+    result.push(arr.slice(i, i + size));
+  }
+  return result;
+}
 
-    function splitPages(qs) {
-      const pages = [];
-      for (let i = 0; i < qs.length; i += 50) {
-        const chunk = qs.slice(i, i + 50);
-        while (chunk.length < 50) chunk.push(null);
-        pages.push(chunk);
-      }
-      return pages;
-    }
+function buildQuestionSheet(items, pageNum) {
+  const itemsPerPage = Number(examData.itemsPerPage) || 50;
+  const fixedItems = [...items];
 
-    const pages = splitPages(questions || []);
+  while (fixedItems.length < itemsPerPage) {
+    fixedItems.push(null);
+  }
 
-    function questionText(q) {
-      if (!q) return '';
-      return q.direction === 'enKo' ? q.en : q.ko;
-    }
+  const rows = fixedItems.map((item, idx) => {
+    const no = idx + 1 + (pageNum - 1) * itemsPerPage;
 
-    function answerText(q) {
-      if (!q) return '';
-      return q.direction === 'enKo' ? q.ko : q.en;
-    }
-
-    function makeTableHTML(half, startNum, isAnswer) {
-      const rows = half.map((q, i) => {
-        const num = startNum + i;
-        const qText = q ? escapeHtml(questionText(q)) : '';
-        const aText = q ? escapeHtml(answerText(q)) : '';
-        const ansTd = isAnswer
-          ? `<td class="td-ans">${aText}</td>`
-          : `<td class="td-ans blank">&nbsp;</td>`;
-
-        return `
-          <tr>
-            <td class="td-num">${q ? num : ''}</td>
-            <td class="td-word">${qText}</td>
-            ${ansTd}
-          </tr>
-        `;
-      }).join('');
-
+    if (!item) {
       return `
+        <tr>
+          <td>${no}</td>
+          <td class="word blank">&nbsp;</td>
+          <td class="blank">&nbsp;</td>
+        </tr>
+      `;
+    }
+
+    return `
+      <tr>
+        <td>${no}</td>
+        <td class="word">${escapeHtml(item.word || '')}</td>
+        <td>${escapeHtml(item.meaning || '')}</td>
+      </tr>
+    `;
+  }).join('');
+
+  return `
+    <div class="sheet-wrapper question-sheet">
+      <div class="sheet">
+        <div class="sheet-header">
+          <div>
+            <div class="sheet-title">${escapeHtml(examData.title || '시험지')}</div>
+            <div class="sheet-sub">${escapeHtml(examData.subtitle || '')}</div>
+          </div>
+          <div class="sheet-page-label">문제지 ${pageNum}</div>
+        </div>
+
         <table class="exam-table">
-          <colgroup>
-            <col class="col-num" />
-            <col class="col-word" />
-            <col class="col-ans" />
-          </colgroup>
           <thead>
             <tr>
-              <th class="col-num">No.</th>
-              <th class="col-word">문제</th>
-              <th class="col-ans">${isAnswer ? '정답' : ''}</th>
+              <th style="width: 10%;">번호</th>
+              <th style="width: 45%;">단어</th>
+              <th style="width: 45%;">뜻</th>
             </tr>
           </thead>
-          <tbody>${rows}</tbody>
+          <tbody>
+            ${rows}
+          </tbody>
         </table>
-      `;
-    }
+      </div>
+    </div>
+  `;
+}
 
-    function makePageHTML(slots, pageIndex, isAnswer) {
-      const left = slots.slice(0, 25);
-      const right = slots.slice(25, 50);
-      const startNum = pageIndex * 50 + 1;
-      const labelText = isAnswer ? 'ANSWER' : 'QUESTION';
-      const pageLabel = pages.length > 1 ? ` ${pageIndex + 1}` : '';
-      const academyHTML = academyName
-        ? `
-          <div class="exam-header-center">
-            <div class="hlabel">ACADEMY</div>
-            <div class="hval">${escapeHtml(academyName)}</div>
-          </div>
-        `
-        : `
-          <div class="exam-header-center">
-            <div class="hlabel">ACADEMY</div>
-            <div class="hval"></div>
-          </div>
-        `;
+function buildAnswerSheet(items, pageNum) {
+  const answerItemsPerPage = Number(examData.answerItemsPerPage) || 50;
+  const fixedItems = [...items];
 
-      return `
-        <div class="exam-page" data-type="${isAnswer ? 'answer' : 'question'}">
-          <div class="sheet-label" style="position:absolute;top:6px;right:10px;">${labelText}${pageLabel}</div>
-          <div class="exam-header">
-            <div class="exam-header-left">${escapeHtml(vocaTitle || '')}</div>
-            ${academyHTML}
-            <div class="exam-header-right">
-              <div class="hrow"><span class="hkey">DAY</span><span>${escapeHtml(rangeStr || '')}</span></div>
-              <div class="hrow"><span class="hkey">NAME</span><span>${escapeHtml(studentName || '')}</span></div>
-            </div>
+  while (fixedItems.length < answerItemsPerPage) {
+    fixedItems.push(null);
+  }
+
+  const columnCount = 2;
+  const rowsPerColumn = Math.ceil(answerItemsPerPage / columnCount);
+  const columns = [];
+
+  for (let c = 0; c < columnCount; c++) {
+    columns.push(fixedItems.slice(c * rowsPerColumn, (c + 1) * rowsPerColumn));
+  }
+
+  const rows = [];
+  for (let r = 0; r < rowsPerColumn; r++) {
+    const left = columns[0][r] ?? null;
+    const right = columns[1][r] ?? null;
+
+    const leftNo = (pageNum - 1) * answerItemsPerPage + r + 1;
+    const rightNo = (pageNum - 1) * answerItemsPerPage + rowsPerColumn + r + 1;
+
+    rows.push(`
+      <tr>
+        ${renderAnswerCells(left, leftNo)}
+        ${renderAnswerCells(right, rightNo)}
+      </tr>
+    `);
+  }
+
+  return `
+    <div class="sheet-wrapper answer-sheet">
+      <div class="sheet">
+        <div class="sheet-header">
+          <div>
+            <div class="sheet-title">${escapeHtml(examData.title || '시험지')}</div>
+            <div class="sheet-sub">${escapeHtml(examData.subtitle || '')}</div>
           </div>
-          <div class="exam-body">
-            ${makeTableHTML(left, startNum, isAnswer)}
-            ${makeTableHTML(right, startNum + 25, isAnswer)}
-          </div>
+          <div class="sheet-page-label">답지 ${pageNum}</div>
         </div>
-      `;
+
+        <table class="answer-grid">
+          <thead>
+            <tr>
+              <th style="width: 8%;">번호</th>
+              <th style="width: 42%;">정답</th>
+              <th style="width: 8%;">번호</th>
+              <th style="width: 42%;">정답</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows.join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
+}
+
+function renderAnswerCells(item, no) {
+  if (!item) {
+    return `
+      <td>${no}</td>
+      <td class="answer-word empty-cell">&nbsp;</td>
+    `;
+  }
+
+  return `
+    <td>${no}</td>
+    <td class="answer-word">${escapeHtml(item.meaning || '')}</td>
+  `;
+}
+
+function renderAll() {
+  const items = Array.isArray(examData.items) ? examData.items : [];
+  const questionPages = chunkArray(items, Number(examData.itemsPerPage) || 50);
+  const answerPages = chunkArray(items, Number(examData.answerItemsPerPage) || 50);
+
+  const questionHtml = questionPages.map((pageItems, idx) => buildQuestionSheet(pageItems, idx + 1)).join('');
+  const answerHtml = answerPages.map((pageItems, idx) => buildAnswerSheet(pageItems, idx + 1)).join('');
+
+  pageContainer.innerHTML = questionHtml + answerHtml;
+}
+
+function clearPrintState() {
+  document.querySelectorAll('.sheet-wrapper').forEach(el => {
+    el.classList.remove('hidden-print-target', 'print-page-break', 'print-page-last');
+  });
+}
+
+function applyPrintMode(mode) {
+  clearPrintState();
+
+  let targets = [];
+  const questionSheets = Array.from(document.querySelectorAll('.question-sheet'));
+  const answerSheets = Array.from(document.querySelectorAll('.answer-sheet'));
+
+  if (mode === 'questions') {
+    answerSheets.forEach(el => el.classList.add('hidden-print-target'));
+    targets = questionSheets;
+  } else if (mode === 'answers') {
+    questionSheets.forEach(el => el.classList.add('hidden-print-target'));
+    targets = answerSheets;
+  } else {
+    targets = [...questionSheets, ...answerSheets];
+  }
+
+  targets.forEach((el, idx) => {
+    if (idx === targets.length - 1) {
+      el.classList.add('print-page-last');
+    } else {
+      el.classList.add('print-page-break');
     }
+  });
+}
 
-    function render() {
-      const preview = document.getElementById('preview');
-      preview.innerHTML = '';
+function runPrint(mode) {
+  applyPrintMode(mode);
 
-      pages.forEach((slots, pi) => {
-        const wrap = document.createElement('div');
-        wrap.className = 'sheet-wrapper';
-        wrap.dataset.role = 'question';
-        wrap.style.position = 'relative';
-        wrap.innerHTML = makePageHTML(slots, pi, false);
-        preview.appendChild(wrap);
-      });
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      window.print();
+    });
+  });
+}
 
-      pages.forEach((slots, pi) => {
-        const wrap = document.createElement('div');
-        wrap.className = 'sheet-wrapper';
-        wrap.dataset.role = 'answer';
-        wrap.style.position = 'relative';
-        wrap.innerHTML = makePageHTML(slots, pi, true);
-        preview.appendChild(wrap);
-      });
-    }
+window.addEventListener('afterprint', () => {
+  clearPrintState();
+});
 
-    function getVisibleSheets(mode) {
-      const allSheets = [...document.querySelectorAll('.sheet-wrapper')];
-      if (mode === 'question') return allSheets.filter(el => el.dataset.role === 'question');
-      if (mode === 'answer') return allSheets.filter(el => el.dataset.role === 'answer');
-      return allSheets;
-    }
+function printQuestions() {
+  runPrint('questions');
+}
 
-    function applyVisibility(mode) {
-      const allSheets = [...document.querySelectorAll('.sheet-wrapper')];
-      const visibleSheets = getVisibleSheets(mode);
+function saveQuestions() {
+  runPrint('questions');
+}
 
-      allSheets.forEach(el => {
-        el.classList.remove('print-page-break', 'print-page-last');
-        if (visibleSheets.includes(el)) {
-          el.classList.remove('no-print');
-        } else {
-          el.classList.add('no-print');
-        }
-      });
+function printAnswers() {
+  runPrint('answers');
+}
 
-      visibleSheets.forEach((el, idx) => {
-        if (idx === visibleSheets.length - 1) {
-          el.classList.add('print-page-last');
-        } else {
-          el.classList.add('print-page-break');
-        }
-      });
-    }
+function saveAnswers() {
+  runPrint('answers');
+}
 
-    function restoreVisibility() {
-      document.querySelectorAll('.sheet-wrapper').forEach(el => {
-        el.classList.remove('no-print', 'print-page-break', 'print-page-last');
-      });
-    }
+function printAllSheets() {
+  runPrint('all');
+}
 
-    function afterPrintCleanup() {
-      restoreVisibility();
-      window.removeEventListener('afterprint', afterPrintCleanup);
-    }
+function saveAllSheets() {
+  runPrint('all');
+}
 
-    function runPrint(mode) {
-      applyVisibility(mode);
-      window.addEventListener('afterprint', afterPrintCleanup, { once: true });
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          window.print();
-        });
-      });
-    }
-
-    function doPrint(mode) {
-      runPrint(mode);
-    }
-
-    function savePdf(mode) {
-      runPrint(mode);
-    }
-
-    render();
-  </script>
+renderAll();
+</script>
 </body>
 </html>
