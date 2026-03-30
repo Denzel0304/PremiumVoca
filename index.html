@@ -436,14 +436,9 @@ window.addEventListener('DOMContentLoaded', async () => {
 
 async function loadIndex() {
   try {
-    const cached = localStorage.getItem(CACHE_PREFIX + 'index');
-    if (cached) {
-      vocaIndex = JSON.parse(cached);
-    } else {
-      const res = await fetch('data/index.json');
-      vocaIndex = await res.json();
-      localStorage.setItem(CACHE_PREFIX + 'index', JSON.stringify(vocaIndex));
-    }
+    // 항상 서버에서 새로 받아옴 (캐시 무시)
+    const res = await fetch('data/index.json?v=' + Date.now());
+    vocaIndex = await res.json();
     const sel = document.getElementById('vocaSelect');
     vocaIndex.forEach(v => {
       const opt = document.createElement('option');
@@ -463,16 +458,10 @@ async function onVocaChange() {
 
   showLoading();
   try {
-    const cacheKey = CACHE_PREFIX + id;
-    const cached = localStorage.getItem(cacheKey);
-    if (cached) {
-      vocaDB = JSON.parse(cached);
-    } else {
-      const entry = vocaIndex.find(v => v.id === id);
-      const res = await fetch(entry.file);
-      vocaDB = await res.json();
-      localStorage.setItem(cacheKey, JSON.stringify(vocaDB));
-    }
+    // 항상 서버에서 새로 받아옴 (캐시 무시)
+    const entry = vocaIndex.find(v => v.id === id);
+    const res = await fetch(entry.file + '?v=' + Date.now());
+    vocaDB = await res.json();
     showDayInfo();
   } catch(e) {
     alert('단어장을 불러오지 못했습니다.');
