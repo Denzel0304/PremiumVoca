@@ -1,3 +1,11 @@
+
+voca01.json
+
+페이지
+1
+/
+1
+100%
 {
   "title": "프리미엄보카 고등기본1",
   "days": [
@@ -6,102 +14,82 @@
       "words": [
         {
           "en": "account",
-          "pron": "어카운트",
           "ko": "설명하다"
         },
         {
           "en": "disgust",
-          "pron": "디스거스트",
           "ko": "혐오"
         },
         {
           "en": "retire",
-          "pron": "리타이어",
           "ko": "은퇴하다"
         },
         {
           "en": "sensible",
-          "pron": "쎈써블",
           "ko": "분별력 있는"
         },
         {
           "en": "fellow",
-          "pron": "펠로우",
           "ko": "동료"
         },
         {
           "en": "predecessor",
-          "pron": "프레더쎄써",
           "ko": "전임자"
         },
         {
           "en": "misleading",
-          "pron": "미슬리딩",
           "ko": "오해하게 하는"
         },
         {
           "en": "paralyze",
-          "pron": "페럴라이즈",
           "ko": "마비시키다"
         },
         {
           "en": "chase",
-          "pron": "췌이스",
           "ko": "추격하다"
         },
         {
           "en": "sow",
-          "pron": "쏘우",
           "ko": "씨를 뿌리다"
         },
         {
           "en": "minister",
-          "pron": "미니스터",
           "ko": "성직자"
         },
         {
           "en": "sarcastic",
-          "pron": "싸캐스틱",
           "ko": "빈정대는"
         },
         {
           "en": "bulletin",
-          "pron": "불리턴",
           "ko": "게시"
         },
         {
           "en": "sponsor",
-          "pron": "스판써",
           "ko": "후원하다"
         },
         {
           "en": "weird",
-          "pron": "위어드",
           "ko": "이상한"
         },
         {
           "en": "perceive",
-          "pron": "퍼씨브",
           "ko": "인지하다"
         },
         {
           "en": "certificate",
-          "pron": "써티피컷",
           "ko": "증명서"
         },
         {
           "en": "eruption",
-          "pron": "이럽션",
           "ko": "분출"
         },
         {
           "en": "landslide",
-          "pron": "랜드슬라이드",
           "ko": "산사태"
         },
         {
           "en": "include",
-          "pron": "인클루드",
           "ko": "포함하다"
         }
       ]
@@ -111,102 +99,82 @@
       "words": [
         {
           "en": "throb",
-          "pron": "뜨랍",
           "ko": "욱신거리다"
         },
         {
           "en": "overcharge",
-          "pron": "오버차쥐",
           "ko": "과잉 청구하다"
         },
         {
           "en": "possess",
-          "pron": "퍼제스",
           "ko": "소유하다"
         },
         {
           "en": "cemetery",
-          "pron": "쎄머테리",
           "ko": "공동묘지"
         },
         {
           "en": "racial",
-          "pron": "레이셜",
           "ko": "인종의"
         },
         {
           "en": "monarch",
-          "pron": "마너크",
           "ko": "군주"
         },
         {
           "en": "compassion",
-          "pron": "컴패션",
           "ko": "연민"
         },
         {
           "en": "impair",
-          "pron": "임페어",
           "ko": "손상시키다"
         },
         {
           "en": "tackle",
-          "pron": "태클",
           "ko": "문제를 다루다"
         },
         {
           "en": "equivalent",
-          "pron": "이퀴벌런트",
           "ko": "상응하는"
         },
         {
           "en": "rigid",
-          "pron": "리지드",
           "ko": "엄격한"
         },
         {
           "en": "bunch",
-          "pron": "번취",
           "ko": "묶음"
         },
         {
           "en": "inferior",
-          "pron": "인피어리어",
           "ko": "열등한"
         },
         {
           "en": "semiconductor",
-          "pron": "쎄미컨덕터",
           "ko": "반도체"
         },
         {
           "en": "horn",
-          "pron": "혼",
           "ko": "뿔"
         },
         {
           "en": "offense",
-          "pron": "어펜스",
           "ko": "위반"
         },
         {
           "en": "impress",
-          "pron": "임프레스",
           "ko": "감동시키다"
         },
         {
           "en": "iconic",
-          "pron": "아이카닉",
           "ko": "상징적인"
         },
         {
           "en": "feast",
-          "pron": "피스트",
           "ko": "축제"
         },
         {
           "en": "commit",
-          "pron": "커밋",
           "ko": "전념하다"
         }
       ]
@@ -216,102 +184,82 @@
       "words": [
         {
           "en": "fascinate",
-          "pron": "패씨네이트",
           "ko": "매혹하다"
         },
         {
           "en": "stretch",
-          "pron": "스트레취",
           "ko": "늘이다"
         },
         {
           "en": "undermine",
-          "pron": "언더마인",
           "ko": "약화시키다"
         },
         {
           "en": "intuitive",
-          "pron": "인튜어티브",
           "ko": "직관력 있는"
         },
         {
           "en": "subtle",
-          "pron": "써틀",
           "ko": "미묘한"
         },
         {
           "en": "progress",
-          "pron": "프로그레스",
           "ko": "진보하다"
         },
         {
           "en": "canal",
-          "pron": "커낼",
           "ko": "운하"
         },
         {
           "en": "complement",
-          "pron": "캄플리먼트",
           "ko": "보충하다"
         },
         {
           "en": "shatter",
-          "pron": "쉐터",
           "ko": "산산이 부서지다"
         },
         {
           "en": "agriculture",
-          "pron": "애그리컬춰",
           "ko": "농업"
         },
         {
           "en": "recharge",
-          "pron": "리차쥐",
           "ko": "재충전하다"
         },
         {
           "en": "foretell",
-          "pron": "포어텔",
           "ko": "예언하다"
         },
         {
           "en": "overnight",
-          "pron": "오버나이트",
           "ko": "하룻밤에"
         },
         {
           "en": "slap",
-          "pron": "슬랩",
           "ko": "찰싹 때리다"
         },
         {
           "en": "chatter",
-          "pron": "채터",
           "ko": "수다를 떨다"
         },
         {
           "en": "invert",
-          "pron": "인버트",
           "ko": "뒤집다"
         },
         {
           "en": "exert",
-          "pron": "이그저트",
           "ko": "노력하다"
         },
         {
           "en": "election",
-          "pron": "일렉션",
           "ko": "선거"
         },
         {
           "en": "hire",
-          "pron": "하이어",
           "ko": "고용하다"
         },
         {
           "en": "authority",
-          "pron": "어또러티",
           "ko": "권위"
         }
       ]
@@ -321,102 +269,82 @@
       "words": [
         {
           "en": "boost",
-          "pron": "부스트",
           "ko": "끌어올리다"
         },
         {
           "en": "justify",
-          "pron": "저스티파이",
           "ko": "정당화하다"
         },
         {
           "en": "continuum",
-          "pron": "컨티뉴엄",
           "ko": "연속체"
         },
         {
           "en": "dramatic",
-          "pron": "드러매틱",
           "ko": "극적인"
         },
         {
           "en": "testimony",
-          "pron": "테스터모니",
           "ko": "증언"
         },
         {
           "en": "utter",
-          "pron": "어터",
           "ko": "말하다"
         },
         {
           "en": "harvest",
-          "pron": "하비스트",
           "ko": "수확하다"
         },
         {
           "en": "overlap",
-          "pron": "오버랩",
           "ko": "겹치다"
         },
         {
           "en": "vein",
-          "pron": "베인",
           "ko": "정맥"
         },
         {
           "en": "headquarters",
-          "pron": "헤드쿼터즈",
           "ko": "본부"
         },
         {
           "en": "cliche",
-          "pron": "클리쉐이",
           "ko": "상투적인 문구"
         },
         {
           "en": "subscribe",
-          "pron": "썹스크라이브",
           "ko": "구독하다"
         },
         {
           "en": "mimic",
-          "pron": "미믹",
           "ko": "흉내내다"
         },
         {
           "en": "profile",
-          "pron": "프로파일",
           "ko": "측면"
         },
         {
           "en": "geometry",
-          "pron": "지아머트리",
           "ko": "기하학"
         },
         {
           "en": "accumulate",
-          "pron": "어큐뮬레이트",
           "ko": "축적하다"
         },
         {
           "en": "translate",
-          "pron": "트랜슬레이트",
           "ko": "번역하다"
         },
         {
           "en": "warrior",
-          "pron": "워리어",
           "ko": "전사"
         },
         {
           "en": "expense",
-          "pron": "익스펜스",
           "ko": "비용"
         },
         {
           "en": "inconvenience",
-          "pron": "인컨비니언스",
           "ko": "불편"
         }
       ]
@@ -426,102 +354,82 @@
       "words": [
         {
           "en": "suicide",
-          "pron": "쑤어싸이드",
           "ko": "자살하다"
         },
         {
           "en": "pinch",
-          "pron": "핀취",
           "ko": "꼬집다"
         },
         {
           "en": "disapprove",
-          "pron": "디써프루브",
           "ko": "반대하다"
         },
         {
           "en": "diabetes",
-          "pron": "다이어비티즈",
           "ko": "당뇨병"
         },
         {
           "en": "misuse",
-          "pron": "미스유즈",
           "ko": "오용하다"
         },
         {
           "en": "stability",
-          "pron": "스터빌러티",
           "ko": "안정성"
         },
         {
           "en": "spot",
-          "pron": "스팟",
           "ko": "발견하다"
         },
         {
           "en": "grill",
-          "pron": "그릴",
           "ko": "굽다"
         },
         {
           "en": "ethnic",
-          "pron": "에뜨닉",
           "ko": "민족의"
         },
         {
           "en": "fasten",
-          "pron": "패쓴",
           "ko": "매다"
         },
         {
           "en": "guidance",
-          "pron": "가이든스",
           "ko": "지도"
         },
         {
           "en": "commodity",
-          "pron": "커마더티",
           "ko": "상품"
         },
         {
           "en": "spouse",
-          "pron": "스파우스",
           "ko": "배우자"
         },
         {
           "en": "fabric",
-          "pron": "패브릭",
           "ko": "직물"
         },
         {
           "en": "choke",
-          "pron": "초크",
           "ko": "숨이 막히다"
         },
         {
           "en": "analogy",
-          "pron": "어낼러지",
           "ko": "유추"
         },
         {
           "en": "universal",
-          "pron": "유니버설",
           "ko": "보편적인"
         },
         {
           "en": "inflation",
-          "pron": "인플레이션",
           "ko": "물가 인상"
         },
         {
           "en": "vaccination",
-          "pron": "백씨네이션",
           "ko": "예방접종"
         },
         {
           "en": "monologue",
-          "pron": "마널로그",
           "ko": "독백"
         }
       ]
@@ -531,102 +439,82 @@
       "words": [
         {
           "en": "immigrant",
-          "pron": "이머그런트",
           "ko": "이민자"
         },
         {
           "en": "alley",
-          "pron": "앨리",
           "ko": "골목"
         },
         {
           "en": "reputation",
-          "pron": "레퓨테이션",
           "ko": "평판"
         },
         {
           "en": "worsen",
-          "pron": "워슨",
           "ko": "악화되다"
         },
         {
           "en": "pretend",
-          "pron": "프리텐드",
           "ko": "~인 척하다"
         },
         {
           "en": "timber",
-          "pron": "팀버",
           "ko": "목재"
         },
         {
           "en": "modifier",
-          "pron": "마디파이어",
           "ko": "수식어"
         },
         {
           "en": "reap",
-          "pron": "립",
           "ko": "수확하다"
         },
         {
           "en": "overpopulation",
-          "pron": "오버파퓰레이션",
           "ko": "인구 과잉"
         },
         {
           "en": "species",
-          "pron": "스피쉬즈",
           "ko": "생물 종"
         },
         {
           "en": "spectrum",
-          "pron": "스펙트럼",
           "ko": "범위"
         },
         {
           "en": "transcend",
-          "pron": "트랜쎈드",
           "ko": "초월하다"
         },
         {
           "en": "terminate",
-          "pron": "터미네이트",
           "ko": "끝내다"
         },
         {
           "en": "signature",
-          "pron": "씨그너춰",
           "ko": "서명"
         },
         {
           "en": "overstate",
-          "pron": "오버스테이트",
           "ko": "과장하여 말하다"
         },
         {
           "en": "assumption",
-          "pron": "어썸프션",
           "ko": "가정"
         },
         {
           "en": "float",
-          "pron": "플로트",
           "ko": "뜨다"
         },
         {
           "en": "manual",
-          "pron": "매뉴얼",
           "ko": "손으로 만든"
         },
         {
           "en": "witness",
-          "pron": "위트니스",
           "ko": "목격하다"
         },
         {
           "en": "prehistoric",
-          "pron": "프리히스토릭",
           "ko": "선사시대의"
         }
       ]
@@ -636,102 +524,82 @@
       "words": [
         {
           "en": "variation",
-          "pron": "베어리에이션",
           "ko": "변화"
         },
         {
           "en": "thoughtful",
-          "pron": "또트풀",
           "ko": "사려 깊은"
         },
         {
           "en": "tune",
-          "pron": "튠",
           "ko": "선율"
         },
         {
           "en": "defend",
-          "pron": "디펜드",
           "ko": "방어하다"
         },
         {
           "en": "scout",
-          "pron": "스카우트",
           "ko": "정찰병"
         },
         {
           "en": "dilemma",
-          "pron": "딜레마",
           "ko": "어려운 문제"
         },
         {
           "en": "import",
-          "pron": "임포트",
           "ko": "수입하다"
         },
         {
           "en": "tangible",
-          "pron": "탠저블",
           "ko": "만질 수 있는"
         },
         {
           "en": "tact",
-          "pron": "택트",
           "ko": "요령"
         },
         {
           "en": "vapor",
-          "pron": "베이퍼",
           "ko": "증기"
         },
         {
           "en": "orphan",
-          "pron": "오펀",
           "ko": "고아"
         },
         {
           "en": "proof",
-          "pron": "프루프",
           "ko": "증거"
         },
         {
           "en": "layer",
-          "pron": "레이어",
           "ko": "층"
         },
         {
           "en": "sum",
-          "pron": "썸",
           "ko": "합계"
         },
         {
           "en": "irreplaceable",
-          "pron": "이리플레이써블",
           "ko": "대체할 수 없는"
         },
         {
           "en": "dismiss",
-          "pron": "디스미스",
           "ko": "해고하다"
         },
         {
           "en": "splendid",
-          "pron": "스플렌디드",
           "ko": "훌륭한"
         },
         {
           "en": "emphasize",
-          "pron": "엠퍼싸이즈",
           "ko": "강조하다"
         },
         {
           "en": "glance",
-          "pron": "글랜스",
           "ko": "흘끗 보다"
         },
         {
           "en": "unlikely",
-          "pron": "언라이클리",
           "ko": "~할 것 같지 않은"
         }
       ]
@@ -741,102 +609,82 @@
       "words": [
         {
           "en": "collide",
-          "pron": "컬라이드",
           "ko": "충돌하다"
         },
         {
           "en": "smash",
-          "pron": "스매쉬",
           "ko": "박살내다"
         },
         {
           "en": "leap",
-          "pron": "립",
           "ko": "도약하다"
         },
         {
           "en": "disclose",
-          "pron": "디스클로즈",
           "ko": "밝히다"
         },
         {
           "en": "metaphor",
-          "pron": "메터포어",
           "ko": "은유"
         },
         {
           "en": "guard",
-          "pron": "가드",
           "ko": "지키다"
         },
         {
           "en": "draft",
-          "pron": "드래프트",
           "ko": "초안"
         },
         {
           "en": "treasure",
-          "pron": "트레줘",
           "ko": "소중히 여기다"
         },
         {
           "en": "onset",
-          "pron": "안쎗",
           "ko": "시작"
         },
         {
           "en": "envious",
-          "pron": "엔비어스",
           "ko": "부러워하는"
         },
         {
           "en": "cater",
-          "pron": "케이터",
           "ko": "음식을 제공하다"
         },
         {
           "en": "bully",
-          "pron": "불리",
           "ko": "괴롭히다"
         },
         {
           "en": "tempt",
-          "pron": "템프트",
           "ko": "유혹하다"
         },
         {
           "en": "multitask",
-          "pron": "멀티태스크",
           "ko": "다중 작업을 하다"
         },
         {
           "en": "invisible",
-          "pron": "인비저블",
           "ko": "보이지 않는"
         },
         {
           "en": "rapid",
-          "pron": "래피드",
           "ko": "빠른"
         },
         {
           "en": "abolish",
-          "pron": "어발리쉬",
           "ko": "폐지하다"
         },
         {
           "en": "abuse",
-          "pron": "어뷰즈",
           "ko": "남용하다"
         },
         {
           "en": "reconcile",
-          "pron": "레컨싸일",
           "ko": "화해하다"
         },
         {
           "en": "nationality",
-          "pron": "내셔낼러티",
           "ko": "국적"
         }
       ]
@@ -846,102 +694,82 @@
       "words": [
         {
           "en": "crash",
-          "pron": "크래쉬",
           "ko": "충돌하다"
         },
         {
           "en": "blessing",
-          "pron": "블레씽",
           "ko": "축복"
         },
         {
           "en": "unify",
-          "pron": "유너파이",
           "ko": "통합하다"
         },
         {
           "en": "favor",
-          "pron": "페이버",
           "ko": "찬성하다"
         },
         {
           "en": "enterprise",
-          "pron": "엔터프라이즈",
           "ko": "기업"
         },
         {
           "en": "fable",
-          "pron": "페이블",
           "ko": "우화"
         },
         {
           "en": "isolated",
-          "pron": "아이썰레이티드",
           "ko": "고립된"
         },
         {
           "en": "inaudible",
-          "pron": "인오더블",
           "ko": "들리지 않는"
         },
         {
           "en": "fulfill",
-          "pron": "풀필",
           "ko": "실행하다"
         },
         {
           "en": "runaway",
-          "pron": "러너웨이",
           "ko": "도망자"
         },
         {
           "en": "involuntary",
-          "pron": "인발런테리",
           "ko": "무의식의"
         },
         {
           "en": "convince",
-          "pron": "컨빈스",
           "ko": "설득하다"
         },
         {
           "en": "authenticity",
-          "pron": "오뗀티써티",
           "ko": "확실성"
         },
         {
           "en": "expose",
-          "pron": "익스포즈",
           "ko": "노출시키다"
         },
         {
           "en": "outdo",
-          "pron": "아웃두",
           "ko": "능가하다"
         },
         {
           "en": "accomplish",
-          "pron": "어캄플리쉬",
           "ko": "성취하다"
         },
         {
           "en": "minor",
-          "pron": "마이너",
           "ko": "소수의"
         },
         {
           "en": "plenty",
-          "pron": "플렌티",
           "ko": "많음"
         },
         {
           "en": "flexible",
-          "pron": "플렉서블",
           "ko": "유연한"
         },
         {
           "en": "string",
-          "pron": "스트링",
           "ko": "끈"
         }
       ]
@@ -951,102 +779,82 @@
       "words": [
         {
           "en": "urgent",
-          "pron": "어전트",
           "ko": "긴급한"
         },
         {
           "en": "potent",
-          "pron": "포튼트",
           "ko": "강력한"
         },
         {
           "en": "intercept",
-          "pron": "인터쎕트",
           "ko": "가로채다"
         },
         {
           "en": "outfit",
-          "pron": "아웃핏",
           "ko": "옷"
         },
         {
           "en": "pound",
-          "pron": "파운드",
           "ko": "두드리다"
         },
         {
           "en": "foremost",
-          "pron": "포어모스트",
           "ko": "가장 중요한"
         },
         {
           "en": "downward",
-          "pron": "다운워드",
           "ko": "내려가는"
         },
         {
           "en": "intention",
-          "pron": "인텐션",
           "ko": "의도"
         },
         {
           "en": "recollect",
-          "pron": "레컬렉트",
           "ko": "회상하다"
         },
         {
           "en": "shudder",
-          "pron": "셔더",
           "ko": "몸을 떨다"
         },
         {
           "en": "annals",
-          "pron": "애늘즈",
           "ko": "연대기"
         },
         {
           "en": "attractive",
-          "pron": "어트랙티브",
           "ko": "매력적인"
         },
         {
           "en": "whereas",
-          "pron": "웨어애즈",
           "ko": "~인 반면"
         },
         {
           "en": "summary",
-          "pron": "써머리",
           "ko": "요약"
         },
         {
           "en": "factual",
-          "pron": "팩츄얼",
           "ko": "사실상의"
         },
         {
           "en": "expenditure",
-          "pron": "익스펜디춰",
           "ko": "지출"
         },
         {
           "en": "convert",
-          "pron": "컨버트",
           "ko": "전환하다"
         },
         {
           "en": "stock",
-          "pron": "스탁",
           "ko": "재고"
         },
         {
           "en": "procession",
-          "pron": "프러쎄션",
           "ko": "행렬"
         },
         {
           "en": "reptile",
-          "pron": "렙틸",
           "ko": "파충류"
         }
       ]
@@ -1056,102 +864,82 @@
       "words": [
         {
           "en": "undergraduate",
-          "pron": "언더그래쥬엇",
           "ko": "대학생"
         },
         {
           "en": "faith",
-          "pron": "페이뜨",
           "ko": "신념"
         },
         {
           "en": "earnest",
-          "pron": "어니스트",
           "ko": "열심인"
         },
         {
           "en": "advent",
-          "pron": "애드벤트",
           "ko": "출현"
         },
         {
           "en": "paddle",
-          "pron": "패들",
           "ko": "노를 젓다"
         },
         {
           "en": "explode",
-          "pron": "익스플로드",
           "ko": "폭발하다"
         },
         {
           "en": "unavoidable",
-          "pron": "어너보이더블",
           "ko": "피할 수 없는"
         },
         {
           "en": "unconsciously",
-          "pron": "언칸셔슬리",
           "ko": "무의식적으로"
         },
         {
           "en": "carve",
-          "pron": "카브",
           "ko": "새기다"
         },
         {
           "en": "mother-in-law",
-          "pron": "머더린로",
           "ko": "시어머니(장모)"
         },
         {
           "en": "trap",
-          "pron": "트랩",
           "ko": "덫"
         },
         {
           "en": "wretched",
-          "pron": "레취드",
           "ko": "비참한"
         },
         {
           "en": "tone",
-          "pron": "톤",
           "ko": "어조"
         },
         {
           "en": "marble",
-          "pron": "마블",
           "ko": "대리석"
         },
         {
           "en": "gratitude",
-          "pron": "그래티튜드",
           "ko": "감사"
         },
         {
           "en": "corporation",
-          "pron": "코퍼레이션",
           "ko": "기업"
         },
         {
           "en": "torment",
-          "pron": "토멘트",
           "ko": "고통을 주다"
         },
         {
           "en": "privilege",
-          "pron": "프리벌리쥐",
           "ko": "특권"
         },
         {
           "en": "devastate",
-          "pron": "데버스테이트",
           "ko": "황폐화시키다"
         },
         {
           "en": "debt",
-          "pron": "데트",
           "ko": "빚"
         }
       ]
@@ -1161,102 +949,82 @@
       "words": [
         {
           "en": "satisfy",
-          "pron": "쌔티스파이",
           "ko": "만족시키다"
         },
         {
           "en": "propose",
-          "pron": "프러포즈",
           "ko": "제안하다"
         },
         {
           "en": "editorial",
-          "pron": "에디토리얼",
           "ko": "신문 사설"
         },
         {
           "en": "competent",
-          "pron": "캄피턴트",
           "ko": "유능한"
         },
         {
           "en": "routine",
-          "pron": "루틴",
           "ko": "일상의 일"
         },
         {
           "en": "seed",
-          "pron": "씨드",
           "ko": "씨앗"
         },
         {
           "en": "deficient",
-          "pron": "디피션트",
           "ko": "부족한"
         },
         {
           "en": "unrivaled",
-          "pron": "언라이벌드",
           "ko": "경쟁자가 없는"
         },
         {
           "en": "format",
-          "pron": "포맷",
           "ko": "형식"
         },
         {
           "en": "violate",
-          "pron": "바이얼레이트",
           "ko": "위반하다"
         },
         {
           "en": "rescue",
-          "pron": "레스큐",
           "ko": "구조하다"
         },
         {
           "en": "central",
-          "pron": "쎈트럴",
           "ko": "중앙의"
         },
         {
           "en": "path",
-          "pron": "패뜨",
           "ko": "길"
         },
         {
           "en": "innate",
-          "pron": "이네이트",
           "ko": "선천적인"
         },
         {
           "en": "sentence",
-          "pron": "쎈텐스",
           "ko": "판결하다"
         },
         {
           "en": "fame",
-          "pron": "페임",
           "ko": "명성"
         },
         {
           "en": "royal",
-          "pron": "로열",
           "ko": "왕실의"
         },
         {
           "en": "monk",
-          "pron": "멍크",
           "ko": "수도자"
         },
         {
           "en": "passion",
-          "pron": "패션",
           "ko": "열정"
         },
         {
           "en": "vice",
-          "pron": "바이스",
           "ko": "악"
         }
       ]
@@ -1266,102 +1034,82 @@
       "words": [
         {
           "en": "reliable",
-          "pron": "릴라이어블",
           "ko": "신뢰할 수 있는"
         },
         {
           "en": "warranty",
-          "pron": "워런티",
           "ko": "보증서"
         },
         {
           "en": "thermometer",
-          "pron": "떠마미터",
           "ko": "온도계"
         },
         {
           "en": "majestic",
-          "pron": "머제스틱",
           "ko": "장엄한"
         },
         {
           "en": "reign",
-          "pron": "레인",
           "ko": "통치하다"
         },
         {
           "en": "wisdom",
-          "pron": "위즈덤",
           "ko": "지혜"
         },
         {
           "en": "embody",
-          "pron": "임바디",
           "ko": "구체화하다"
         },
         {
           "en": "internal",
-          "pron": "인터널",
           "ko": "내부의"
         },
         {
           "en": "qualify",
-          "pron": "콸러파이",
           "ko": "자격을 주다"
         },
         {
           "en": "resemble",
-          "pron": "리젬블",
           "ko": "닮다"
         },
         {
           "en": "journal",
-          "pron": "저늘",
           "ko": "잡지"
         },
         {
           "en": "potential",
-          "pron": "퍼텐셜",
           "ko": "잠재적인"
         },
         {
           "en": "specialty",
-          "pron": "스페셜티",
           "ko": "전문"
         },
         {
           "en": "microbe",
-          "pron": "마이크로브",
           "ko": "미생물"
         },
         {
           "en": "cite",
-          "pron": "싸이트",
           "ko": "인용하다"
         },
         {
           "en": "anticipate",
-          "pron": "앤티써페이트",
           "ko": "예상하다"
         },
         {
           "en": "liberal",
-          "pron": "리버럴",
           "ko": "자유주의의"
         },
         {
           "en": "pile",
-          "pron": "파일",
           "ko": "쌓다"
         },
         {
           "en": "cutback",
-          "pron": "컷백",
           "ko": "축소"
         },
         {
           "en": "delay",
-          "pron": "딜레이",
           "ko": "연기하다"
         }
       ]
@@ -1371,102 +1119,82 @@
       "words": [
         {
           "en": "intrude",
-          "pron": "인트루드",
           "ko": "침범하다"
         },
         {
           "en": "withhold",
-          "pron": "위드홀드",
           "ko": "억누르다"
         },
         {
           "en": "anniversary",
-          "pron": "애니버서리",
           "ko": "기념일"
         },
         {
           "en": "disrupt",
-          "pron": "디스럽트",
           "ko": "방해하다"
         },
         {
           "en": "implicit",
-          "pron": "임플리씻",
           "ko": "함축적인"
         },
         {
           "en": "nest",
-          "pron": "네스트",
           "ko": "둥지"
         },
         {
           "en": "advisory",
-          "pron": "애드바이저리",
           "ko": "권고의"
         },
         {
           "en": "hesitate",
-          "pron": "헤저테이트",
           "ko": "망설이다"
         },
         {
           "en": "depress",
-          "pron": "디프레스",
           "ko": "우울하게 하다"
         },
         {
           "en": "prime",
-          "pron": "프라임",
           "ko": "가장 중요한"
         },
         {
           "en": "Saturn",
-          "pron": "쌔턴",
           "ko": "토성"
         },
         {
           "en": "goods",
-          "pron": "구즈",
           "ko": "상품"
         },
         {
           "en": "oxygen",
-          "pron": "악씨전",
           "ko": "산소"
         },
         {
           "en": "uncountable",
-          "pron": "언카운터블",
           "ko": "셀 수 없는"
         },
         {
           "en": "vanity",
-          "pron": "배너티",
           "ko": "허영심"
         },
         {
           "en": "magnify",
-          "pron": "매그너파이",
           "ko": "확대하다"
         },
         {
           "en": "conform",
-          "pron": "컨폼",
           "ko": "따르다"
         },
         {
           "en": "immature",
-          "pron": "이머츄어",
           "ko": "미숙한"
         },
         {
           "en": "infinite",
-          "pron": "인퍼넛",
           "ko": "무한한"
         },
         {
           "en": "priest",
-          "pron": "프리스트",
           "ko": "성직자"
         }
       ]
@@ -1476,102 +1204,82 @@
       "words": [
         {
           "en": "groom",
-          "pron": "그룸",
           "ko": "신랑"
         },
         {
           "en": "compress",
-          "pron": "컴프레스",
           "ko": "압축하다"
         },
         {
           "en": "flip",
-          "pron": "플립",
           "ko": "뒤집다"
         },
         {
           "en": "customs",
-          "pron": "커스텀즈",
           "ko": "관세"
         },
         {
           "en": "denial",
-          "pron": "디나이얼",
           "ko": "부정"
         },
         {
           "en": "tranquil",
-          "pron": "트랭퀼",
           "ko": "고요한"
         },
         {
           "en": "chamber",
-          "pron": "췌임버",
           "ko": "방"
         },
         {
           "en": "kneel",
-          "pron": "닐",
           "ko": "무릎을 꿇다"
         },
         {
           "en": "hospitalize",
-          "pron": "하스피털라이즈",
           "ko": "입원시키다"
         },
         {
           "en": "wilderness",
-          "pron": "윌더니스",
           "ko": "황무지"
         },
         {
           "en": "relationship",
-          "pron": "릴레이션쉽",
           "ko": "관계"
         },
         {
           "en": "wage",
-          "pron": "웨이쥐",
           "ko": "임금"
         },
         {
           "en": "curriculum",
-          "pron": "커리큘럼",
           "ko": "교육 과정"
         },
         {
           "en": "sociology",
-          "pron": "쏘시알러지",
           "ko": "사회학"
         },
         {
           "en": "conservative",
-          "pron": "컨써버티브",
           "ko": "보수적인"
         },
         {
           "en": "mobile",
-          "pron": "모벌",
           "ko": "이동하기 쉬운"
         },
         {
           "en": "alchemy",
-          "pron": "앨커미",
           "ko": "연금술"
         },
         {
           "en": "deck",
-          "pron": "덱",
           "ko": "갑판"
         },
         {
           "en": "blend",
-          "pron": "블렌드",
           "ko": "섞다"
         },
         {
           "en": "devote",
-          "pron": "디보트",
           "ko": "헌신하다"
         }
       ]
@@ -1581,102 +1289,82 @@
       "words": [
         {
           "en": "ambition",
-          "pron": "앰비션",
           "ko": "야망"
         },
         {
           "en": "diligent",
-          "pron": "딜리전트",
           "ko": "성실한"
         },
         {
           "en": "successive",
-          "pron": "썩세씨브",
           "ko": "연속적인"
         },
         {
           "en": "industrious",
-          "pron": "인더스트리어스",
           "ko": "근면한"
         },
         {
           "en": "treat",
-          "pron": "트리트",
           "ko": "다루다"
         },
         {
           "en": "comprise",
-          "pron": "컴프라이즈",
           "ko": "구성하다"
         },
         {
           "en": "desirable",
-          "pron": "디자이어러블",
           "ko": "바람직한"
         },
         {
           "en": "efficient",
-          "pron": "이피션트",
           "ko": "효율적인"
         },
         {
           "en": "kidney",
-          "pron": "키드니",
           "ko": "신장"
         },
         {
           "en": "pension",
-          "pron": "펜션",
           "ko": "연금"
         },
         {
           "en": "introvert",
-          "pron": "인트러버트",
           "ko": "내향적인 사람"
         },
         {
           "en": "malfunction",
-          "pron": "맬펑크션",
           "ko": "오작동"
         },
         {
           "en": "extinction",
-          "pron": "익스팅크션",
           "ko": "멸종"
         },
         {
           "en": "somewhat",
-          "pron": "썸왓",
           "ko": "약간"
         },
         {
           "en": "harbor",
-          "pron": "하버",
           "ko": "항구"
         },
         {
           "en": "archaeology",
-          "pron": "아키알러지",
           "ko": "고고학"
         },
         {
           "en": "board",
-          "pron": "보드",
           "ko": "이사회"
         },
         {
           "en": "poultry",
-          "pron": "폴트리",
           "ko": "사육 조류"
         },
         {
           "en": "volcano",
-          "pron": "발케이노우",
           "ko": "화산"
         },
         {
           "en": "whereabouts",
-          "pron": "웨러바웃츠",
           "ko": "행방"
         }
       ]
@@ -1686,102 +1374,82 @@
       "words": [
         {
           "en": "sign",
-          "pron": "싸인",
           "ko": "서명하다"
         },
         {
           "en": "collapse",
-          "pron": "컬랩스",
           "ko": "붕괴하다"
         },
         {
           "en": "margin",
-          "pron": "마진",
           "ko": "가장자리"
         },
         {
           "en": "convenient",
-          "pron": "컨비니언트",
           "ko": "편리한"
         },
         {
           "en": "insomnia",
-          "pron": "인쌈니어",
           "ko": "불면증"
         },
         {
           "en": "masculine",
-          "pron": "매스큘린",
           "ko": "남성의"
         },
         {
           "en": "biodiversity",
-          "pron": "바이오다이버써티",
           "ko": "생물 다양성"
         },
         {
           "en": "monopoly",
-          "pron": "머나펄리",
           "ko": "독점"
         },
         {
           "en": "grain",
-          "pron": "그레인",
           "ko": "곡물"
         },
         {
           "en": "enhance",
-          "pron": "인핸스",
           "ko": "향상시키다"
         },
         {
           "en": "alternate",
-          "pron": "올터네이트",
           "ko": "번갈아 하다"
         },
         {
           "en": "repertoire",
-          "pron": "레퍼트와",
           "ko": "연주 목록"
         },
         {
           "en": "conflict",
-          "pron": "컨플릭트",
           "ko": "충돌하다"
         },
         {
           "en": "phase",
-          "pron": "페이즈",
           "ko": "단계"
         },
         {
           "en": "unrest",
-          "pron": "언레스트",
           "ko": "불안"
         },
         {
           "en": "state",
-          "pron": "스테이트",
           "ko": "상태"
         },
         {
           "en": "surgical",
-          "pron": "써지컬",
           "ko": "수술의"
         },
         {
           "en": "march",
-          "pron": "마취",
           "ko": "행진"
         },
         {
           "en": "launch",
-          "pron": "론취",
           "ko": "출시하다"
         },
         {
           "en": "bulk",
-          "pron": "벌크",
           "ko": "대량"
         }
       ]
@@ -1791,102 +1459,82 @@
       "words": [
         {
           "en": "fairy",
-          "pron": "페어리",
           "ko": "요정"
         },
         {
           "en": "shame",
-          "pron": "쉐임",
           "ko": "부끄러움"
         },
         {
           "en": "official",
-          "pron": "어피셜",
           "ko": "공식적인"
         },
         {
           "en": "thrift",
-          "pron": "뜨리프트",
           "ko": "절약"
         },
         {
           "en": "inflexible",
-          "pron": "인플렉서블",
           "ko": "확고한"
         },
         {
           "en": "fiber",
-          "pron": "파이버",
           "ko": "섬유"
         },
         {
           "en": "exclaim",
-          "pron": "익스클레임",
           "ko": "외치다"
         },
         {
           "en": "simulate",
-          "pron": "씨뮬레이트",
           "ko": "모의 실험을 하다"
         },
         {
           "en": "harass",
-          "pron": "허래스",
           "ko": "괴롭히다"
         },
         {
           "en": "delicate",
-          "pron": "델리컷",
           "ko": "섬세한"
         },
         {
           "en": "saw",
-          "pron": "쏘",
           "ko": "톱질하다"
         },
         {
           "en": "entertain",
-          "pron": "엔터테인",
           "ko": "즐겁게 하다"
         },
         {
           "en": "comprehend",
-          "pron": "캄프리헨드",
           "ko": "이해하다"
         },
         {
           "en": "lure",
-          "pron": "루어",
           "ko": "유혹하다"
         },
         {
           "en": "edge",
-          "pron": "에쥐",
           "ko": "가장자리"
         },
         {
           "en": "instill",
-          "pron": "인스틸",
           "ko": "주입하다"
         },
         {
           "en": "wag",
-          "pron": "웨그",
           "ko": "흔들다"
         },
         {
           "en": "departure",
-          "pron": "디파춰",
           "ko": "출발"
         },
         {
           "en": "discard",
-          "pron": "디스카드",
           "ko": "버리다"
         },
         {
           "en": "scenery",
-          "pron": "씨너리",
           "ko": "풍경"
         }
       ]
@@ -1896,102 +1544,82 @@
       "words": [
         {
           "en": "satellite",
-          "pron": "쌔털라이트",
           "ko": "위성"
         },
         {
           "en": "realistic",
-          "pron": "리얼리스틱",
           "ko": "현실적인"
         },
         {
           "en": "resilient",
-          "pron": "리질리언트",
           "ko": "회복력 있는"
         },
         {
           "en": "aspire",
-          "pron": "어스파이어",
           "ko": "열망하다"
         },
         {
           "en": "tranquility",
-          "pron": "트랭퀼러티",
           "ko": "고요"
         },
         {
           "en": "lean",
-          "pron": "린",
           "ko": "기대다"
         },
         {
           "en": "intimidating",
-          "pron": "인티미데이팅",
           "ko": "위협적인"
         },
         {
           "en": "elastic",
-          "pron": "일래스틱",
           "ko": "탄력 있는"
         },
         {
           "en": "satire",
-          "pron": "쌔타이어",
           "ko": "풍자"
         },
         {
           "en": "standard",
-          "pron": "스탠더드",
           "ko": "표준"
         },
         {
           "en": "obese",
-          "pron": "오비스",
           "ko": "비만의"
         },
         {
           "en": "restore",
-          "pron": "리스토어",
           "ko": "회복하다"
         },
         {
           "en": "virtually",
-          "pron": "버츄얼리",
           "ko": "사실상"
         },
         {
           "en": "snore",
-          "pron": "스노어",
           "ko": "코를 골다"
         },
         {
           "en": "content",
-          "pron": "칸텐트",
           "ko": "만족하는"
         },
         {
           "en": "shallow",
-          "pron": "쉘로우",
           "ko": "얕은"
         },
         {
           "en": "diameter",
-          "pron": "다이애미터",
           "ko": "지름"
         },
         {
           "en": "embassy",
-          "pron": "엠버씨",
           "ko": "대사관"
         },
         {
           "en": "compound",
-          "pron": "캄파운드",
           "ko": "혼합물"
         },
         {
           "en": "striking",
-          "pron": "스트라이킹",
           "ko": "눈에 띄는"
         }
       ]
@@ -2001,102 +1629,82 @@
       "words": [
         {
           "en": "announce",
-          "pron": "어나운스",
           "ko": "발표하다"
         },
         {
           "en": "phantom",
-          "pron": "팬텀",
           "ko": "유령"
         },
         {
           "en": "synergy",
-          "pron": "씨너지",
           "ko": "동반 상승효과"
         },
         {
           "en": "envelope",
-          "pron": "엔벌로프",
           "ko": "봉투"
         },
         {
           "en": "filter",
-          "pron": "필터",
           "ko": "거르다"
         },
         {
           "en": "plain",
-          "pron": "플레인",
           "ko": "분명한"
         },
         {
           "en": "peer",
-          "pron": "피어",
           "ko": "또래"
         },
         {
           "en": "commerce",
-          "pron": "카머스",
           "ko": "상업"
         },
         {
           "en": "valueless",
-          "pron": "밸률리스",
           "ko": "가치 없는"
         },
         {
           "en": "conventional",
-          "pron": "컨벤셔널",
           "ko": "전통적인"
         },
         {
           "en": "refer",
-          "pron": "리퍼",
           "ko": "언급하다"
         },
         {
           "en": "breed",
-          "pron": "브리드",
           "ko": "번식하다"
         },
         {
           "en": "avenue",
-          "pron": "애버뉴",
           "ko": "거리"
         },
         {
           "en": "supremacy",
-          "pron": "쑤프레머씨",
           "ko": "최고"
         },
         {
           "en": "pavement",
-          "pron": "페이브먼트",
           "ko": "포장"
         },
         {
           "en": "continent",
-          "pron": "칸티넌트",
           "ko": "대륙"
         },
         {
           "en": "migrate",
-          "pron": "마이그레이트",
           "ko": "이동하다"
         },
         {
           "en": "escalate",
-          "pron": "에스컬레이트",
           "ko": "증가하다"
         },
         {
           "en": "subtract",
-          "pron": "썹트랙트",
           "ko": "빼다"
         },
         {
           "en": "deprive",
-          "pron": "디프라이브",
           "ko": "빼앗다"
         }
       ]
@@ -2106,102 +1714,82 @@
       "words": [
         {
           "en": "density",
-          "pron": "덴써티",
           "ko": "농도"
         },
         {
           "en": "entrance",
-          "pron": "엔트런스",
           "ko": "입장"
         },
         {
           "en": "rob",
-          "pron": "랍",
           "ko": "훔치다"
         },
         {
           "en": "reunion",
-          "pron": "리유니언",
           "ko": "동창회"
         },
         {
           "en": "upcoming",
-          "pron": "업커밍",
           "ko": "다가오는"
         },
         {
           "en": "orient",
-          "pron": "오리엔트",
           "ko": "동양"
         },
         {
           "en": "capitalism",
-          "pron": "캐피털리즘",
           "ko": "자본주의"
         },
         {
           "en": "noble",
-          "pron": "노블",
           "ko": "고귀한"
         },
         {
           "en": "vain",
-          "pron": "베인",
           "ko": "헛된"
         },
         {
           "en": "precision",
-          "pron": "프리씨전",
           "ko": "정확"
         },
         {
           "en": "minute",
-          "pron": "마이뉴트",
           "ko": "미세한"
         },
         {
           "en": "exhale",
-          "pron": "엑스헤일",
           "ko": "내쉬다"
         },
         {
           "en": "endure",
-          "pron": "인듀어",
           "ko": "참다"
         },
         {
           "en": "phenomenon",
-          "pron": "피나미넌",
           "ko": "현상"
         },
         {
           "en": "diploma",
-          "pron": "디플로머",
           "ko": "졸업장"
         },
         {
           "en": "formal",
-          "pron": "포멀",
           "ko": "공식적인"
         },
         {
           "en": "terminal",
-          "pron": "터미널",
           "ko": "종착역"
         },
         {
           "en": "outrage",
-          "pron": "아웃레이쥐",
           "ko": "화나게 하다"
         },
         {
           "en": "brutal",
-          "pron": "브루틀",
           "ko": "잔인한"
         },
         {
           "en": "paste",
-          "pron": "페이스트",
           "ko": "반죽"
         }
       ]
@@ -2211,102 +1799,82 @@
       "words": [
         {
           "en": "sidewalk",
-          "pron": "싸이드워크",
           "ko": "인도"
         },
         {
           "en": "tedious",
-          "pron": "티디어스",
           "ko": "지루한"
         },
         {
           "en": "withstand",
-          "pron": "위드스탠드",
           "ko": "견디다"
         },
         {
           "en": "biased",
-          "pron": "바이어스트",
           "ko": "편향된"
         },
         {
           "en": "famine",
-          "pron": "패민",
           "ko": "기근"
         },
         {
           "en": "sympathy",
-          "pron": "씸퍼띠",
           "ko": "동정"
         },
         {
           "en": "reed",
-          "pron": "리드",
           "ko": "갈대"
         },
         {
           "en": "institute",
-          "pron": "인스티튜트",
           "ko": "연구소"
         },
         {
           "en": "overturn",
-          "pron": "오버턴",
           "ko": "뒤집다"
         },
         {
           "en": "slogan",
-          "pron": "슬로건",
           "ko": "구호"
         },
         {
           "en": "toll",
-          "pron": "톨",
           "ko": "통행료"
         },
         {
           "en": "lane",
-          "pron": "레인",
           "ko": "차선"
         },
         {
           "en": "defeat",
-          "pron": "디피트",
           "ko": "패배시키다"
         },
         {
           "en": "glide",
-          "pron": "글라이드",
           "ko": "미끄러지다"
         },
         {
           "en": "evolve",
-          "pron": "이발브",
           "ko": "진화하다"
         },
         {
           "en": "skip",
-          "pron": "스킵",
           "ko": "거르다"
         },
         {
           "en": "mossy",
-          "pron": "모씨",
           "ko": "이끼가 낀"
         },
         {
           "en": "prejudice",
-          "pron": "프레쥬디스",
           "ko": "편견"
         },
         {
           "en": "suburb",
-          "pron": "써버브",
           "ko": "교외"
         },
         {
           "en": "panel",
-          "pron": "패널",
           "ko": "판"
         }
       ]
@@ -2316,102 +1884,82 @@
       "words": [
         {
           "en": "immune",
-          "pron": "이뮨",
           "ko": "면역의"
         },
         {
           "en": "commonplace",
-          "pron": "카먼플레이스",
           "ko": "흔한"
         },
         {
           "en": "drown",
-          "pron": "드라운",
           "ko": "익사하다"
         },
         {
           "en": "solitude",
-          "pron": "쌀러튜드",
           "ko": "고독"
         },
         {
           "en": "prairie",
-          "pron": "프레어리",
           "ko": "대평원"
         },
         {
           "en": "region",
-          "pron": "리전",
           "ko": "지역"
         },
         {
           "en": "superior",
-          "pron": "쑤피어리어",
           "ko": "우수한"
         },
         {
           "en": "actualize",
-          "pron": "액츄얼라이즈",
           "ko": "현실화하다"
         },
         {
           "en": "temperate",
-          "pron": "템퍼럿",
           "ko": "온화한"
         },
         {
           "en": "stun",
-          "pron": "스턴",
           "ko": "기절시키다"
         },
         {
           "en": "individual",
-          "pron": "인디비쥬얼",
           "ko": "개인의"
         },
         {
           "en": "fluid",
-          "pron": "플루이드",
           "ko": "액체"
         },
         {
           "en": "mutation",
-          "pron": "뮤테이션",
           "ko": "돌연변이"
         },
         {
           "en": "horizon",
-          "pron": "허라이즌",
           "ko": "수평선"
         },
         {
           "en": "resign",
-          "pron": "리자인",
           "ko": "사임하다"
         },
         {
           "en": "dissolve",
-          "pron": "디잘브",
           "ko": "녹이다"
         },
         {
           "en": "apparent",
-          "pron": "어패어런트",
           "ko": "명백한"
         },
         {
           "en": "fake",
-          "pron": "페이크",
           "ko": "가짜의"
         },
         {
           "en": "overabundant",
-          "pron": "오버러번던트",
           "ko": "과잉의"
         },
         {
           "en": "breeze",
-          "pron": "브리즈",
           "ko": "미풍"
         }
       ]
@@ -2421,102 +1969,82 @@
       "words": [
         {
           "en": "drill",
-          "pron": "드릴",
           "ko": "훈련"
         },
         {
           "en": "takeoff",
-          "pron": "테이코프",
           "ko": "이륙"
         },
         {
           "en": "antibiotic",
-          "pron": "앤티바이아틱",
           "ko": "항생제"
         },
         {
           "en": "monetary",
-          "pron": "머니테리",
           "ko": "화폐의"
         },
         {
           "en": "tyrant",
-          "pron": "타이어런트",
           "ko": "독재자"
         },
         {
           "en": "prompt",
-          "pron": "프람프트",
           "ko": "즉각적인"
         },
         {
           "en": "brochure",
-          "pron": "브로슈어",
           "ko": "소책자"
         },
         {
           "en": "spacious",
-          "pron": "스페이셔스",
           "ko": "넓은"
         },
         {
           "en": "imagery",
-          "pron": "이미저리",
           "ko": "이미지"
         },
         {
           "en": "excess",
-          "pron": "익쎄스",
           "ko": "과잉"
         },
         {
           "en": "likely",
-          "pron": "라이클리",
           "ko": "가능성 있는"
         },
         {
           "en": "signal",
-          "pron": "씨그널",
           "ko": "신호"
         },
         {
           "en": "primate",
-          "pron": "프라이메이트",
           "ko": "영장류"
         },
         {
           "en": "ultraviolet",
-          "pron": "얼트러바이얼릿",
           "ko": "자외선의"
         },
         {
           "en": "outperform",
-          "pron": "아웃퍼폼",
           "ko": "능가하다"
         },
         {
           "en": "lump",
-          "pron": "럼프",
           "ko": "덩어리"
         },
         {
           "en": "mollify",
-          "pron": "말러파이",
           "ko": "진정시키다"
         },
         {
           "en": "employ",
-          "pron": "임플로이",
           "ko": "고용하다"
         },
         {
           "en": "polarize",
-          "pron": "폴러라이즈",
           "ko": "양극화되다"
         },
         {
           "en": "worth",
-          "pron": "워뜨",
           "ko": "가치"
         }
       ]
@@ -2526,102 +2054,82 @@
       "words": [
         {
           "en": "symmetry",
-          "pron": "씨머트리",
           "ko": "대칭"
         },
         {
           "en": "intolerable",
-          "pron": "인탈러러블",
           "ko": "견딜 수 없는"
         },
         {
           "en": "preach",
-          "pron": "프리취",
           "ko": "설교하다"
         },
         {
           "en": "postpone",
-          "pron": "포스트폰",
           "ko": "연기하다"
         },
         {
           "en": "ripple",
-          "pron": "리플",
           "ko": "잔물결"
         },
         {
           "en": "inspire",
-          "pron": "인스파이어",
           "ko": "영감을 주다"
         },
         {
           "en": "trait",
-          "pron": "트레이트",
           "ko": "특성"
         },
         {
           "en": "triumphantly",
-          "pron": "트라이엄펀틀리",
           "ko": "의기양양하여"
         },
         {
           "en": "solemn",
-          "pron": "쌀럼",
           "ko": "엄숙한"
         },
         {
           "en": "endanger",
-          "pron": "인데인저",
           "ko": "위태롭게 하다"
         },
         {
           "en": "tactic",
-          "pron": "택틱",
           "ko": "전략"
         },
         {
           "en": "trust",
-          "pron": "트러스트",
           "ko": "신뢰하다"
         },
         {
           "en": "prescribe",
-          "pron": "프리스크라이브",
           "ko": "처방하다"
         },
         {
           "en": "periodical",
-          "pron": "피어리아디컬",
           "ko": "정기 간행물"
         },
         {
           "en": "dietary",
-          "pron": "다이어테리",
           "ko": "음식의"
         },
         {
           "en": "guardian",
-          "pron": "가디언",
           "ko": "보호자"
         },
         {
           "en": "consent",
-          "pron": "컨쎈트",
           "ko": "동의하다"
         },
         {
           "en": "fright",
-          "pron": "프라이트",
           "ko": "공포"
         },
         {
           "en": "inspector",
-          "pron": "인스펙터",
           "ko": "감독관"
         },
         {
           "en": "monotony",
-          "pron": "머나터니",
           "ko": "단조로움"
         }
       ]
@@ -2631,102 +2139,82 @@
       "words": [
         {
           "en": "promote",
-          "pron": "프러모트",
           "ko": "촉진하다"
         },
         {
           "en": "exhaust",
-          "pron": "이그조스트",
           "ko": "고갈시키다"
         },
         {
           "en": "valid",
-          "pron": "밸리드",
           "ko": "타당한"
         },
         {
           "en": "racist",
-          "pron": "레이시스트",
           "ko": "인종 차별주의자"
         },
         {
           "en": "mourn",
-          "pron": "몬",
           "ko": "애도하다"
         },
         {
           "en": "frame",
-          "pron": "프레임",
           "ko": "틀"
         },
         {
           "en": "humid",
-          "pron": "휴미드",
           "ko": "습한"
         },
         {
           "en": "stake",
-          "pron": "스테이크",
           "ko": "말뚝"
         },
         {
           "en": "landscape",
-          "pron": "랜드스케입",
           "ko": "풍경"
         },
         {
           "en": "humble",
-          "pron": "험블",
           "ko": "겸손한"
         },
         {
           "en": "worthwhile",
-          "pron": "워뜨와일",
           "ko": "가치 있는"
         },
         {
           "en": "gigantic",
-          "pron": "자이갠틱",
           "ko": "거대한"
         },
         {
           "en": "trustworthy",
-          "pron": "트러스트워디",
           "ko": "신뢰할 수 있는"
         },
         {
           "en": "intrinsic",
-          "pron": "인트린식",
           "ko": "본질적인"
         },
         {
           "en": "vinegar",
-          "pron": "비니거",
           "ko": "식초"
         },
         {
           "en": "quantity",
-          "pron": "콴터티",
           "ko": "양"
         },
         {
           "en": "measure",
-          "pron": "메줘",
           "ko": "측정하다"
         },
         {
           "en": "anesthetic",
-          "pron": "애너스떼틱",
           "ko": "마취제"
         },
         {
           "en": "ceramic",
-          "pron": "써래믹",
           "ko": "도자기"
         },
         {
           "en": "choir",
-          "pron": "콰이어",
           "ko": "합창단"
         }
       ]
@@ -2736,102 +2224,82 @@
       "words": [
         {
           "en": "grave",
-          "pron": "그레이브",
           "ko": "무덤"
         },
         {
           "en": "bothersome",
-          "pron": "바더썸",
           "ko": "성가신"
         },
         {
           "en": "criteria",
-          "pron": "크라이티어리어",
           "ko": "기준"
         },
         {
           "en": "rapport",
-          "pron": "래포어",
           "ko": "관계"
         },
         {
           "en": "repair",
-          "pron": "리페어",
           "ko": "수리하다"
         },
         {
           "en": "miser",
-          "pron": "마이저",
           "ko": "구두쇠"
         },
         {
           "en": "temper",
-          "pron": "템퍼",
           "ko": "성질"
         },
         {
           "en": "drowsy",
-          "pron": "드라우지",
           "ko": "졸리는"
         },
         {
           "en": "enormous",
-          "pron": "이노머스",
           "ko": "거대한"
         },
         {
           "en": "medieval",
-          "pron": "미디이블",
           "ko": "중세의"
         },
         {
           "en": "obstacle",
-          "pron": "압스터클",
           "ko": "방해물"
         },
         {
           "en": "force",
-          "pron": "포스",
           "ko": "강요하다"
         },
         {
           "en": "comment",
-          "pron": "카멘트",
           "ko": "논평하다"
         },
         {
           "en": "spill",
-          "pron": "스필",
           "ko": "엎지르다"
         },
         {
           "en": "logical",
-          "pron": "로지컬",
           "ko": "논리적인"
         },
         {
           "en": "memorial",
-          "pron": "머모리얼",
           "ko": "기념물"
         },
         {
           "en": "landfill",
-          "pron": "랜드필",
           "ko": "쓰레기 매립지"
         },
         {
           "en": "automate",
-          "pron": "오터메이트",
           "ko": "자동화하다"
         },
         {
           "en": "rod",
-          "pron": "라드",
           "ko": "막대"
         },
         {
           "en": "adequate",
-          "pron": "애디퀏",
           "ko": "적절한"
         }
       ]
@@ -2841,102 +2309,82 @@
       "words": [
         {
           "en": "preface",
-          "pron": "프레피스",
           "ko": "머리말"
         },
         {
           "en": "latitude",
-          "pron": "래티튜드",
           "ko": "위도"
         },
         {
           "en": "abstain",
-          "pron": "업스테인",
           "ko": "절제하다"
         },
         {
           "en": "generate",
-          "pron": "제너레이트",
           "ko": "발생시키다"
         },
         {
           "en": "council",
-          "pron": "카운슬",
           "ko": "의회"
         },
         {
           "en": "hostile",
-          "pron": "하스틀",
           "ko": "적대적인"
         },
         {
           "en": "controversy",
-          "pron": "칸트러버씨",
           "ko": "논쟁"
         },
         {
           "en": "invariable",
-          "pron": "인베어리어블",
           "ko": "불변의"
         },
         {
           "en": "refugee",
-          "pron": "레퓨지",
           "ko": "피난민"
         },
         {
           "en": "mode",
-          "pron": "모드",
           "ko": "방법"
         },
         {
           "en": "groan",
-          "pron": "그로운",
           "ko": "신음하다"
         },
         {
           "en": "transplant",
-          "pron": "트랜스플랜트",
           "ko": "이식하다"
         },
         {
           "en": "dominant",
-          "pron": "다미넌트",
           "ko": "지배적인"
         },
         {
           "en": "reluctant",
-          "pron": "릴럭턴트",
           "ko": "내키지 않는"
         },
         {
           "en": "mechanical",
-          "pron": "머캐니컬",
           "ko": "기계적인"
         },
         {
           "en": "facilitate",
-          "pron": "퍼씰러테이트",
           "ko": "촉진하다"
         },
         {
           "en": "ridge",
-          "pron": "리쥐",
           "ko": "산등성이"
         },
         {
           "en": "ratio",
-          "pron": "레이쇼우",
           "ko": "비율"
         },
         {
           "en": "humiliation",
-          "pron": "휴밀리에이션",
           "ko": "굴욕"
         },
         {
           "en": "copper",
-          "pron": "카퍼",
           "ko": "구리"
         }
       ]
@@ -2946,102 +2394,82 @@
       "words": [
         {
           "en": "viewpoint",
-          "pron": "뷰포인트",
           "ko": "관점"
         },
         {
           "en": "substance",
-          "pron": "썹스턴스",
           "ko": "물질"
         },
         {
           "en": "stubborn",
-          "pron": "스터번",
           "ko": "완고한"
         },
         {
           "en": "critique",
-          "pron": "크리틱",
           "ko": "비평"
         },
         {
           "en": "rip",
-          "pron": "립",
           "ko": "찢다"
         },
         {
           "en": "fluent",
-          "pron": "플루언트",
           "ko": "유창한"
         },
         {
           "en": "helpless",
-          "pron": "헬플리스",
           "ko": "무력한"
         },
         {
           "en": "spiral",
-          "pron": "스파이럴",
           "ko": "나선형의"
         },
         {
           "en": "conversely",
-          "pron": "칸버슬리",
           "ko": "역으로"
         },
         {
           "en": "absurd",
-          "pron": "업써드",
           "ko": "터무니없는"
         },
         {
           "en": "knowledgeable",
-          "pron": "날리저블",
           "ko": "박식한"
         },
         {
           "en": "predator",
-          "pron": "프레더터",
           "ko": "포식자"
         },
         {
           "en": "alternative",
-          "pron": "올터너티브",
           "ko": "대안"
         },
         {
           "en": "preconceived",
-          "pron": "프리컨씨브드",
           "ko": "선입견의"
         },
         {
           "en": "imply",
-          "pron": "임플라이",
           "ko": "암시하다"
         },
         {
           "en": "elevate",
-          "pron": "엘리베이트",
           "ko": "올리다"
         },
         {
           "en": "immediately",
-          "pron": "이미디어틀리",
           "ko": "즉시"
         },
         {
           "en": "deprived",
-          "pron": "디프라이브드",
           "ko": "불우한"
         },
         {
           "en": "surgery",
-          "pron": "써저리",
           "ko": "수술"
         },
         {
           "en": "steep",
-          "pron": "스팁",
           "ko": "가파른"
         }
       ]
@@ -3051,102 +2479,82 @@
       "words": [
         {
           "en": "divorce",
-          "pron": "디보스",
           "ko": "이혼하다"
         },
         {
           "en": "tournament",
-          "pron": "투어너먼트",
           "ko": "토너먼트"
         },
         {
           "en": "liberty",
-          "pron": "리버티",
           "ko": "자유"
         },
         {
           "en": "persuade",
-          "pron": "퍼스웨이드",
           "ko": "설득하다"
         },
         {
           "en": "upstream",
-          "pron": "업스트림",
           "ko": "상류로"
         },
         {
           "en": "semester",
-          "pron": "씨메스터",
           "ko": "학기"
         },
         {
           "en": "flesh",
-          "pron": "플레쉬",
           "ko": "살"
         },
         {
           "en": "electronic",
-          "pron": "일렉트라닉",
           "ko": "전자의"
         },
         {
           "en": "notable",
-          "pron": "노터블",
           "ko": "주목할 만한"
         },
         {
           "en": "regard",
-          "pron": "리가드",
           "ko": "여기다"
         },
         {
           "en": "sigh",
-          "pron": "싸이",
           "ko": "한숨 쉬다"
         },
         {
           "en": "sickness",
-          "pron": "씨크니스",
           "ko": "질병"
         },
         {
           "en": "acknowledge",
-          "pron": "액날리쥐",
           "ko": "인정하다"
         },
         {
           "en": "underlying",
-          "pron": "언더라잉",
           "ko": "근본적인"
         },
         {
           "en": "gloomy",
-          "pron": "글루미",
           "ko": "우울한"
         },
         {
           "en": "rush",
-          "pron": "러쉬",
           "ko": "돌진하다"
         },
         {
           "en": "startle",
-          "pron": "스타틀",
           "ko": "놀라게 하다"
         },
         {
           "en": "eloquent",
-          "pron": "엘러퀀트",
           "ko": "유창한"
         },
         {
           "en": "oblige",
-          "pron": "어블라이쥐",
           "ko": "강요하다"
         },
         {
           "en": "synonym",
-          "pron": "씨너님",
           "ko": "동의어"
         }
       ]
@@ -3156,102 +2564,82 @@
       "words": [
         {
           "en": "tenant",
-          "pron": "테넌트",
           "ko": "세입자"
         },
         {
           "en": "extrinsic",
-          "pron": "익스트린식",
           "ko": "외부의"
         },
         {
           "en": "rely",
-          "pron": "릴라이",
           "ko": "의존하다"
         },
         {
           "en": "layout",
-          "pron": "레이아웃",
           "ko": "배치"
         },
         {
           "en": "discriminate",
-          "pron": "디스크리미네이트",
           "ko": "구별하다"
         },
         {
           "en": "outgoing",
-          "pron": "아웃고잉",
           "ko": "외향적인"
         },
         {
           "en": "absorb",
-          "pron": "업쏘브",
           "ko": "흡수하다"
         },
         {
           "en": "incline",
-          "pron": "인클라인",
           "ko": "~하는 경향이 있다"
         },
         {
           "en": "dialect",
-          "pron": "다이얼렉트",
           "ko": "사투리"
         },
         {
           "en": "intelligent",
-          "pron": "인텔리전트",
           "ko": "똑똑한"
         },
         {
           "en": "dimension",
-          "pron": "디멘션",
           "ko": "차원"
         },
         {
           "en": "protein",
-          "pron": "프로틴",
           "ko": "단백질"
         },
         {
           "en": "estimate",
-          "pron": "에스티메이트",
           "ko": "추정하다"
         },
         {
           "en": "literacy",
-          "pron": "리터러씨",
           "ko": "읽고 쓰는 능력"
         },
         {
           "en": "parliament",
-          "pron": "파얼러멘트",
           "ko": "국회"
         },
         {
           "en": "premature",
-          "pron": "프리머츄어",
           "ko": "너무 이른"
         },
         {
           "en": "majesty",
-          "pron": "매저스티",
           "ko": "장엄함"
         },
         {
           "en": "determine",
-          "pron": "디터민",
           "ko": "결정하다"
         },
         {
           "en": "striped",
-          "pron": "스트라입트",
           "ko": "줄무늬의"
         },
         {
           "en": "detective",
-          "pron": "디텍티브",
           "ko": "탐정"
         }
       ]
@@ -3261,102 +2649,82 @@
       "words": [
         {
           "en": "sprint",
-          "pron": "스프린트",
           "ko": "단거리 경주"
         },
         {
           "en": "victim",
-          "pron": "빅팀",
           "ko": "피해자"
         },
         {
           "en": "itinerary",
-          "pron": "아이티너레리",
           "ko": "여행 일정표"
         },
         {
           "en": "surpass",
-          "pron": "써패스",
           "ko": "능가하다"
         },
         {
           "en": "consequence",
-          "pron": "칸써퀜스",
           "ko": "결과"
         },
         {
           "en": "deference",
-          "pron": "데퍼런스",
           "ko": "복종"
         },
         {
           "en": "hinder",
-          "pron": "힌더",
           "ko": "방해하다"
         },
         {
           "en": "deed",
-          "pron": "디드",
           "ko": "행위"
         },
         {
           "en": "falsify",
-          "pron": "폴서파이",
           "ko": "반증하다"
         },
         {
           "en": "rectangle",
-          "pron": "렉탱글",
           "ko": "직사각형"
         },
         {
           "en": "yawn",
-          "pron": "욘",
           "ko": "하품하다"
         },
         {
           "en": "antibody",
-          "pron": "앤티바디",
           "ko": "항체"
         },
         {
           "en": "grab",
-          "pron": "그랩",
           "ko": "잡다"
         },
         {
           "en": "lodge",
-          "pron": "라쥐",
           "ko": "오두막"
         },
         {
           "en": "stack",
-          "pron": "스택",
           "ko": "쌓다"
         },
         {
           "en": "renovate",
-          "pron": "레너베이트",
           "ko": "개조하다"
         },
         {
           "en": "modify",
-          "pron": "마디파이",
           "ko": "수정하다"
         },
         {
           "en": "utilize",
-          "pron": "유틸라이즈",
           "ko": "이용하다"
         },
         {
           "en": "fierce",
-          "pron": "피어스",
           "ko": "사나운"
         },
         {
           "en": "extinct",
-          "pron": "익스팅크트",
           "ko": "멸종된"
         }
       ]
@@ -3366,102 +2734,82 @@
       "words": [
         {
           "en": "roast",
-          "pron": "로스트",
           "ko": "굽다"
         },
         {
           "en": "missionary",
-          "pron": "미셔네리",
           "ko": "선교사"
         },
         {
           "en": "quarrel",
-          "pron": "쿼럴",
           "ko": "다투다"
         },
         {
           "en": "lengthy",
-          "pron": "렝띠",
           "ko": "아주 긴"
         },
         {
           "en": "fair",
-          "pron": "페어",
           "ko": "박람회"
         },
         {
           "en": "dust",
-          "pron": "더스트",
           "ko": "먼지"
         },
         {
           "en": "empathetic",
-          "pron": "엠퍼떼틱",
           "ko": "공감적인"
         },
         {
           "en": "academic",
-          "pron": "애커데믹",
           "ko": "학업의"
         },
         {
           "en": "plow",
-          "pron": "플라우",
           "ko": "쟁기로 갈다"
         },
         {
           "en": "spear",
-          "pron": "스피어",
           "ko": "창"
         },
         {
           "en": "temperament",
-          "pron": "템퍼러먼트",
           "ko": "기질"
         },
         {
           "en": "moan",
-          "pron": "모운",
           "ko": "신음하다"
         },
         {
           "en": "sight",
-          "pron": "싸이트",
           "ko": "시야"
         },
         {
           "en": "mixture",
-          "pron": "믹스춰",
           "ko": "혼합물"
         },
         {
           "en": "vacate",
-          "pron": "베이케이트",
           "ko": "비우다"
         },
         {
           "en": "sew",
-          "pron": "소우",
           "ko": "바느질하다"
         },
         {
           "en": "carbohydrate",
-          "pron": "카보하이드레이트",
           "ko": "탄수화물"
         },
         {
           "en": "magnitude",
-          "pron": "매그니튜드",
           "ko": "규모"
         },
         {
           "en": "dose",
-          "pron": "도스",
           "ko": "복용량"
         },
         {
           "en": "communal",
-          "pron": "커뮤널",
           "ko": "공용의"
         }
       ]
@@ -3471,102 +2819,82 @@
       "words": [
         {
           "en": "distinguish",
-          "pron": "디스팅귀쉬",
           "ko": "구별하다"
         },
         {
           "en": "identical",
-          "pron": "아이덴티컬",
           "ko": "동일한"
         },
         {
           "en": "stream",
-          "pron": "스트림",
           "ko": "개울"
         },
         {
           "en": "collision",
-          "pron": "컬리전",
           "ko": "충돌"
         },
         {
           "en": "collective",
-          "pron": "컬렉티브",
           "ko": "집단의"
         },
         {
           "en": "distribute",
-          "pron": "디스트리뷰트",
           "ko": "분배하다"
         },
         {
           "en": "induce",
-          "pron": "인듀스",
           "ko": "유발하다"
         },
         {
           "en": "misdeed",
-          "pron": "미스디드",
           "ko": "나쁜짓"
         },
         {
           "en": "trivial",
-          "pron": "트리비얼",
           "ko": "사소한"
         },
         {
           "en": "hybrid",
-          "pron": "하이브리드",
           "ko": "잡종"
         },
         {
           "en": "mitigate",
-          "pron": "미티게이트",
           "ko": "완화하다"
         },
         {
           "en": "positive",
-          "pron": "파저티브",
           "ko": "긍정적인"
         },
         {
           "en": "premise",
-          "pron": "프레미스",
           "ko": "전제"
         },
         {
           "en": "era",
-          "pron": "이러",
           "ko": "시대"
         },
         {
           "en": "mow",
-          "pron": "모우",
           "ko": "베다"
         },
         {
           "en": "shelter",
-          "pron": "쉘터",
           "ko": "대피소"
         },
         {
           "en": "thus",
-          "pron": "더스",
           "ko": "따라서"
         },
         {
           "en": "fine",
-          "pron": "파인",
           "ko": "미세한"
         },
         {
           "en": "grip",
-          "pron": "그립",
           "ko": "쥐다"
         },
         {
           "en": "token",
-          "pron": "토컨",
           "ko": "표시"
         }
       ]
@@ -3576,102 +2904,82 @@
       "words": [
         {
           "en": "mislead",
-          "pron": "미슬리드",
           "ko": "오해하게 하다"
         },
         {
           "en": "toxic",
-          "pron": "탁씩",
           "ko": "유독성의"
         },
         {
           "en": "mechanic",
-          "pron": "머캐닉",
           "ko": "정비사"
         },
         {
           "en": "forecast",
-          "pron": "포어캐스트",
           "ko": "예상하다"
         },
         {
           "en": "ultimate",
-          "pron": "얼티멋",
           "ko": "궁극적인"
         },
         {
           "en": "knot",
-          "pron": "낫",
           "ko": "매듭"
         },
         {
           "en": "estate",
-          "pron": "이스테이트",
           "ko": "재산"
         },
         {
           "en": "outrun",
-          "pron": "아웃런",
           "ko": "앞지르다"
         },
         {
           "en": "extreme",
-          "pron": "익스트림",
           "ko": "극단적인"
         },
         {
           "en": "slaughter",
-          "pron": "슬로터",
           "ko": "학살하다"
         },
         {
           "en": "drought",
-          "pron": "드라우트",
           "ko": "가뭄"
         },
         {
           "en": "intimate",
-          "pron": "인티멋",
           "ko": "친밀한"
         },
         {
           "en": "organism",
-          "pron": "오거니즘",
           "ko": "유기체"
         },
         {
           "en": "eclipse",
-          "pron": "이클립스",
           "ko": "일식"
         },
         {
           "en": "pharmacy",
-          "pron": "파머씨",
           "ko": "약국"
         },
         {
           "en": "respond",
-          "pron": "리스판드",
           "ko": "반응하다"
         },
         {
           "en": "proceed",
-          "pron": "프러씨드",
           "ko": "진행하다"
         },
         {
           "en": "punctuate",
-          "pron": "펑크츄에이트",
           "ko": "구두점을 찍다"
         },
         {
           "en": "cease",
-          "pron": "씨스",
           "ko": "멈추다"
         },
         {
           "en": "lava",
-          "pron": "라버",
           "ko": "용암"
         }
       ]
@@ -3681,102 +2989,82 @@
       "words": [
         {
           "en": "due",
-          "pron": "듀",
           "ko": "예정된"
         },
         {
           "en": "telecommute",
-          "pron": "텔리커뮤트",
           "ko": "재택근무하다"
         },
         {
           "en": "property",
-          "pron": "프라퍼티",
           "ko": "재산"
         },
         {
           "en": "beak",
-          "pron": "비크",
           "ko": "부리"
         },
         {
           "en": "exhibit",
-          "pron": "이그지빗",
           "ko": "전시하다"
         },
         {
           "en": "emperor",
-          "pron": "엠퍼러",
           "ko": "황제"
         },
         {
           "en": "wholesale",
-          "pron": "홀쎄일",
           "ko": "도매"
         },
         {
           "en": "barely",
-          "pron": "베얼리",
           "ko": "거의 ~ 않다"
         },
         {
           "en": "vital",
-          "pron": "바이틀",
           "ko": "필수적인"
         },
         {
           "en": "equilibrium",
-          "pron": "이퀼리브리엄",
           "ko": "평형"
         },
         {
           "en": "illustrate",
-          "pron": "일러스트레이트",
           "ko": "설명하다"
         },
         {
           "en": "erode",
-          "pron": "이로드",
           "ko": "침식하다"
         },
         {
           "en": "evergreen",
-          "pron": "에버그린",
           "ko": "상록수"
         },
         {
           "en": "ripen",
-          "pron": "라이펀",
           "ko": "익다"
         },
         {
           "en": "order",
-          "pron": "오더",
           "ko": "명령하다"
         },
         {
           "en": "ineffective",
-          "pron": "이니펙티브",
           "ko": "효과 없는"
         },
         {
           "en": "likewise",
-          "pron": "라이콰이즈",
           "ko": "마찬가지로"
         },
         {
           "en": "fancy",
-          "pron": "팬씨",
           "ko": "화려한"
         },
         {
           "en": "survive",
-          "pron": "써바이브",
           "ko": "생존하다"
         },
         {
           "en": "dye",
-          "pron": "다이",
           "ko": "염색하다"
         }
       ]
@@ -3786,102 +3074,82 @@
       "words": [
         {
           "en": "behavior",
-          "pron": "비헤이비어",
           "ko": "행동"
         },
         {
           "en": "entry",
-          "pron": "엔트리",
           "ko": "입장"
         },
         {
           "en": "swirl",
-          "pron": "스월",
           "ko": "빙빙 돌다"
         },
         {
           "en": "haste",
-          "pron": "헤이스트",
           "ko": "서두르다"
         },
         {
           "en": "unlock",
-          "pron": "언락",
           "ko": "열다"
         },
         {
           "en": "beast",
-          "pron": "비스트",
           "ko": "짐승"
         },
         {
           "en": "disorder",
-          "pron": "디쏘더",
           "ko": "무질서"
         },
         {
           "en": "conductor",
-          "pron": "컨덕터",
           "ko": "지휘자"
         },
         {
           "en": "toss",
-          "pron": "토스",
           "ko": "던지다"
         },
         {
           "en": "deficiency",
-          "pron": "디피션씨",
           "ko": "결핍"
         },
         {
           "en": "sorrowful",
-          "pron": "쏘로풀",
           "ko": "슬퍼하는"
         },
         {
           "en": "blossom",
-          "pron": "블라썸",
           "ko": "꽃을 피우다"
         },
         {
           "en": "errand",
-          "pron": "에런드",
           "ko": "심부름"
         },
         {
           "en": "quote",
-          "pron": "쿼우트",
           "ko": "인용하다"
         },
         {
           "en": "spare",
-          "pron": "스페어",
           "ko": "여분의"
         },
         {
           "en": "boom",
-          "pron": "붐",
           "ko": "인기"
         },
         {
           "en": "dehydrate",
-          "pron": "디하이드레이트",
           "ko": "탈수시키다"
         },
         {
           "en": "reward",
-          "pron": "리워드",
           "ko": "보상하다"
         },
         {
           "en": "sweep",
-          "pron": "스윕",
           "ko": "쓸다"
         },
         {
           "en": "parasitic",
-          "pron": "패러씨틱",
           "ko": "기생하는"
         }
       ]
@@ -3891,102 +3159,82 @@
       "words": [
         {
           "en": "metropolis",
-          "pron": "머트라펄리스",
           "ko": "대도시"
         },
         {
           "en": "intern",
-          "pron": "인턴",
           "ko": "교육 실습생"
         },
         {
           "en": "self-esteem",
-          "pron": "쎌프 이스팀",
           "ko": "자존감"
         },
         {
           "en": "incredible",
-          "pron": "인크레더블",
           "ko": "놀라운"
         },
         {
           "en": "preoccupy",
-          "pron": "프리아큐파이",
           "ko": "몰두하게 하다"
         },
         {
           "en": "numerical",
-          "pron": "뉴메리컬",
           "ko": "숫자의"
         },
         {
           "en": "swap",
-          "pron": "스왑",
           "ko": "바꾸다"
         },
         {
           "en": "hollow",
-          "pron": "할로우",
           "ko": "속이 빈"
         },
         {
           "en": "voiceless",
-          "pron": "보이슬리스",
           "ko": "무언의"
         },
         {
           "en": "represent",
-          "pron": "레프리젠트",
           "ko": "나타내다"
         },
         {
           "en": "ideology",
-          "pron": "아이디알러지",
           "ko": "이념"
         },
         {
           "en": "costume",
-          "pron": "카스튬",
           "ko": "의상"
         },
         {
           "en": "expedition",
-          "pron": "엑스퍼디션",
           "ko": "탐험"
         },
         {
           "en": "generous",
-          "pron": "제너러스",
           "ko": "너그러운"
         },
         {
           "en": "hesitancy",
-          "pron": "헤지턴씨",
           "ko": "망설임"
         },
         {
           "en": "animate",
-          "pron": "애니메이트",
           "ko": "생명을 주다"
         },
         {
           "en": "spin",
-          "pron": "스핀",
           "ko": "회전하다"
         },
         {
           "en": "herbal",
-          "pron": "허벌",
           "ko": "약초의"
         },
         {
           "en": "responsible",
-          "pron": "리스판써블",
           "ko": "책임이 있는"
         },
         {
           "en": "lap",
-          "pron": "랩",
           "ko": "무릎"
         }
       ]
@@ -3996,102 +3244,82 @@
       "words": [
         {
           "en": "opposite",
-          "pron": "아퍼짓",
           "ko": "반대의"
         },
         {
           "en": "vegetarian",
-          "pron": "베저테어리언",
           "ko": "채식주의자"
         },
         {
           "en": "patron",
-          "pron": "페이트런",
           "ko": "후원자"
         },
         {
           "en": "monarchy",
-          "pron": "마너키",
           "ko": "군주제"
         },
         {
           "en": "pessimistic",
-          "pron": "페씨미스틱",
           "ko": "비관적인"
         },
         {
           "en": "wail",
-          "pron": "웨일",
           "ko": "울부짖다"
         },
         {
           "en": "govern",
-          "pron": "거번",
           "ko": "통치하다"
         },
         {
           "en": "perspective",
-          "pron": "퍼스펙티브",
           "ko": "관점"
         },
         {
           "en": "remain",
-          "pron": "리메인",
           "ko": "머무르다"
         },
         {
           "en": "reproduce",
-          "pron": "리프러듀스",
           "ko": "번식하다"
         },
         {
           "en": "inherit",
-          "pron": "인헤릿",
           "ko": "물려받다"
         },
         {
           "en": "suitable",
-          "pron": "쑤터블",
           "ko": "적절한"
         },
         {
           "en": "feature",
-          "pron": "피춰",
           "ko": "특징"
         },
         {
           "en": "companion",
-          "pron": "컴패년",
           "ko": "친구"
         },
         {
           "en": "contribute",
-          "pron": "컨트리뷰트",
           "ko": "기여하다"
         },
         {
           "en": "garment",
-          "pron": "가먼트",
           "ko": "옷"
         },
         {
           "en": "criticism",
-          "pron": "크리티씨즘",
           "ko": "비판"
         },
         {
           "en": "resent",
-          "pron": "리젠트",
           "ko": "분개하다"
         },
         {
           "en": "unfold",
-          "pron": "언폴드",
           "ko": "펼치다"
         },
         {
           "en": "equation",
-          "pron": "이퀘이션",
           "ko": "방정식"
         }
       ]
@@ -4101,102 +3329,82 @@
       "words": [
         {
           "en": "antisocial",
-          "pron": "앤티쏘셜",
           "ko": "반사회적인"
         },
         {
           "en": "entitle",
-          "pron": "인타이틀",
           "ko": "자격을 주다"
         },
         {
           "en": "quarter",
-          "pron": "쿼터",
           "ko": "4분의 1"
         },
         {
           "en": "holy",
-          "pron": "홀리",
           "ko": "신성한"
         },
         {
           "en": "sculpture",
-          "pron": "스컬프춰",
           "ko": "조각품"
         },
         {
           "en": "terrific",
-          "pron": "터리픽",
           "ko": "아주 멋진"
         },
         {
           "en": "partially",
-          "pron": "파셜리",
           "ko": "부분적으로"
         },
         {
           "en": "recite",
-          "pron": "리싸이트",
           "ko": "암송하다"
         },
         {
           "en": "cautious",
-          "pron": "코셔스",
           "ko": "신중한"
         },
         {
           "en": "frown",
-          "pron": "프라운",
           "ko": "눈살을 찌푸리다"
         },
         {
           "en": "coverage",
-          "pron": "커버리쥐",
           "ko": "보도"
         },
         {
           "en": "mass",
-          "pron": "매스",
           "ko": "대량의"
         },
         {
           "en": "general",
-          "pron": "제너럴",
           "ko": "일반적인"
         },
         {
           "en": "remote",
-          "pron": "리모트",
           "ko": "먼"
         },
         {
           "en": "hub",
-          "pron": "허브",
           "ko": "중심"
         },
         {
           "en": "optimize",
-          "pron": "압티마이즈",
           "ko": "최적화하다"
         },
         {
           "en": "abolition",
-          "pron": "애벌리션",
           "ko": "폐지"
         },
         {
           "en": "wind",
-          "pron": "와인드",
           "ko": "감다"
         },
         {
           "en": "lower",
-          "pron": "로워",
           "ko": "낮추다"
         },
         {
           "en": "punish",
-          "pron": "퍼니쉬",
           "ko": "벌을 주다"
         }
       ]
@@ -4206,102 +3414,82 @@
       "words": [
         {
           "en": "deluxe",
-          "pron": "덜럭스",
           "ko": "호화로운"
         },
         {
           "en": "swarm",
-          "pron": "스웜",
           "ko": "떼"
         },
         {
           "en": "edible",
-          "pron": "에더블",
           "ko": "먹을 수 있는"
         },
         {
           "en": "productive",
-          "pron": "프러덕티브",
           "ko": "생산적인"
         },
         {
           "en": "mediate",
-          "pron": "미디에이트",
           "ko": "중재하다"
         },
         {
           "en": "express",
-          "pron": "익스프레스",
           "ko": "표현하다"
         },
         {
           "en": "urge",
-          "pron": "어쥐",
           "ko": "촉구하다"
         },
         {
           "en": "aspiration",
-          "pron": "애스퍼레이션",
           "ko": "열망"
         },
         {
           "en": "store",
-          "pron": "스토어",
           "ko": "저장하다"
         },
         {
           "en": "request",
-          "pron": "리퀘스트",
           "ko": "요청하다"
         },
         {
           "en": "finance",
-          "pron": "파이낸스",
           "ko": "재정"
         },
         {
           "en": "twinkle",
-          "pron": "트윙클",
           "ko": "반짝거리다"
         },
         {
           "en": "understate",
-          "pron": "언더스테이트",
           "ko": "축소해서 말하다"
         },
         {
           "en": "desirous",
-          "pron": "디자이어러스",
           "ko": "간절히 바라는"
         },
         {
           "en": "attribute",
-          "pron": "어트리뷰트",
           "ko": "~의 탓으로 돌리다"
         },
         {
           "en": "overdue",
-          "pron": "오버두",
           "ko": "연체된"
         },
         {
           "en": "lag",
-          "pron": "래그",
           "ko": "뒤처지다"
         },
         {
           "en": "improper",
-          "pron": "임프라퍼",
           "ko": "부적절한"
         },
         {
           "en": "sincerity",
-          "pron": "씬쎄러티",
           "ko": "성실"
         },
         {
           "en": "sincere",
-          "pron": "씬씨어",
           "ko": "진실한"
         }
       ]
@@ -4311,102 +3499,82 @@
       "words": [
         {
           "en": "spread",
-          "pron": "스프레드",
           "ko": "퍼뜨리다"
         },
         {
           "en": "chemistry",
-          "pron": "케미스트리",
           "ko": "화학"
         },
         {
           "en": "masterpiece",
-          "pron": "매스터피스",
           "ko": "걸작"
         },
         {
           "en": "congress",
-          "pron": "캉그러스",
           "ko": "의회"
         },
         {
           "en": "degrade",
-          "pron": "디그레이드",
           "ko": "강등시키다"
         },
         {
           "en": "earn",
-          "pron": "언",
           "ko": "벌다"
         },
         {
           "en": "roam",
-          "pron": "로움",
           "ko": "돌아다니다"
         },
         {
           "en": "spectator",
-          "pron": "스펙테이터",
           "ko": "관중"
         },
         {
           "en": "lumber",
-          "pron": "럼버",
           "ko": "목재"
         },
         {
           "en": "linkage",
-          "pron": "링키쥐",
           "ko": "결합"
         },
         {
           "en": "summarize",
-          "pron": "써머라이즈",
           "ko": "요약하다"
         },
         {
           "en": "beam",
-          "pron": "빔",
           "ko": "광선"
         },
         {
           "en": "underline",
-          "pron": "언더라인",
           "ko": "밑줄을 긋다"
         },
         {
           "en": "tutor",
-          "pron": "튜터",
           "ko": "가정 교사"
         },
         {
           "en": "structure",
-          "pron": "스트럭춰",
           "ko": "구조"
         },
         {
           "en": "purchase",
-          "pron": "퍼처스",
           "ko": "구매하다"
         },
         {
           "en": "gravity",
-          "pron": "그래버티",
           "ko": "중력"
         },
         {
           "en": "perform",
-          "pron": "퍼폼",
           "ko": "수행하다"
         },
         {
           "en": "supernatural",
-          "pron": "쑤퍼내츄럴",
           "ko": "초자연적인"
         },
         {
           "en": "radiant",
-          "pron": "레이디언트",
           "ko": "빛나는"
         }
       ]
@@ -4416,102 +3584,82 @@
       "words": [
         {
           "en": "epic",
-          "pron": "에픽",
           "ko": "서사시"
         },
         {
           "en": "county",
-          "pron": "카운티",
           "ko": "자치주"
         },
         {
           "en": "literary",
-          "pron": "리터레리",
           "ko": "문학의"
         },
         {
           "en": "couch",
-          "pron": "카우취",
           "ko": "소파"
         },
         {
           "en": "submerge",
-          "pron": "써브머지",
           "ko": "잠수하다"
         },
         {
           "en": "interest",
-          "pron": "인터레스트",
           "ko": "이자"
         },
         {
           "en": "antique",
-          "pron": "앤틱",
           "ko": "골동품"
         },
         {
           "en": "patrol",
-          "pron": "퍼트롤",
           "ko": "순찰하다"
         },
         {
           "en": "probable",
-          "pron": "프라버블",
           "ko": "있음직한"
         },
         {
           "en": "orientation",
-          "pron": "오리언테이션",
           "ko": "방향"
         },
         {
           "en": "interior",
-          "pron": "인티어리어",
           "ko": "내부의"
         },
         {
           "en": "guilt",
-          "pron": "길트",
           "ko": "죄책감"
         },
         {
           "en": "naked",
-          "pron": "네이키드",
           "ko": "벌거벗은"
         },
         {
           "en": "thrust",
-          "pron": "뜨러스트",
           "ko": "밀치다"
         },
         {
           "en": "imbalance",
-          "pron": "임밸런스",
           "ko": "불균형"
         },
         {
           "en": "intricate",
-          "pron": "인트리컷",
           "ko": "복잡한"
         },
         {
           "en": "income",
-          "pron": "인컴",
           "ko": "수입"
         },
         {
           "en": "ruin",
-          "pron": "루인",
           "ko": "망치다"
         },
         {
           "en": "advocate",
-          "pron": "애드버케이트",
           "ko": "옹호하다"
         },
         {
           "en": "dull",
-          "pron": "덜",
           "ko": "지루한"
         }
       ]
@@ -4521,102 +3669,82 @@
       "words": [
         {
           "en": "finding",
-          "pron": "파인딩",
           "ko": "연구 결과"
         },
         {
           "en": "overseas",
-          "pron": "오버씨즈",
           "ko": "해외로"
         },
         {
           "en": "regime",
-          "pron": "레이짐",
           "ko": "정권"
         },
         {
           "en": "extensive",
-          "pron": "익스텐씨브",
           "ko": "광범위한"
         },
         {
           "en": "camouflage",
-          "pron": "캐머플라쥐",
           "ko": "위장하다"
         },
         {
           "en": "dumb",
-          "pron": "덤",
           "ko": "말을 못 하는"
         },
         {
           "en": "theme",
-          "pron": "띰",
           "ko": "주제"
         },
         {
           "en": "refrain",
-          "pron": "리프레인",
           "ko": "삼가다"
         },
         {
           "en": "related",
-          "pron": "릴레이티드",
           "ko": "관련이 있는"
         },
         {
           "en": "synonymous",
-          "pron": "씨나너머스",
           "ko": "동의어의"
         },
         {
           "en": "lyric",
-          "pron": "리릭",
           "ko": "가사"
         },
         {
           "en": "utility",
-          "pron": "유틸러티",
           "ko": "유용함"
         },
         {
           "en": "enlist",
-          "pron": "인리스트",
           "ko": "요청하다"
         },
         {
           "en": "surrender",
-          "pron": "써렌더",
           "ko": "항복하다"
         },
         {
           "en": "produce",
-          "pron": "프러듀스",
           "ko": "생산하다"
         },
         {
           "en": "refund",
-          "pron": "리펀드",
           "ko": "환불"
         },
         {
           "en": "occupation",
-          "pron": "아큐페이션",
           "ko": "직업"
         },
         {
           "en": "transparent",
-          "pron": "트랜스페어런트",
           "ko": "투명한"
         },
         {
           "en": "narrate",
-          "pron": "내레이트",
           "ko": "이야기하다"
         },
         {
           "en": "venture",
-          "pron": "벤춰",
           "ko": "모험"
         }
       ]
@@ -4626,105 +3754,86 @@
       "words": [
         {
           "en": "boycott",
-          "pron": "보이캇",
           "ko": "불매운동"
         },
         {
           "en": "bound",
-          "pron": "바운드",
           "ko": "튀어오르다"
         },
         {
           "en": "trace",
-          "pron": "트레이스",
           "ko": "추적하다"
         },
         {
           "en": "passenger",
-          "pron": "패씬저",
           "ko": "승객"
         },
         {
           "en": "prevalent",
-          "pron": "프레벌런트",
           "ko": "널리 퍼진"
         },
         {
           "en": "outward",
-          "pron": "아웃워드",
           "ko": "바깥쪽의"
         },
         {
           "en": "faculty",
-          "pron": "패컬티",
           "ko": "교수진"
         },
         {
           "en": "antibacterial",
-          "pron": "앤티백티어리얼",
           "ko": "항균의"
         },
         {
           "en": "pottery",
-          "pron": "파터리",
           "ko": "도자기"
         },
         {
           "en": "junction",
-          "pron": "정크션",
           "ko": "교차점"
         },
         {
           "en": "marked",
-          "pron": "마크트",
           "ko": "두드러진"
         },
         {
           "en": "stimulate",
-          "pron": "스티뮬레이트",
           "ko": "자극하다"
         },
         {
           "en": "restrain",
-          "pron": "리스트레인",
           "ko": "제한하다"
         },
         {
           "en": "faultless",
-          "pron": "폴틀리스",
           "ko": "결점이 없는"
         },
         {
           "en": "coworker",
-          "pron": "코워커",
           "ko": "직장 동료"
         },
         {
           "en": "bypass",
-          "pron": "바이패스",
           "ko": "우회하다"
         },
         {
           "en": "promising",
-          "pron": "프라미씽",
           "ko": "유망한"
         },
         {
           "en": "dedicate",
-          "pron": "데디케이트",
           "ko": "헌신하다"
         },
         {
           "en": "recent",
-          "pron": "리슨트",
           "ko": "최근의"
         },
         {
           "en": "variety",
-          "pron": "버라이어티",
           "ko": "다양성"
         }
       ]
     }
   ]
 }
+voca01.json 표시 중입니다.
