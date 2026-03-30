@@ -1,24 +1,38 @@
-#toolbar {
-background: var(--ink); color: #fff;
-padding: 14px 32px;
-  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
-  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-border-bottom: 3px solid var(--accent);
-position: sticky; top: 0; z-index: 100;
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>단어 시험지</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --ink: #1a1714;
+  --paper: #f5f0e8;
+  --accent: #8b2e2e;
 }
-.toolbar-title { font-size: 15px; font-weight: 700; margin-right: 8px; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans KR', sans-serif; background: var(--paper); color: var(--ink); }
+
+/* ── 툴바 ── */
+#toolbar {
+  background: var(--ink); color: #fff;
+  padding: 14px 32px;
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  border-bottom: 3px solid var(--accent);
+  position: sticky; top: 0; z-index: 100;
+}
 .toolbar-title { font-size: 15px; font-weight: 700; margin-right: 4px; }
 .tbtn {
-  padding: 8px 18px; border: 1px solid #555; background: transparent; color: #fff;
-  font-size: 13px; font-family: 'Noto Sans KR', sans-serif; font-weight: 500;
-  border-radius: 3px; cursor: pointer; transition: all 0.15s;
   padding: 8px 14px; border: 1px solid #555; background: transparent; color: #fff;
   font-size: 12px; font-family: 'Noto Sans KR', sans-serif; font-weight: 500;
   border-radius: 3px; cursor: pointer; transition: all 0.15s; white-space: nowrap;
 }
 .tbtn:hover { background: #333; }
 .tbtn-primary { background: var(--accent); border-color: var(--accent); }
-@@ -36,6 +36,9 @@
+.tbtn-primary:hover { background: #6e2222; }
+.tbtn-back { border-color: #888; color: #ccc; }
 .sep { width: 1px; height: 24px; background: #444; flex-shrink: 0; }
 .tb-spacer { flex: 1; }
 
@@ -27,69 +41,157 @@ position: sticky; top: 0; z-index: 100;
 
 /* ── 프리뷰 영역 ── */
 #preview {
-padding: 32px 24px 60px;
-@@ -48,9 +51,10 @@
-box-shadow: 0 4px 24px rgba(0,0,0,0.13);
-border-radius: 2px;
-position: relative;
-  /* ① A4 비율 그대로 보여주기: 210:297 = 0.707 */
-  width: min(794px, 100%);   /* 96dpi 기준 A4 너비 */
+  padding: 32px 24px 60px;
+  display: flex; flex-direction: column; align-items: center; gap: 40px;
+}
+
+/* ── 시험지 래퍼 (화면) ── */
+.sheet-wrapper {
+  background: #fff;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.13);
+  border-radius: 2px;
+  position: relative;
   width: min(794px, 100%);
 }
 
 /* [4] 문제지/답지 레이블 — 화면 + 인쇄 모두 표시 */
 .sheet-label {
-position: absolute; top: 10px; right: 10px;
-font-size: 10px; background: var(--accent); color: #fff;
-@@ -59,10 +63,8 @@
+  position: absolute; top: 10px; right: 10px;
+  font-size: 10px; background: var(--accent); color: #fff;
+  padding: 2px 8px; border-radius: 2px; font-weight: 700; letter-spacing: 0.1em; z-index: 10;
+}
 
 /* =============================================
-  시험지 내부 — 화면 + 인쇄 공용
-   핵심: 화면에서도 A4 픽셀 크기로 고정
-  ============================================= */
+   시험지 내부 — 화면 + 인쇄 공용
+   ============================================= */
 .exam-page {
-  /* 96dpi A4: 794 x 1123px */
-width: 794px;
-height: 1123px;
-padding: 36px 44px 32px 44px;
-@@ -90,7 +92,6 @@
-display: flex;
-align-items: center;
-}
-/* ⑧ 헤더 중앙 - 학원명 */
-.exam-header-center {
-width: 180px;
-padding: 0 10px;
-@@ -153,18 +154,19 @@
-height: 20px;
+  width: 794px;
+  height: 1123px;
+  padding: 36px 44px 32px 44px;
+  font-family: 'Noto Sans KR', sans-serif;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
-/* ⑦ 컬럼 너비: 번호 좁게, 단어 적당히, 답 넓게 */
-.col-num  { width: 22px; }
+/* ── 헤더 ── */
+.exam-header {
+  display: flex;
+  align-items: stretch;
+  border: 2.5px solid #111;
+  margin-bottom: 5px;
+  flex-shrink: 0;
+  height: 58px;
+}
+.exam-header-left {
+  flex: 1;
+  padding: 0 14px;
+  font-size: 17px;
+  font-weight: 700;
+  border-right: 1.5px solid #111;
+  display: flex;
+  align-items: center;
+}
+.exam-header-center {
+  width: 180px;
+  padding: 0 10px;
+  font-size: 13px;
+  border-right: 1.5px solid #111;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+}
+.exam-header-center .hlabel { font-size: 9px; font-weight: 700; color: #888; letter-spacing: 0.06em; }
+.exam-header-center .hval { font-size: 13px; font-weight: 500; }
+.exam-header-right {
+  width: 190px;
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+}
+.exam-header-right .hrow {
+  padding: 0 10px;
+  display: flex; gap: 8px; align-items: center;
+  border-bottom: 1px solid #ccc;
+  flex: 1;
+}
+.exam-header-right .hrow:last-child { border-bottom: none; }
+.exam-header-right .hkey { font-weight: 700; color: #555; min-width: 36px; font-size: 10px; }
+
+/* ── 2열 표 ── */
+.exam-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 6px;
+  flex: 1;
+  min-height: 0;
+}
+
+/* ── 단어 표 ── */
+.exam-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  border: 2px solid #111;
+  height: 100%;
+}
+.exam-table th, .exam-table td {
+  border: 0.6px solid #999;
+  font-size: 11px;
+  padding: 0 5px;
+  line-height: 1.3;
+  overflow: hidden;
+}
+.exam-table th {
+  background: #edeae2;
+  text-align: center;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  padding: 3px 4px;
+  border-bottom: 1.5px solid #888;
+  height: 20px;
+}
+
 /* [1] No. 컬럼 2배 너비 / 단어 컬럼 유지 / 줄어드는 부분은 답란 */
 .col-num  { width: 44px; }   /* 기존 22px → 44px */
 .col-word { width: 42%; }
-.col-ans  { } /* 나머지 */
 .col-ans  { }                /* 나머지 = 답란이 줄어듦 */
 
-/* ⑥ 번호 크게 */
 /* [1] 번호 폰트 크기 키우고 3자리도 안 잘리도록 */
 .td-num {
-text-align: center;
-  font-size: 12px;
+  text-align: center;
   font-size: 13px;           /* 기존 12px → 13px */
-font-weight: 700;
-color: #111;
-font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  color: #111;
+  font-family: 'DM Mono', monospace;
   white-space: nowrap;       /* 줄바꿈 방지 */
 }
 .td-word { font-size: 11px; word-break: break-all; }
 .td-ans  { font-size: 11px; color: #111; }
-@@ -190,7 +192,15 @@
-page-break-inside: avoid;
-}
-.sheet-wrapper:last-child { page-break-after: auto; }
-  .sheet-label { display: none !important; }
+.td-ans.blank { color: transparent; }
+
+/* tbody 행 균등 분배 */
+.exam-table tbody tr { height: calc((100% - 20px) / 25); }
+
+/* =============================================
+   인쇄 전용
+   ============================================= */
+@media print {
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { background: #fff !important; }
+  #toolbar { display: none !important; }
+  #preview { padding: 0 !important; gap: 0 !important; }
+
+  .sheet-wrapper {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    width: 210mm !important;
+    page-break-after: always;
+    page-break-inside: avoid;
+  }
+  .sheet-wrapper:last-child { page-break-after: auto; }
 
   /* [4] 인쇄 시에도 sheet-label 표시 */
   .sheet-label {
@@ -100,11 +202,18 @@ page-break-inside: avoid;
     z-index: 10;
   }
 
-.exam-page {
-width: 210mm !important;
-@@ -205,6 +215,40 @@
+  .exam-page {
+    width: 210mm !important;
+    height: 297mm !important;
+    padding: 10mm 12mm 9mm 12mm !important;
+    page-break-inside: avoid;
+    overflow: hidden;
+  }
 
-@page { size: A4 portrait; margin: 0; }
+  .exam-table { height: 100%; page-break-inside: avoid; break-inside: avoid; }
+  .no-print { display: none !important; }
+
+  @page { size: A4 portrait; margin: 0; }
 }
 
 /* ── PDF 저장 옵션 드롭다운 스타일 ── */
@@ -143,145 +252,157 @@ width: 210mm !important;
 </style>
 </head>
 <body>
-@@ -214,11 +258,22 @@
-<div class="sep"></div>
-<span class="toolbar-title" id="tbTitle"></span>
-<div class="sep"></div>
-  <button class="tbtn tbtn-primary" onclick="doPrint()">🖨 인쇄</button>
+
+<div id="toolbar">
+  <button class="tbtn tbtn-back" onclick="history.back()">← 돌아가기</button>
+  <div class="sep"></div>
+  <span class="toolbar-title" id="tbTitle"></span>
+  <div class="sep"></div>
 
   <!-- [8] 인쇄 버튼 3개 -->
   <button class="tbtn tbtn-primary" onclick="doPrint('all')">🖨 모두 인쇄</button>
   <button class="tbtn" onclick="doPrint('question')">문제지 인쇄</button>
   <button class="tbtn" onclick="doPrint('answer')">답지 인쇄</button>
 
-<div class="sep"></div>
-  <button class="tbtn" onclick="savePdf()">PDF 저장</button>
+  <div class="sep"></div>
 
   <!-- [6][8] PDF 저장 버튼 3개 -->
   <button class="tbtn" onclick="savePdf('all')">💾 모두 저장</button>
   <button class="tbtn" onclick="savePdf('question')">문제지 저장</button>
   <button class="tbtn" onclick="savePdf('answer')">답지 저장</button>
 
-<div class="tb-spacer"></div>
-  <span id="tbInfo" style="font-size:12px;color:#aaa;"></span>
+  <div class="tb-spacer"></div>
   <!-- [9] 범위·문항 수만 표시 (출력옵션 제외) -->
   <span id="tbInfo"></span>
 </div>
 
 <div id="preview"></div>
-@@ -227,28 +282,28 @@
+
+<script>
 const raw = sessionStorage.getItem('examPayload');
 if (!raw) { alert('출제 데이터가 없습니다.'); location.href = 'index.html'; }
 const P = JSON.parse(raw);
-const { vocaTitle, studentName, academyName, rangeStr, questions, printAnswer, pdfOption } = P;
 const { vocaTitle, studentName, academyName, rangeStr, questions, enKoCount, koEnCount } = P;
 
 document.getElementById('tbTitle').textContent = vocaTitle;
 // [9] 범위와 문항 수만 표시
 document.getElementById('tbInfo').textContent =
-  `Day ${rangeStr} · ${questions.length}문항 · ${printAnswer ? '답지 포함' : '문제지만'}`;
   `Day ${rangeStr} · ${questions.length}문항 (영한 ${enKoCount ?? '?'} / 한영 ${koEnCount ?? '?'})`;
 
-// ── 50개씩 페이지 분할 ──
 // ── [10] 빈 페이지 버그 수정: 실제 문항 수에 맞게 페이지 분할 ──
 function splitPages(qs) {
-const pages = [];
-  let i = 0;
-  do {
+  const pages = [];
   // 실제 문항만큼만 페이지를 생성, 50개 단위로 자름
   for (let i = 0; i < qs.length; i += 50) {
-const chunk = qs.slice(i, i + 50);
+    const chunk = qs.slice(i, i + 50);
     // 50개 미만이면 null 패딩 (행 높이 균등 유지)
-while (chunk.length < 50) chunk.push(null);
-pages.push(chunk);
-    i += 50;
-  } while (i < qs.length);
+    while (chunk.length < 50) chunk.push(null);
+    pages.push(chunk);
   }
-return pages;
+  return pages;
 }
 
 const pages = splitPages(questions);
 
-// ② 발음 제거: enKo=영어→한글뜻, koEn=한글뜻→영어
 function questionText(q) {
-if (!q) return '';
-return q.direction === 'enKo' ? q.en : q.ko;
-@@ -266,9 +321,9 @@
-const aText = q ? answerText(q) : '';
-const ansTd = isAnswer
-? `<td class="td-ans">${aText}</td>`
-      : `<td class="td-ans blank"></td>`;
+  if (!q) return '';
+  return q.direction === 'enKo' ? q.en : q.ko;
+}
+function answerText(q) {
+  if (!q) return '';
+  return q.direction === 'enKo' ? q.ko : q.en;
+}
+
+function makeTableHTML(half, startNum, isAnswer) {
+  let rows = '';
+  half.forEach((q, i) => {
+    const num = startNum + i;
+    const qText = q ? questionText(q) : '';
+    const aText = q ? answerText(q) : '';
+    const ansTd = isAnswer
+      ? `<td class="td-ans">${aText}</td>`
       : `<td class="td-ans blank">&nbsp;</td>`;
-rows += `<tr>
-      <td class="td-num">${num}</td>
+    rows += `<tr>
       <td class="td-num">${q ? num : ''}</td>
-     <td class="td-word">${qText}</td>
-     ${ansTd}
-   </tr>`;
-@@ -289,23 +344,25 @@
-const left  = slots.slice(0, 25);
-const right = slots.slice(25, 50);
-const startNum = pageIndex * 50 + 1;
+      <td class="td-word">${qText}</td>
+      ${ansTd}
+    </tr>`;
+  });
+  return `
+    <table class="exam-table">
+      <colgroup><col class="col-num"><col class="col-word"><col class="col-ans"></colgroup>
+      <thead><tr>
+        <th class="col-num">No.</th>
+        <th class="col-word">단어</th>
+        <th class="col-ans">답</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+}
+
+function makePageHTML(slots, pageIndex, isAnswer) {
+  const left  = slots.slice(0, 25);
+  const right = slots.slice(25, 50);
+  const startNum = pageIndex * 50 + 1;
   const labelText = isAnswer ? '답지' : '문제지';
   const pageLabel = pages.length > 1 ? ` ${pageIndex + 1}` : '';
 
-  // ⑧ 학원명 헤더
-const academyHTML = `
-   <div class="exam-header-center">
-     <div class="hlabel">ACADEMY</div>
-     <div class="hval">${academyName || ''}</div>
-   </div>`;
+  const academyHTML = `
+    <div class="exam-header-center">
+      <div class="hlabel">ACADEMY</div>
+      <div class="hval">${academyName || ''}</div>
+    </div>`;
 
-  const nameVal = studentName || '';
-return `
- <div class="exam-page" data-type="${isAnswer ? 'answer' : 'question'}">
+  return `
+  <div class="exam-page" data-type="${isAnswer ? 'answer' : 'question'}">
     <!-- [4] 레이블을 exam-page 안으로 이동해 인쇄 영역에 포함 -->
     <div class="sheet-label" style="position:absolute;top:6px;right:10px;">${labelText}${pageLabel}</div>
-   <div class="exam-header">
-     <div class="exam-header-left">${vocaTitle}</div>
-     ${academyHTML}
-     <div class="exam-header-right">
-       <div class="hrow"><span class="hkey">범위</span><span>Day ${rangeStr}</span></div>
-        <div class="hrow"><span class="hkey">이름</span><span>${nameVal}</span></div>
+    <div class="exam-header">
+      <div class="exam-header-left">${vocaTitle}</div>
+      ${academyHTML}
+      <div class="exam-header-right">
+        <div class="hrow"><span class="hkey">범위</span><span>Day ${rangeStr}</span></div>
         <div class="hrow"><span class="hkey">이름</span><span>${studentName || ''}</span></div>
-     </div>
-   </div>
-   <div class="exam-body">
-@@ -324,49 +381,58 @@
-const wrap = document.createElement('div');
-wrap.className = 'sheet-wrapper';
-wrap.dataset.role = 'question';
-    wrap.innerHTML = `<div class="sheet-label">문제지${pages.length > 1 ? ' ' + (pi+1) : ''}</div>`
-                   + makePageHTML(slots, pi, false);
+      </div>
+    </div>
+    <div class="exam-body">
+      ${makeTableHTML(left,  startNum,      isAnswer)}
+      ${makeTableHTML(right, startNum + 25, isAnswer)}
+    </div>
+  </div>`;
+}
+
+function render() {
+  const preview = document.getElementById('preview');
+  preview.innerHTML = '';
+
+  // 문제지
+  pages.forEach((slots, pi) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'sheet-wrapper';
+    wrap.dataset.role = 'question';
     wrap.style.position = 'relative';
     wrap.innerHTML = makePageHTML(slots, pi, false);
-preview.appendChild(wrap);
-});
+    preview.appendChild(wrap);
+  });
 
-// 답지
-pages.forEach((slots, pi) => {
-const wrap = document.createElement('div');
-    wrap.className = 'sheet-wrapper' + (!printAnswer ? ' no-print' : '');
+  // 답지
+  pages.forEach((slots, pi) => {
+    const wrap = document.createElement('div');
     wrap.className = 'sheet-wrapper';
-wrap.dataset.role = 'answer';
-    wrap.innerHTML = `<div class="sheet-label">답지${pages.length > 1 ? ' ' + (pi+1) : ''}</div>`
-                   + makePageHTML(slots, pi, true);
+    wrap.dataset.role = 'answer';
     wrap.style.position = 'relative';
     wrap.innerHTML = makePageHTML(slots, pi, true);
-preview.appendChild(wrap);
-});
+    preview.appendChild(wrap);
+  });
 }
 
 render();
 
-function doPrint() {
-  document.querySelectorAll('[data-role="answer"]').forEach(el => {
-    el.classList.toggle('no-print', !printAnswer);
-  });
 // [8] 인쇄: 'all' | 'question' | 'answer'
 function doPrint(mode) {
   applyVisibility(mode);
-window.print();
+  window.print();
   // 인쇄 후 복원
   setTimeout(() => restoreVisibility(), 500);
 }
@@ -295,28 +416,19 @@ function savePdf(mode) {
   }, 200);
 }
 
-function savePdf() {
 function applyVisibility(mode) {
-const qEls = document.querySelectorAll('[data-role="question"]');
-const aEls = document.querySelectorAll('[data-role="answer"]');
-  if (pdfOption === 1) {
+  const qEls = document.querySelectorAll('[data-role="question"]');
+  const aEls = document.querySelectorAll('[data-role="answer"]');
   if (mode === 'question') {
-qEls.forEach(el => el.classList.remove('no-print'));
-aEls.forEach(el => el.classList.add('no-print'));
-  } else if (pdfOption === 2) {
-  } else if (mode === 'answer') {
-qEls.forEach(el => el.classList.add('no-print'));
-aEls.forEach(el => el.classList.remove('no-print'));
-  } else {
-  } else { // all
-qEls.forEach(el => el.classList.remove('no-print'));
-aEls.forEach(el => el.classList.remove('no-print'));
-}
-  setTimeout(() => {
-    window.print();
     qEls.forEach(el => el.classList.remove('no-print'));
-    aEls.forEach(el => el.classList.toggle('no-print', !printAnswer));
-  }, 200);
+    aEls.forEach(el => el.classList.add('no-print'));
+  } else if (mode === 'answer') {
+    qEls.forEach(el => el.classList.add('no-print'));
+    aEls.forEach(el => el.classList.remove('no-print'));
+  } else { // all
+    qEls.forEach(el => el.classList.remove('no-print'));
+    aEls.forEach(el => el.classList.remove('no-print'));
+  }
 }
 
 function restoreVisibility() {
@@ -324,3 +436,4 @@ function restoreVisibility() {
 }
 </script>
 </body>
+</html>
