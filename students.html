@@ -74,9 +74,11 @@ header {
   background: #fff; color: var(--ink); outline: none;
 }
 #addBar input:focus, #addBar select:focus { border-color: var(--accent); }
-#addBar input[type="text"] { width: 130px; }
-#classInput { width: 110px; }
-#addBar select { width: 200px; }
+#newName      { width: 130px; }
+/* [3] 반 입력창 충분히 넓게 */
+#classInput   { width: 200px; }
+/* [4] 단어장 드롭다운 2배 */
+#newVoca      { width: 320px; }
 .abtn {
   padding: 7px 18px; border: none; border-radius: 3px; font-size: 13px; font-weight: 700;
   font-family: 'Noto Sans KR', sans-serif; cursor: pointer;
@@ -85,25 +87,21 @@ header {
 .abtn-add:hover { background: #6e2222; }
 
 /* ── 메인 테이블 영역 ── */
-#tableWrap {
-  overflow-x: auto;
-  padding: 20px 24px 40px;
-}
+#tableWrap { overflow-x: auto; padding: 20px 24px 40px; }
 
 /* ── 학생 카드 리스트 ── */
-#studentList { display: flex; flex-direction: column; gap: 10px; min-width: 1400px; }
+/* [2] 슬롯 너비 줄임: 120→90, grid 조정 */
+#studentList { display: flex; flex-direction: column; gap: 10px; min-width: 1300px; }
 
-/* ── 컬럼 헤더 ── */
 .list-header {
   display: grid;
-  grid-template-columns: 36px 110px 160px 90px 4px 350px 4px 1fr;
-  align-items: center;
-  padding: 0 10px;
-  gap: 0;
+  grid-template-columns: 36px 120px 170px 80px 4px 310px 4px 1fr;
+  align-items: center; padding: 0 10px; gap: 0;
 }
-.list-header .lh { font-size: 10px; font-weight: 700; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; padding: 0 6px; }
-.lh-pass { text-align: center; }
-.lh-slot { text-align: center; }
+.list-header .lh {
+  font-size: 10px; font-weight: 700; color: var(--muted);
+  letter-spacing: 0.1em; text-transform: uppercase; padding: 0 6px;
+}
 .col-div { background: var(--line); width: 1px; height: 20px; }
 
 /* ── 학생 행 카드 ── */
@@ -111,9 +109,8 @@ header {
   background: #fff; border: 1px solid var(--line); border-radius: 4px;
   box-shadow: var(--shadow);
   display: grid;
-  grid-template-columns: 36px 110px 160px 90px 4px 350px 4px 1fr;
-  align-items: stretch;
-  min-height: 80px;
+  grid-template-columns: 36px 120px 170px 80px 4px 310px 4px 1fr;
+  align-items: stretch; min-height: 100px;
   transition: border-color 0.15s;
 }
 .student-card:hover { border-color: #b0a898; }
@@ -133,8 +130,8 @@ header {
 }
 .name-text { font-size: 14px; font-weight: 700; }
 .class-badge {
-  display: inline-block; font-size: 10px; background: var(--ink); color: #fff;
-  padding: 1px 7px; border-radius: 10px; font-weight: 500;
+  display: inline-block; font-size: 11px; background: var(--ink); color: #fff;
+  padding: 2px 8px; border-radius: 10px; font-weight: 500;
 }
 .btn-del {
   font-size: 10px; color: #c0392b; background: none; border: none;
@@ -143,18 +140,18 @@ header {
 }
 .btn-del:hover { text-decoration: underline; }
 
-/* 단어장 열 */
+/* [5] 단어장 열 — 글씨 크게 */
 .col-voca {
   padding: 8px 10px; border-right: 1px solid var(--line);
   display: flex; align-items: center;
-  font-size: 12px; color: var(--muted); line-height: 1.4;
+  font-size: 13px; font-weight: 500; color: var(--ink); line-height: 1.4;
 }
 
-/* 반 열 */
+/* [5] 반 열 — 글씨 크게 */
 .col-class {
   padding: 8px 8px; border-right: 1px solid var(--line);
   display: flex; align-items: center; justify-content: center;
-  font-size: 12px; color: var(--muted);
+  font-size: 13px; font-weight: 500; color: var(--ink);
 }
 
 /* 구분선 열 */
@@ -168,7 +165,7 @@ header {
 .pass-slot {
   display: flex; flex-direction: column; align-items: center; gap: 2px;
   background: var(--pass-bg); border: 1px solid var(--pass-border);
-  border-radius: 3px; padding: 4px 6px; min-width: 42px; flex-shrink: 0;
+  border-radius: 3px; padding: 4px 6px; min-width: 44px; flex-shrink: 0;
 }
 .pass-slot.unchecked { background: #fff8f0; border-color: #e0b090; }
 .pass-slot input[type="checkbox"] { width: 14px; height: 14px; accent-color: var(--accent2); cursor: pointer; }
@@ -181,39 +178,61 @@ header {
 /* ── 시험 슬롯 영역 ── */
 .col-slots {
   padding: 6px 8px;
-  display: flex; align-items: center; gap: 6px; overflow-x: auto;
+  display: flex; align-items: stretch; gap: 5px; overflow-x: auto;
 }
+
+/* [2] 슬롯 너비 줄임 — 딱 필요한 만큼 */
 .exam-slot {
   display: flex; flex-direction: column; gap: 3px;
   background: var(--slot-bg); border: 1px solid var(--slot-border);
-  border-radius: 3px; padding: 5px 7px; min-width: 120px; flex-shrink: 0;
+  border-radius: 3px; padding: 5px 6px;
+  width: 100px; flex-shrink: 0;          /* 고정 너비 100px */
 }
 .exam-slot.empty { border-style: dashed; background: #fafaf8; opacity: 0.7; }
-.slot-label { font-size: 9px; font-weight: 700; color: var(--muted); letter-spacing: 0.08em; }
+
+/* [7] 합격 체크박스 행 */
+.slot-pass-row {
+  display: flex; align-items: center; gap: 4px;
+  padding-bottom: 3px; border-bottom: 1px solid var(--line); margin-bottom: 2px;
+}
+.slot-pass-row input[type="checkbox"] {
+  width: 13px; height: 13px; accent-color: var(--accent2); cursor: pointer; flex-shrink: 0;
+}
+.slot-pass-label {
+  font-size: 9px; font-weight: 700; color: var(--accent2); letter-spacing: 0.05em;
+  cursor: pointer;
+}
+.exam-slot.passed { background: var(--pass-bg); border-color: var(--pass-border); opacity: 1; }
+.exam-slot.passed .slot-pass-label { color: var(--accent2); }
+
+.slot-label { font-size: 9px; font-weight: 700; color: var(--muted); letter-spacing: 0.06em; }
 .slot-inp {
-  font-family: 'DM Mono', monospace; font-size: 12px;
+  font-family: 'DM Mono', monospace; font-size: 11px;
   border: 1px solid var(--line); border-radius: 2px;
-  padding: 3px 5px; width: 100%; background: #fff; color: var(--ink); outline: none;
+  padding: 2px 4px; width: 100%; background: #fff; color: var(--ink); outline: none;
 }
 .slot-inp:focus { border-color: var(--accent); }
 .slot-inp.err { border-color: #c0392b; background: #fff5f5; }
+/* [2] 총개수·영한 나란히 — 각 50% */
 .slot-row { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
 .slot-auto {
-  font-size: 11px; color: var(--accent2); font-weight: 700;
-  padding: 3px 5px; background: #eaf3ec; border-radius: 2px; text-align: center;
-  border: 1px solid var(--pass-border);
+  font-size: 10px; color: var(--accent2); font-weight: 700;
+  padding: 2px 4px; background: #eaf3ec; border-radius: 2px; text-align: center;
+  border: 1px solid var(--pass-border); white-space: nowrap;
 }
-.slot-err { font-size: 9px; color: #c0392b; margin-top: 1px; display: none; }
+.slot-err { font-size: 9px; color: #c0392b; margin-top: 1px; display: none; line-height: 1.2; }
+/* [1] 총 단어수 표시 */
+.slot-maxwords {
+  font-size: 9px; color: var(--muted); margin-top: 1px;
+  font-family: 'DM Mono', monospace;
+}
 
 /* ── 빈 상태 ── */
-#emptyState {
-  text-align: center; padding: 80px 24px; color: var(--muted);
-  display: none;
-}
+#emptyState { text-align: center; padding: 80px 24px; color: var(--muted); display: none; }
 #emptyState .ei { font-size: 48px; margin-bottom: 16px; }
 #emptyState p { font-size: 15px; line-height: 1.8; }
 
-/* ── 모달: 삭제 확인 ── */
+/* ── 모달 ── */
 .modal-overlay {
   display: none; position: fixed; inset: 0;
   background: rgba(0,0,0,0.5); z-index: 9999;
@@ -227,7 +246,7 @@ header {
   font-family: 'Noto Sans KR', sans-serif;
 }
 .modal-title { font-size: 17px; font-weight: 700; margin-bottom: 12px; }
-.modal-desc { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 24px; }
+.modal-desc { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 24px; white-space: pre-line; }
 .modal-btns { display: flex; gap: 10px; justify-content: flex-end; }
 .mbtn {
   padding: 9px 20px; border-radius: 3px; font-size: 13px; font-weight: 700;
@@ -240,7 +259,9 @@ header {
 /* ── 인쇄 ── */
 @media print {
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  header, #filterBar, #addBar, #tableWrap { display: none !important; }
+  header, #filterBar, #addBar, #tableWrap, .modal-overlay { display: none !important; }
+  /* [6] 인쇄 배경 흰색 */
+  body { background: #fff !important; }
   #printArea { display: block !important; }
 }
 #printArea { display: none; }
@@ -248,7 +269,6 @@ header {
 </head>
 <body>
 
-<!-- 헤더 -->
 <header>
   <div class="header-logo">Premium Voca</div>
   <div class="header-rule"></div>
@@ -263,28 +283,21 @@ header {
   <button class="hbtn hbtn-outline" onclick="doPrint('answer')" style="margin-left:4px;">답지 인쇄</button>
 </header>
 
-<!-- 필터 바 -->
 <div id="filterBar">
   <label>반 필터</label>
-  <select id="classFilter" onchange="applyFilter()">
-    <option value="">전체</option>
-  </select>
+  <select id="classFilter" onchange="applyFilter()"><option value="">전체</option></select>
   <span class="filter-count" id="filterCount"></span>
 </div>
 
-<!-- 학생 추가 바 -->
 <div id="addBar">
   <input type="text" id="newName" placeholder="학생 이름" maxlength="10">
   <input type="text" id="classInput" placeholder="반 (직접입력 또는 선택)" maxlength="20" list="classList">
   <datalist id="classList"></datalist>
-  <select id="newVoca">
-    <option value="">— 단어장 선택 —</option>
-  </select>
+  <select id="newVoca"><option value="">— 단어장 선택 —</option></select>
   <button class="abtn abtn-add" onclick="addStudent()">+ 학생 추가</button>
   <span id="addErr" style="font-size:12px;color:#c0392b;display:none;"></span>
 </div>
 
-<!-- 테이블 -->
 <div id="tableWrap">
   <div class="list-header">
     <div class="lh" style="text-align:center;">출력</div>
@@ -292,9 +305,9 @@ header {
     <div class="lh">단어장</div>
     <div class="lh" style="text-align:center;">반</div>
     <div></div>
-    <div class="lh lh-pass" style="padding-left:8px;">합격 기록 (최대 7)</div>
+    <div class="lh" style="padding-left:8px;">합격 기록 (최대 7)</div>
     <div></div>
-    <div class="lh lh-slot" style="padding-left:8px;">시험 슬롯 (5개)</div>
+    <div class="lh" style="padding-left:8px;">시험 슬롯 (5개) — 체크=합격</div>
   </div>
   <div id="studentList"></div>
   <div id="emptyState">
@@ -326,25 +339,19 @@ header {
   </div>
 </div>
 
-<!-- 인쇄 영역 -->
 <div id="printArea"></div>
 
 <script>
-/* =====================================================
-   데이터 & 상태
-===================================================== */
 const STORAGE_KEY = 'premiumVoca_students_v1';
-const MAX_PASS = 7;
-const SLOT_COUNT = 5;
+const MAX_PASS    = 7;
+const SLOT_COUNT  = 5;
 
-let vocaIndex = [];   // [{id, title, file}]
-let vocaDBs   = {};   // {id: vocaDB}
-let students  = [];   // 학생 배열 (앞 = 최신)
+let vocaIndex = [];
+let vocaDBs   = {};
+let students  = [];
 let deleteTargetId = null;
 
-/* =====================================================
-   초기화
-===================================================== */
+/* ── 초기화 ── */
 window.addEventListener('DOMContentLoaded', async () => {
   await loadVocaIndex();
   loadData();
@@ -375,105 +382,82 @@ async function getVocaDB(vocaId) {
   } catch(e) { return null; }
 }
 
-/* =====================================================
-   로컬스토리지
-===================================================== */
+/* ── 로컬스토리지 ── */
 function saveData(showMsg = false) {
-  // 저장 전 현재 DOM 입력값 수집
   collectAllInputs();
   localStorage.setItem(STORAGE_KEY, JSON.stringify(students));
   if (showMsg) showDoneModal('학생 시험 목록이 저장되었습니다.');
 }
-
 function loadData() {
   const raw = localStorage.getItem(STORAGE_KEY);
   students = raw ? JSON.parse(raw) : [];
 }
 
-/* =====================================================
-   DOM → 데이터 수집
-===================================================== */
+/* ── DOM → 데이터 수집 ── */
 function collectAllInputs() {
   document.querySelectorAll('.student-card').forEach(card => {
     const sid = card.dataset.sid;
-    const st = students.find(s => s.id === sid);
+    const st  = students.find(s => s.id === sid);
     if (!st) return;
-    // 출력 체크
     st.printCheck = card.querySelector('.print-check').checked;
-    // 슬롯 5개 수집
     card.querySelectorAll('.exam-slot').forEach((slotEl, i) => {
       const range = slotEl.querySelector('.inp-range')?.value.trim() || '';
       const total = parseInt(slotEl.querySelector('.inp-total')?.value) || 0;
-      const enKo  = parseInt(slotEl.querySelector('.inp-enko')?.value) || 0;
-      st.slots[i] = { range, total, enKo };
+      const enKo  = parseInt(slotEl.querySelector('.inp-enko')?.value)  || 0;
+      st.slots[i] = { range, total, enKo, passed: st.slots[i]?.passed || false };
     });
   });
 }
 
-/* =====================================================
-   학생 추가
-===================================================== */
+/* ── 학생 추가 ── */
 function addStudent() {
   const name  = document.getElementById('newName').value.trim();
   const cls   = document.getElementById('classInput').value.trim();
   const voca  = document.getElementById('newVoca').value;
   const errEl = document.getElementById('addErr');
   errEl.style.display = 'none';
-
   if (!name) { showAddErr('이름을 입력하세요.'); return; }
   if (!voca) { showAddErr('단어장을 선택하세요.'); return; }
 
   const vocaEntry = vocaIndex.find(v => v.id === voca);
   const st = {
     id: 'st_' + Date.now(),
-    name,
-    class: cls,
+    name, class: cls,
     vocaId: voca,
     vocaTitle: vocaEntry ? vocaEntry.title : voca,
-    passSlots: [],   // {range, date}
-    slots: Array(SLOT_COUNT).fill(null).map(() => ({ range:'', total:0, enKo:0 })),
+    passSlots: [],
+    slots: Array(SLOT_COUNT).fill(null).map(() => ({ range:'', total:0, enKo:0, passed:false })),
     printCheck: true,
   };
-
-  students.unshift(st);  // 최신이 맨 위
+  students.unshift(st);
   updateClassList();
   renderAll();
   saveData();
-
-  document.getElementById('newName').value = '';
+  document.getElementById('newName').value   = '';
   document.getElementById('classInput').value = '';
-  document.getElementById('newVoca').value = '';
+  document.getElementById('newVoca').value    = '';
 }
 function showAddErr(msg) {
   const el = document.getElementById('addErr');
   el.textContent = msg; el.style.display = 'inline';
 }
 
-/* =====================================================
-   반 목록 갱신
-===================================================== */
+/* ── 반 목록 갱신 ── */
 function updateClassList() {
   const classes = [...new Set(students.map(s => s.class).filter(Boolean))].sort();
-
-  // datalist
-  const dl = document.getElementById('classList');
-  dl.innerHTML = classes.map(c => `<option value="${c}">`).join('');
-
-  // 필터 select
-  const cf = document.getElementById('classFilter');
+  document.getElementById('classList').innerHTML = classes.map(c => `<option value="${c}">`).join('');
+  const cf  = document.getElementById('classFilter');
   const cur = cf.value;
   cf.innerHTML = '<option value="">전체</option>' +
     classes.map(c => `<option value="${c}" ${c===cur?'selected':''}>${c}</option>`).join('');
 }
 
-/* =====================================================
-   필터
-===================================================== */
+/* ── 필터 ── */
 function applyFilter() {
   const cls = document.getElementById('classFilter').value;
   let visible = 0;
   document.querySelectorAll('.student-card').forEach(card => {
-    const st = students.find(s => s.id === card.dataset.sid);
+    const st    = students.find(s => s.id === card.dataset.sid);
     const match = !cls || st?.class === cls;
     card.classList.toggle('filtered-out', !match);
     if (match) visible++;
@@ -482,20 +466,12 @@ function applyFilter() {
     cls ? `${visible}명 표시 중` : `전체 ${students.length}명`;
 }
 
-/* =====================================================
-   렌더링
-===================================================== */
+/* ── 렌더링 ── */
 function renderAll() {
   const list = document.getElementById('studentList');
   list.innerHTML = '';
-  document.getElementById('emptyState').style.display =
-    students.length === 0 ? 'block' : 'none';
-
-  students.forEach(st => {
-    const card = buildCard(st);
-    list.appendChild(card);
-  });
-
+  document.getElementById('emptyState').style.display = students.length === 0 ? 'block' : 'none';
+  students.forEach(st => list.appendChild(buildCard(st)));
   updateClassList();
   applyFilter();
 }
@@ -505,14 +481,13 @@ function buildCard(st) {
   card.className = 'student-card';
   card.dataset.sid = st.id;
 
-  /* ── 출력 체크 ── */
+  /* 출력 체크 */
   card.innerHTML += `
     <div class="col-check">
-      <input type="checkbox" class="print-check" ${st.printCheck ? 'checked' : ''}
-        title="오늘 인쇄 대상">
+      <input type="checkbox" class="print-check" ${st.printCheck ? 'checked' : ''} title="오늘 인쇄 대상">
     </div>`;
 
-  /* ── 이름 + 삭제 ── */
+  /* 이름 */
   card.innerHTML += `
     <div class="col-name">
       <div class="name-text">${esc(st.name)}</div>
@@ -520,27 +495,27 @@ function buildCard(st) {
       <button class="btn-del" onclick="askDelete('${st.id}')">✕ 삭제</button>
     </div>`;
 
-  /* ── 단어장 ── */
+  /* 단어장 */
   card.innerHTML += `<div class="col-voca">${esc(st.vocaTitle)}</div>`;
 
-  /* ── 반 ── */
+  /* 반 */
   card.innerHTML += `<div class="col-class">${esc(st.class || '—')}</div>`;
 
-  /* ── 구분선 ── */
+  /* 구분선 */
   card.innerHTML += `<div class="col-divider"></div>`;
 
-  /* ── 합격 슬롯 ── */
+  /* 합격 슬롯 */
   let passHTML = '<div class="col-pass">';
   if (st.passSlots.length === 0) {
     passHTML += `<span style="font-size:11px;color:var(--muted);">없음</span>`;
   } else {
     st.passSlots.forEach((ps, pi) => {
-      const checked = ps.passed !== false; // 기본 true
+      const chk = ps.passed !== false;
       passHTML += `
-        <div class="pass-slot ${checked ? '' : 'unchecked'}" id="ps_${st.id}_${pi}">
-          <input type="checkbox" ${checked ? 'checked' : ''}
-            onchange="togglePass('${st.id}', ${pi}, this.checked)"
-            title="${checked ? '합격 — 클릭하면 취소' : '미합격 — 클릭하면 합격 처리'}">
+        <div class="pass-slot ${chk ? '' : 'unchecked'}" id="ps_${st.id}_${pi}">
+          <input type="checkbox" ${chk ? 'checked' : ''}
+            onchange="togglePassSlot('${st.id}',${pi},this.checked)"
+            title="${chk ? '합격 — 취소하려면 클릭' : '미합격 — 합격 처리하려면 클릭'}">
           <div class="pass-range">${esc(ps.range)}</div>
         </div>`;
     });
@@ -548,61 +523,89 @@ function buildCard(st) {
   passHTML += '</div>';
   card.innerHTML += passHTML;
 
-  /* ── 구분선 ── */
+  /* 구분선 */
   card.innerHTML += `<div class="col-divider"></div>`;
 
-  /* ── 시험 슬롯 5개 ── */
+  /* [7] 시험 슬롯 5개 — 합격 체크박스 포함 */
   let slotsHTML = '<div class="col-slots">';
   for (let i = 0; i < SLOT_COUNT; i++) {
-    const sl = st.slots[i] || { range:'', total:0, enKo:0 };
+    const sl      = st.slots[i] || { range:'', total:0, enKo:0, passed:false };
     const isEmpty = !sl.range;
-    const koEn = Math.max(0, (sl.total || 0) - (sl.enKo || 0));
+    const isPassed = sl.passed === true;
+    const koEn    = !isNaN(sl.total) && !isNaN(sl.enKo) ? Math.max(0, sl.total - sl.enKo) : 0;
+
     slotsHTML += `
-      <div class="exam-slot ${isEmpty ? 'empty' : ''}" id="slot_${st.id}_${i}">
-        <div class="slot-label">슬롯 ${i+1}</div>
+      <div class="exam-slot ${isEmpty ? 'empty' : ''} ${isPassed ? 'passed' : ''}" id="slot_${st.id}_${i}">
+
+        <!-- [7] 합격 체크박스 -->
+        <div class="slot-pass-row">
+          <input type="checkbox" id="pass_${st.id}_${i}" ${isPassed ? 'checked' : ''}
+            onchange="onSlotPassChange('${st.id}',${i},this.checked)">
+          <label class="slot-pass-label" for="pass_${st.id}_${i}">합격</label>
+        </div>
+
         <div>
-          <div class="slot-label" style="margin-bottom:2px;">범위</div>
-          <input class="slot-inp inp-range" type="text" placeholder="예: 1-5"
-            value="${esc(sl.range)}"
-            oninput="onSlotInput('${st.id}',${i})"
-            data-sid="${st.id}" data-si="${i}">
+          <div class="slot-label">범위</div>
+          <input class="slot-inp inp-range" type="text" placeholder="1-5"
+            value="${esc(sl.range)}" ${isPassed ? 'disabled' : ''}
+            oninput="onSlotInput('${st.id}',${i})">
+          <!-- [1] 총 단어수 표시 영역 -->
+          <div class="slot-maxwords" id="mw_${st.id}_${i}"></div>
           <div class="slot-err" id="re_${st.id}_${i}"></div>
         </div>
+
         <div class="slot-row">
           <div>
-            <div class="slot-label">총 개수</div>
+            <div class="slot-label">총</div>
             <input class="slot-inp inp-total" type="number" min="1" placeholder="개수"
-              value="${sl.total || ''}"
-              oninput="onSlotInput('${st.id}',${i})"
-              data-sid="${st.id}" data-si="${i}">
+              value="${sl.total || ''}" ${isPassed ? 'disabled' : ''}
+              oninput="onSlotInput('${st.id}',${i})">
           </div>
           <div>
             <div class="slot-label">영한</div>
             <input class="slot-inp inp-enko" type="number" min="0" placeholder="영한"
-              value="${sl.enKo || ''}"
-              oninput="onSlotInput('${st.id}',${i})"
-              data-sid="${st.id}" data-si="${i}">
+              value="${sl.enKo || ''}" ${isPassed ? 'disabled' : ''}
+              oninput="onSlotInput('${st.id}',${i})">
           </div>
         </div>
-        <div style="display:flex;align-items:center;gap:4px;">
-          <span class="slot-label">한영:</span>
-          <span class="slot-auto" id="koen_${st.id}_${i}">${sl.total && sl.enKo !== undefined ? koEn : '—'}</span>
+
+        <div style="display:flex;align-items:center;gap:3px;">
+          <span class="slot-label">한영</span>
+          <span class="slot-auto" id="koen_${st.id}_${i}">${sl.total ? koEn+'개' : '—'}</span>
         </div>
+
         <div class="slot-err" id="se_${st.id}_${i}"></div>
       </div>`;
   }
   slotsHTML += '</div>';
   card.innerHTML += slotsHTML;
 
+  // 렌더 후 총 단어수 표시 (비동기)
+  st.slots.forEach((sl, i) => {
+    if (sl.range) updateMaxWords(st.id, i, st.vocaId, sl.range);
+  });
+
   return card;
 }
 
-/* =====================================================
-   슬롯 입력 처리 (실시간 검증 + 한영 자동계산)
-===================================================== */
+/* ── [1] 범위 입력 시 총 단어수 표시 ── */
+async function updateMaxWords(sid, si, vocaId, rangeVal) {
+  const el = document.getElementById(`mw_${sid}_${si}`);
+  if (!el) return;
+  if (!rangeVal) { el.textContent = ''; return; }
+  const days = parseRange(rangeVal);
+  if (!days) { el.textContent = ''; return; }
+  const db = await getVocaDB(vocaId);
+  if (!db) { el.textContent = ''; return; }
+  const inv = days.filter(n => !db.days.find(d => d.day === n));
+  if (inv.length) { el.textContent = ''; return; }
+  const max = getWordsFromDays(db, days).length;
+  el.textContent = `최대 ${max}개`;
+}
+
+/* ── 슬롯 입력 처리 ── */
 async function onSlotInput(sid, si) {
-  const card = document.querySelector(`.student-card[data-sid="${sid}"]`);
-  const slotEl = document.getElementById(`slot_${sid}_${si}`);
+  const slotEl   = document.getElementById(`slot_${sid}_${si}`);
   const rangeInp = slotEl.querySelector('.inp-range');
   const totalInp = slotEl.querySelector('.inp-total');
   const enKoInp  = slotEl.querySelector('.inp-enko');
@@ -614,17 +617,21 @@ async function onSlotInput(sid, si) {
   const total    = parseInt(totalInp.value);
   const enKo     = parseInt(enKoInp.value);
 
-  // 슬롯 empty 스타일
   slotEl.classList.toggle('empty', !rangeVal);
-
   seEl.style.display = 'none';
   reEl.style.display = 'none';
   rangeInp.classList.remove('err');
   totalInp.classList.remove('err');
   enKoInp.classList.remove('err');
 
-  // 범위 검증
   const st = students.find(s => s.id === sid);
+
+  // [1] 총 단어수 표시
+  if (rangeVal && st) await updateMaxWords(sid, si, st.vocaId, rangeVal);
+  else document.getElementById(`mw_${sid}_${si}`).textContent = '';
+
+  // 범위 검증
+  let maxWords = Infinity;
   if (rangeVal && st) {
     const days = parseRange(rangeVal);
     if (!days) {
@@ -638,7 +645,7 @@ async function onSlotInput(sid, si) {
           rangeInp.classList.add('err');
           reEl.textContent = `없는 과: Day ${inv.join(',')}`; reEl.style.display = 'block';
         } else {
-          const maxWords = getWordsFromDays(db, days).length;
+          maxWords = getWordsFromDays(db, days).length;
           if (!isNaN(total) && total > maxWords) {
             totalInp.classList.add('err');
             seEl.textContent = `최대 ${maxWords}개`; seEl.style.display = 'block';
@@ -650,13 +657,12 @@ async function onSlotInput(sid, si) {
 
   // 한영 자동계산
   if (!isNaN(total) && !isNaN(enKo)) {
-    const koEn = total - enKo;
     if (enKo > total) {
       enKoInp.classList.add('err');
       seEl.textContent = `영한은 ${total}개 이하`; seEl.style.display = 'block';
       koEnEl.textContent = '—';
     } else {
-      koEnEl.textContent = koEn >= 0 ? `${koEn}개` : '—';
+      koEnEl.textContent = `${total - enKo}개`;
     }
   } else {
     koEnEl.textContent = '—';
@@ -664,32 +670,59 @@ async function onSlotInput(sid, si) {
 
   // 데이터 동기화
   if (st) {
-    st.slots[si] = { range: rangeVal, total: isNaN(total) ? 0 : total, enKo: isNaN(enKo) ? 0 : enKo };
+    st.slots[si] = {
+      ...st.slots[si],
+      range: rangeVal,
+      total: isNaN(total) ? 0 : total,
+      enKo:  isNaN(enKo)  ? 0 : enKo,
+    };
   }
 }
 
-/* =====================================================
-   합격 토글
-===================================================== */
-function togglePass(sid, pi, checked) {
+/* ── [7] 시험 슬롯 합격 체크 ── */
+function onSlotPassChange(sid, si, checked) {
+  const st = students.find(s => s.id === sid);
+  if (!st) return;
+
+  const sl = st.slots[si];
+  if (!sl || !sl.range) {
+    // 범위 없으면 체크 취소
+    document.getElementById(`pass_${sid}_${si}`).checked = false;
+    return;
+  }
+
+  if (checked) {
+    // 합격 처리: 합격 슬롯으로 이동
+    st.passSlots.push({ range: sl.range, date: new Date().toISOString(), passed: true });
+    // 최대 7개 초과 시 가장 오래된 것 제거
+    if (st.passSlots.length > MAX_PASS) st.passSlots.shift();
+    // 슬롯 초기화
+    st.slots[si] = { range:'', total:0, enKo:0, passed:false };
+  } else {
+    st.slots[si].passed = false;
+  }
+
+  saveData();
+  renderAll();
+}
+
+/* ── 합격 기록 토글 ── */
+function togglePassSlot(sid, pi, checked) {
   const st = students.find(s => s.id === sid);
   if (!st) return;
   st.passSlots[pi].passed = checked;
-
   const psEl = document.getElementById(`ps_${sid}_${pi}`);
   if (psEl) psEl.classList.toggle('unchecked', !checked);
   saveData();
 }
 
-/* =====================================================
-   삭제
-===================================================== */
+/* ── 삭제 ── */
 function askDelete(sid) {
   const st = students.find(s => s.id === sid);
   if (!st) return;
   deleteTargetId = sid;
   document.getElementById('deleteModalDesc').textContent =
-    `"${st.name}" 학생의 모든 정보가 삭제됩니다. 계속하시겠습니까?`;
+    `"${st.name}" 학생의 모든 정보가 삭제됩니다.\n계속하시겠습니까?`;
   document.getElementById('deleteModal').classList.add('show');
 }
 function confirmDelete() {
@@ -700,48 +733,7 @@ function confirmDelete() {
   saveData();
 }
 
-/* =====================================================
-   범위 파싱 & 단어 추출
-===================================================== */
-function parseRange(str) {
-  if (!str || !str.trim()) return null;
-  const parts = str.split(',').map(s => s.trim()).filter(Boolean);
-  const days = new Set();
-  for (const part of parts) {
-    if (part.includes('-')) {
-      const [a, b] = part.split('-').map(Number);
-      if (isNaN(a) || isNaN(b) || a > b) return null;
-      for (let i = a; i <= b; i++) days.add(i);
-    } else {
-      const n = Number(part);
-      if (isNaN(n) || n <= 0) return null;
-      days.add(n);
-    }
-  }
-  return [...days].sort((a,b) => a-b);
-}
-
-function getWordsFromDays(db, dayNums) {
-  const words = [];
-  dayNums.forEach(n => {
-    const day = db.days.find(d => d.day === n);
-    if (day) day.words.forEach(w => words.push({...w, day: n}));
-  });
-  return words;
-}
-
-function shuffle(arr) {
-  const a = [...arr];
-  for (let i = a.length-1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i+1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-
-/* =====================================================
-   인쇄
-===================================================== */
+/* ── 인쇄 ── */
 async function doPrint(mode) {
   collectAllInputs();
   saveData();
@@ -757,13 +749,12 @@ async function doPrint(mode) {
     return;
   }
 
-  // 각 학생별 시험지 생성
   const allPages = [];
   for (const st of targets) {
     const db = await getVocaDB(st.vocaId);
     if (!db) continue;
-    const stPages = await buildStudentPages(st, db);
-    allPages.push({ st, pages: stPages });
+    const stPages = buildStudentPages(st, db);
+    if (stPages.length > 0) allPages.push({ st, pages: stPages });
   }
 
   if (allPages.length === 0) {
@@ -771,48 +762,46 @@ async function doPrint(mode) {
     return;
   }
 
-  // 인쇄 HTML 생성
-  const printEl = document.getElementById('printArea');
-  printEl.innerHTML = buildPrintHTML(allPages, mode);
-
+  document.getElementById('printArea').innerHTML = buildPrintHTML(allPages, mode);
   window.print();
-
   showDoneModal('학생 시험 목록이 저장되었으며,\n모든 시험지가 프린터로 전송되었습니다.');
 }
 
-async function buildStudentPages(st, db) {
-  const pages = []; // [{questions, isAnswer, label}]
-  const activeSlots = st.slots.filter(sl => sl.range && sl.total > 0);
-
+function buildStudentPages(st, db) {
+  const pages = [];
+  // passed=false인 슬롯만 출력 대상
+  const activeSlots = st.slots.filter(sl => sl.range && sl.total > 0 && !sl.passed);
   for (const sl of activeSlots) {
     const days = parseRange(sl.range);
     if (!days) continue;
     const pool = getWordsFromDays(db, days);
-    if (pool.length === 0) continue;
+    if (!pool.length) continue;
     const enKoCount = Math.min(sl.enKo || 0, sl.total);
     const koEnCount = sl.total - enKoCount;
-    const shuffled = shuffle(pool);
+    const shuffled  = shuffle(pool);
     const enKoWords = shuffled.slice(0, enKoCount).map(w => ({...w, direction:'enKo'}));
     const koEnWords = shuffled.slice(enKoCount, enKoCount + koEnCount).map(w => ({...w, direction:'koEn'}));
-    const questions = shuffle([...enKoWords, ...koEnWords]);
-    pages.push({ questions, slot: sl });
+    pages.push({ questions: shuffle([...enKoWords, ...koEnWords]), slot: sl });
   }
   return pages;
 }
 
+/* ── 인쇄 HTML 빌드 ── */
 function buildPrintHTML(allPages, mode) {
+  /* [6] 배경 흰색 명시 */
   let html = `
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&family=DM+Mono:wght@400;500&display=swap');
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    body, html { background: #fff !important; }
     .ep {
       width: 210mm; height: 297mm;
       padding: 10mm 12mm 9mm 12mm;
       font-family: 'Noto Sans KR', sans-serif;
+      background: #fff !important;
       display: flex; flex-direction: column;
       overflow: hidden;
-      page-break-after: always;
-      page-break-inside: avoid;
+      page-break-after: always; page-break-inside: avoid;
       position: relative;
     }
     .ep.last-ep { page-break-after: auto; }
@@ -820,6 +809,7 @@ function buildPrintHTML(allPages, mode) {
       position: absolute; top: 6px; right: 10px;
       font-size: 9px; background: #8b2e2e; color: #fff;
       padding: 2px 7px; border-radius: 2px; font-weight: 700;
+      -webkit-print-color-adjust: exact; print-color-adjust: exact;
     }
     .ep-header {
       display: flex; align-items: stretch;
@@ -837,6 +827,7 @@ function buildPrintHTML(allPages, mode) {
     }
     .ep-h-mid .hl { font-size: 8px; font-weight: 700; color: #888; letter-spacing: 0.06em; }
     .ep-h-mid .hv { font-size: 12px; font-weight: 500; }
+    /* [8] 우측 헤더: 범위(위) / 이름(아래) */
     .ep-h-right {
       width: 180px; display: flex; flex-direction: column; font-size: 11px;
     }
@@ -853,15 +844,18 @@ function buildPrintHTML(allPages, mode) {
     table {
       width: 100%; border-collapse: collapse; table-layout: fixed;
       border: 2px solid #111; height: 100%;
+      background: #fff !important;
     }
     th, td {
       border: 0.6px solid #999; font-size: 13px;
       padding: 0 6px; line-height: 1.3; overflow: hidden;
+      background: #fff !important;
     }
     th {
-      background: #edeae2; text-align: center; font-weight: 700;
+      background: #edeae2 !important; text-align: center; font-weight: 700;
       font-size: 10px; letter-spacing: 0.05em;
       padding: 3px 4px; border-bottom: 1.5px solid #888; height: 20px;
+      -webkit-print-color-adjust: exact; print-color-adjust: exact;
     }
     .cn { width: 44px; }
     .cw { width: 42%; }
@@ -880,50 +874,43 @@ function buildPrintHTML(allPages, mode) {
     }
   </style>`;
 
-  // 모든 페이지 목록 생성
-  const epList = []; // {html, isAnswer}
-
+  const epList = [];
   for (const { st, pages } of allPages) {
-    if (pages.length === 0) continue;
-    // 학생별로 슬롯 문항 합산
+    if (!pages.length) continue;
     const allQ = [];
     pages.forEach(p => allQ.push(...p.questions));
 
-    // 50개 단위 페이지 분할
+    // 슬롯별 범위 문자열 (헤더에 표시)
+    const rangeStr = pages.map(p => p.slot.range).join(', ');
+
     for (let i = 0; i < allQ.length; i += 50) {
       const chunk = allQ.slice(i, i + 50);
       while (chunk.length < 50) chunk.push(null);
       const pi = Math.floor(i / 50);
-      const totalPages = Math.ceil(allQ.length / 50);
-      const label = totalPages > 1 ? `${pi+1}` : '';
-
-      // 문제지
-      epList.push({ html: makeEP(chunk, pi, st, false, label), isAnswer: false });
-      // 답지
-      epList.push({ html: makeEP(chunk, pi, st, true,  label), isAnswer: true });
+      const totalPg = Math.ceil(allQ.length / 50);
+      const label = totalPg > 1 ? `${pi+1}` : '';
+      epList.push({ html: makeEP(chunk, pi, st, false, label, rangeStr), isAnswer: false });
+      epList.push({ html: makeEP(chunk, pi, st, true,  label, rangeStr), isAnswer: true  });
     }
   }
 
-  // mode에 따라 필터
   let filtered;
   if (mode === 'question')    filtered = epList.filter(e => !e.isAnswer);
   else if (mode === 'answer') filtered = epList.filter(e => e.isAnswer);
-  else                        filtered = epList; // all: 문제+답지 교대로 이미 정렬됨
+  else                        filtered = epList;
 
-  // 마지막 페이지에 last-ep 적용
-  const htmlParts = filtered.map((e, idx) => {
-    if (idx === filtered.length - 1) {
-      return e.html.replace('class="ep"', 'class="ep last-ep"');
-    }
-    return e.html;
-  });
+  const htmlParts = filtered.map((e, idx) =>
+    idx === filtered.length - 1
+      ? e.html.replace('class="ep"', 'class="ep last-ep"')
+      : e.html
+  );
 
   return html + htmlParts.join('');
 }
 
-function makeEP(slots, pageIndex, st, isAnswer, pageLabel) {
-  const left  = slots.slice(0, 25);
-  const right = slots.slice(25, 50);
+function makeEP(slots, pageIndex, st, isAnswer, pageLabel, rangeStr) {
+  const left     = slots.slice(0, 25);
+  const right    = slots.slice(25, 50);
   const startNum = pageIndex * 50 + 1;
   const typeLabel = isAnswer ? '답지' : '문제지';
   const fullLabel = pageLabel ? `${typeLabel} ${pageLabel}` : typeLabel;
@@ -935,11 +922,12 @@ function makeEP(slots, pageIndex, st, isAnswer, pageLabel) {
       <div class="ep-h-left">${esc(st.vocaTitle)}</div>
       <div class="ep-h-mid">
         <div class="hl">ACADEMY</div>
-        <div class="hv">${esc('')}</div>
+        <div class="hv"></div>
       </div>
+      <!-- [8] 위: 범위, 아래: 이름 -->
       <div class="ep-h-right">
+        <div class="hr"><span class="hk">범위</span><span>Day ${esc(rangeStr)}</span></div>
         <div class="hr"><span class="hk">이름</span><span>${esc(st.name)}</span></div>
-        <div class="hr"><span class="hk">반</span><span>${esc(st.class || '')}</span></div>
       </div>
     </div>
     <div class="ep-body">
@@ -973,9 +961,43 @@ function makeTable(half, startNum, isAnswer) {
   </table>`;
 }
 
-/* =====================================================
-   유틸
-===================================================== */
+/* ── 유틸 ── */
+function parseRange(str) {
+  if (!str || !str.trim()) return null;
+  const parts = str.split(',').map(s => s.trim()).filter(Boolean);
+  const days  = new Set();
+  for (const part of parts) {
+    if (part.includes('-')) {
+      const [a, b] = part.split('-').map(Number);
+      if (isNaN(a) || isNaN(b) || a > b) return null;
+      for (let i = a; i <= b; i++) days.add(i);
+    } else {
+      const n = Number(part);
+      if (isNaN(n) || n <= 0) return null;
+      days.add(n);
+    }
+  }
+  return [...days].sort((a,b) => a-b);
+}
+
+function getWordsFromDays(db, dayNums) {
+  const words = [];
+  dayNums.forEach(n => {
+    const day = db.days.find(d => d.day === n);
+    if (day) day.words.forEach(w => words.push({...w, day: n}));
+  });
+  return words;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i+1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 function esc(str) {
   if (!str) return '';
   return String(str)
