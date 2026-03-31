@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>학생별 출제</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1714;
+    --paper: #f5f0e8;
+    --accent: #8b2e2e;
+    --line: #ccc4b0;
+    --muted: #7a7060;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 28px 48px 24px;
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+    border-bottom: 4px solid var(--accent);
+  }
+  .header-logo { font-size: 36px; font-weight: 900; letter-spacing: 0.04em; line-height: 1; }
+  .header-rule { width: 1px; height: 34px; background: #444; flex-shrink: 0; }
+  .header-desc { font-size: 14px; color: #aaa49a; font-weight: 300; line-height: 1.6; flex: 1; }
+  .header-back {
+    color: #aaa49a; font-size: 13px; text-decoration: none;
+    font-weight: 300; white-space: nowrap;
+  }
+  main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 60px 24px;
+    text-align: center;
+  }
+  .placeholder-icon { font-size: 52px; }
+  .placeholder-title { font-size: 22px; font-weight: 700; }
+  .placeholder-desc { font-size: 14px; color: var(--muted); line-height: 1.8; }
+  footer {
+    text-align: center; font-size: 12px; color: var(--muted);
+    padding: 24px; border-top: 1px solid var(--line);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div><div class="header-logo">Premium Voca</div></div>
+  <div class="header-rule"></div>
+  <div class="header-desc">학생별 출제</div>
+  <a href="index.html" class="header-back">← 홈으로</a>
+</header>
+
+<main>
+  <div class="placeholder-icon">🚧</div>
+  <div class="placeholder-title">준비 중입니다</div>
+  <div class="placeholder-desc">
+    학생별 출제 기능은 현재 개발 중입니다.<br>
+    곧 만나볼 수 있습니다.
+  </div>
+</main>
+
+<footer>Premium Voca Exam System &nbsp;·&nbsp; Denzel0304</footer>
+
+</body>
+</html>
