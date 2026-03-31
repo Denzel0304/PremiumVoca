@@ -86,12 +86,12 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--paper); color:
 .exam-header-left {
   flex: 1;
   padding: 0 14px;
-  font-size: 17px;
+  font-size: 21px;
   font-weight: 700;
   border-right: 1.5px solid #111;
   display: flex;
   align-items: center;
-  justify-content: center;  /* [5] 중앙 정렬 */
+  justify-content: center;
   text-align: center;
 }
 .exam-header-center {
@@ -295,6 +295,26 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--paper); color:
 
 <div id="preview"></div>
 
+<!-- 커스텀 PDF 저장 안내 모달 -->
+<div id="pdfGuideModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:9999;align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:6px;padding:36px 40px;max-width:400px;width:90%;box-shadow:0 8px 40px rgba(0,0,0,0.25);font-family:'Noto Sans KR',sans-serif;">
+    <div style="font-size:22px;margin-bottom:6px;">📄</div>
+    <div style="font-size:17px;font-weight:700;color:#1a1714;margin-bottom:16px;">PDF 저장 안내</div>
+    <div style="font-size:14px;color:#555;line-height:1.9;margin-bottom:24px;">
+      저장 대상: <strong id="pdfGuideTarget" style="color:#8b2e2e;"></strong><br>
+      확인을 누르면 인쇄 창이 열립니다.<br>
+      프린터 목록에서<br>
+      <strong>"Microsoft Print to PDF"</strong> 또는<br>
+      <strong>"PDF로 저장"</strong>을 선택하시면<br>
+      PDF 파일로 저장됩니다.
+    </div>
+    <div style="display:flex;gap:10px;justify-content:flex-end;">
+      <button onclick="closePdfGuide(false)" style="padding:10px 22px;border:1px solid #ccc;background:#fff;border-radius:3px;font-size:14px;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">취소</button>
+      <button id="pdfGuideMode" onclick="closePdfGuide(true)" style="padding:10px 22px;border:none;background:#8b2e2e;color:#fff;border-radius:3px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;">확인</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const raw = sessionStorage.getItem('examPayload');
 if (!raw) { alert('출제 데이터가 없습니다.'); location.href = 'index.html'; }
@@ -451,18 +471,21 @@ function doPrint(mode) {
   setTimeout(() => restoreVisibility(), 600);
 }
 
-// [6][8][4] PDF 저장 — 안내 확인창 먼저 표시
+// PDF 저장 — 커스텀 안내창 (브라우저 confirm 도메인 표시 우회)
 function savePdf(mode) {
   const modeLabel = mode === 'all' ? '문제지 + 답지' : mode === 'question' ? '문제지' : '답지';
-  const ok = confirm(
-    `📄 PDF 저장 안내\n\n` +
-    `저장 대상: ${modeLabel}\n\n` +
-    `확인을 누르면 인쇄 창이 열립니다.\n` +
-    `프린터 목록에서 "Microsoft Print to PDF" 또는\n` +
-    `"PDF로 저장"을 선택하시면 PDF로 저장됩니다.`
-  );
-  if (!ok) return;
 
+  // 커스텀 모달 표시
+  document.getElementById('pdfGuideTarget').textContent = modeLabel;
+  document.getElementById('pdfGuideModal').style.display = 'flex';
+  document.getElementById('pdfGuideMode').dataset.mode = mode;
+}
+
+function closePdfGuide(confirmed) {
+  const modal = document.getElementById('pdfGuideModal');
+  const mode = document.getElementById('pdfGuideMode').dataset.mode;
+  modal.style.display = 'none';
+  if (!confirmed) return;
   applyVisibility(mode);
   markLastPrintPage(mode);
   setTimeout(() => {
