@@ -3,79 +3,993 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>학생별 출제</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<title>학생별 출제 — Premium Voca</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --ink: #1a1714;
-    --paper: #f5f0e8;
-    --accent: #8b2e2e;
-    --line: #ccc4b0;
-    --muted: #7a7060;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'Noto Sans KR', sans-serif;
-    background: var(--paper);
-    color: var(--ink);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-  header {
-    background: var(--ink);
-    color: var(--paper);
-    padding: 28px 48px 24px;
-    display: flex;
-    align-items: flex-end;
-    gap: 20px;
-    border-bottom: 4px solid var(--accent);
-  }
-  .header-logo { font-size: 36px; font-weight: 900; letter-spacing: 0.04em; line-height: 1; }
-  .header-rule { width: 1px; height: 34px; background: #444; flex-shrink: 0; }
-  .header-desc { font-size: 14px; color: #aaa49a; font-weight: 300; line-height: 1.6; flex: 1; }
-  .header-back {
-    color: #aaa49a; font-size: 13px; text-decoration: none;
-    font-weight: 300; white-space: nowrap;
-  }
-  main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    padding: 60px 24px;
-    text-align: center;
-  }
-  .placeholder-icon { font-size: 52px; }
-  .placeholder-title { font-size: 22px; font-weight: 700; }
-  .placeholder-desc { font-size: 14px; color: var(--muted); line-height: 1.8; }
-  footer {
-    text-align: center; font-size: 12px; color: var(--muted);
-    padding: 24px; border-top: 1px solid var(--line);
-  }
+:root {
+  --ink: #1a1714;
+  --paper: #f5f0e8;
+  --paper2: #ede8dc;
+  --accent: #8b2e2e;
+  --accent2: #2e6b3e;
+  --line: #ccc4b0;
+  --muted: #7a7060;
+  --card: #faf7f2;
+  --pass-bg: #eaf3ec;
+  --pass-border: #a8d5b0;
+  --slot-bg: #fff;
+  --slot-border: #ccc4b0;
+  --shadow: 0 2px 12px rgba(26,23,20,0.10);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans KR', sans-serif; background: var(--paper); color: var(--ink); min-height: 100vh; }
+
+/* ── 헤더 ── */
+header {
+  background: var(--ink); color: var(--paper);
+  padding: 18px 32px;
+  display: flex; align-items: center; gap: 16px;
+  border-bottom: 4px solid var(--accent);
+  position: sticky; top: 0; z-index: 200;
+}
+.header-logo { font-size: 22px; font-weight: 900; letter-spacing: 0.04em; }
+.header-rule { width: 1px; height: 28px; background: #444; flex-shrink: 0; }
+.header-desc { font-size: 13px; color: #aaa49a; font-weight: 300; }
+.hsp { flex: 1; }
+.hbtn {
+  padding: 8px 16px; border-radius: 3px; font-size: 13px; font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif; cursor: pointer; border: none;
+  white-space: nowrap; transition: all 0.15s;
+}
+.hbtn-outline { background: transparent; border: 1px solid #555; color: #fff; }
+.hbtn-outline:hover { background: #333; }
+.hbtn-save { background: #444; color: #fff; }
+.hbtn-save:hover { background: #222; }
+.hbtn-print { background: var(--accent); color: #fff; }
+.hbtn-print:hover { background: #6e2222; }
+.hbtn-q { background: transparent; border: 1px solid #555; color: #ccc; }
+.hbtn-q:hover { background: #333; }
+
+/* ── 필터 바 ── */
+#filterBar {
+  background: #fff; border-bottom: 1px solid var(--line);
+  padding: 10px 24px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+}
+#filterBar label { font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: 0.06em; }
+#classFilter {
+  font-family: 'Noto Sans KR', sans-serif; font-size: 13px;
+  padding: 5px 10px; border: 1px solid var(--line); border-radius: 3px;
+  background: #fff; color: var(--ink); outline: none;
+}
+.filter-count { font-size: 12px; color: var(--muted); margin-left: 8px; }
+
+/* ── 학생 추가 폼 ── */
+#addBar {
+  background: var(--paper2); border-bottom: 2px solid var(--line);
+  padding: 12px 24px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+}
+#addBar input, #addBar select {
+  font-family: 'Noto Sans KR', sans-serif; font-size: 13px;
+  padding: 7px 10px; border: 1px solid var(--line); border-radius: 3px;
+  background: #fff; color: var(--ink); outline: none;
+}
+#addBar input:focus, #addBar select:focus { border-color: var(--accent); }
+#addBar input[type="text"] { width: 130px; }
+#classInput { width: 110px; }
+#addBar select { width: 200px; }
+.abtn {
+  padding: 7px 18px; border: none; border-radius: 3px; font-size: 13px; font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif; cursor: pointer;
+}
+.abtn-add { background: var(--accent); color: #fff; }
+.abtn-add:hover { background: #6e2222; }
+
+/* ── 메인 테이블 영역 ── */
+#tableWrap {
+  overflow-x: auto;
+  padding: 20px 24px 40px;
+}
+
+/* ── 학생 카드 리스트 ── */
+#studentList { display: flex; flex-direction: column; gap: 10px; min-width: 1400px; }
+
+/* ── 컬럼 헤더 ── */
+.list-header {
+  display: grid;
+  grid-template-columns: 36px 110px 160px 90px 4px 350px 4px 1fr;
+  align-items: center;
+  padding: 0 10px;
+  gap: 0;
+}
+.list-header .lh { font-size: 10px; font-weight: 700; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; padding: 0 6px; }
+.lh-pass { text-align: center; }
+.lh-slot { text-align: center; }
+.col-div { background: var(--line); width: 1px; height: 20px; }
+
+/* ── 학생 행 카드 ── */
+.student-card {
+  background: #fff; border: 1px solid var(--line); border-radius: 4px;
+  box-shadow: var(--shadow);
+  display: grid;
+  grid-template-columns: 36px 110px 160px 90px 4px 350px 4px 1fr;
+  align-items: stretch;
+  min-height: 80px;
+  transition: border-color 0.15s;
+}
+.student-card:hover { border-color: #b0a898; }
+.student-card.filtered-out { display: none; }
+
+/* 체크 열 */
+.col-check {
+  display: flex; align-items: center; justify-content: center;
+  padding: 8px 0; border-right: 1px solid var(--line);
+}
+.col-check input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--accent); cursor: pointer; }
+
+/* 이름 열 */
+.col-name {
+  padding: 8px 10px; border-right: 1px solid var(--line);
+  display: flex; flex-direction: column; justify-content: center; gap: 4px;
+}
+.name-text { font-size: 14px; font-weight: 700; }
+.class-badge {
+  display: inline-block; font-size: 10px; background: var(--ink); color: #fff;
+  padding: 1px 7px; border-radius: 10px; font-weight: 500;
+}
+.btn-del {
+  font-size: 10px; color: #c0392b; background: none; border: none;
+  cursor: pointer; padding: 0; text-align: left; margin-top: 2px;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+.btn-del:hover { text-decoration: underline; }
+
+/* 단어장 열 */
+.col-voca {
+  padding: 8px 10px; border-right: 1px solid var(--line);
+  display: flex; align-items: center;
+  font-size: 12px; color: var(--muted); line-height: 1.4;
+}
+
+/* 반 열 */
+.col-class {
+  padding: 8px 8px; border-right: 1px solid var(--line);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; color: var(--muted);
+}
+
+/* 구분선 열 */
+.col-divider { background: var(--line); }
+
+/* ── 합격 슬롯 영역 ── */
+.col-pass {
+  padding: 6px 8px; border-right: 1px solid var(--line);
+  display: flex; align-items: center; gap: 5px; flex-wrap: nowrap; overflow-x: auto;
+}
+.pass-slot {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  background: var(--pass-bg); border: 1px solid var(--pass-border);
+  border-radius: 3px; padding: 4px 6px; min-width: 42px; flex-shrink: 0;
+}
+.pass-slot.unchecked { background: #fff8f0; border-color: #e0b090; }
+.pass-slot input[type="checkbox"] { width: 14px; height: 14px; accent-color: var(--accent2); cursor: pointer; }
+.pass-range {
+  font-size: 10px; font-family: 'DM Mono', monospace;
+  color: var(--accent2); font-weight: 700; white-space: nowrap;
+}
+.pass-slot.unchecked .pass-range { color: #c0392b; }
+
+/* ── 시험 슬롯 영역 ── */
+.col-slots {
+  padding: 6px 8px;
+  display: flex; align-items: center; gap: 6px; overflow-x: auto;
+}
+.exam-slot {
+  display: flex; flex-direction: column; gap: 3px;
+  background: var(--slot-bg); border: 1px solid var(--slot-border);
+  border-radius: 3px; padding: 5px 7px; min-width: 120px; flex-shrink: 0;
+}
+.exam-slot.empty { border-style: dashed; background: #fafaf8; opacity: 0.7; }
+.slot-label { font-size: 9px; font-weight: 700; color: var(--muted); letter-spacing: 0.08em; }
+.slot-inp {
+  font-family: 'DM Mono', monospace; font-size: 12px;
+  border: 1px solid var(--line); border-radius: 2px;
+  padding: 3px 5px; width: 100%; background: #fff; color: var(--ink); outline: none;
+}
+.slot-inp:focus { border-color: var(--accent); }
+.slot-inp.err { border-color: #c0392b; background: #fff5f5; }
+.slot-row { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+.slot-auto {
+  font-size: 11px; color: var(--accent2); font-weight: 700;
+  padding: 3px 5px; background: #eaf3ec; border-radius: 2px; text-align: center;
+  border: 1px solid var(--pass-border);
+}
+.slot-err { font-size: 9px; color: #c0392b; margin-top: 1px; display: none; }
+
+/* ── 빈 상태 ── */
+#emptyState {
+  text-align: center; padding: 80px 24px; color: var(--muted);
+  display: none;
+}
+#emptyState .ei { font-size: 48px; margin-bottom: 16px; }
+#emptyState p { font-size: 15px; line-height: 1.8; }
+
+/* ── 모달: 삭제 확인 ── */
+.modal-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.5); z-index: 9999;
+  align-items: center; justify-content: center;
+}
+.modal-overlay.show { display: flex; }
+.modal-box {
+  background: #fff; border-radius: 6px; padding: 36px 40px;
+  max-width: 380px; width: 90%;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.25);
+  font-family: 'Noto Sans KR', sans-serif;
+}
+.modal-title { font-size: 17px; font-weight: 700; margin-bottom: 12px; }
+.modal-desc { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 24px; }
+.modal-btns { display: flex; gap: 10px; justify-content: flex-end; }
+.mbtn {
+  padding: 9px 20px; border-radius: 3px; font-size: 13px; font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif; cursor: pointer; border: none;
+}
+.mbtn-cancel { background: #eee; color: var(--ink); border: 1px solid var(--line); }
+.mbtn-del { background: #c0392b; color: #fff; }
+.mbtn-ok { background: var(--accent); color: #fff; }
+
+/* ── 인쇄 ── */
+@media print {
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  header, #filterBar, #addBar, #tableWrap { display: none !important; }
+  #printArea { display: block !important; }
+}
+#printArea { display: none; }
 </style>
 </head>
 <body>
 
+<!-- 헤더 -->
 <header>
-  <div><div class="header-logo">Premium Voca</div></div>
+  <div class="header-logo">Premium Voca</div>
   <div class="header-rule"></div>
   <div class="header-desc">학생별 출제</div>
-  <a href="index.html" class="header-back">← 홈으로</a>
+  <div class="hsp"></div>
+  <button class="hbtn hbtn-q" onclick="location.href='index.html'">← 홈으로</button>
+  <div style="width:8px"></div>
+  <button class="hbtn hbtn-save" onclick="saveData(true)">💾 저장</button>
+  <div style="width:4px"></div>
+  <button class="hbtn hbtn-print" onclick="doPrint('all')">🖨 모두 인쇄</button>
+  <button class="hbtn hbtn-outline" onclick="doPrint('question')" style="margin-left:4px;">문제지 인쇄</button>
+  <button class="hbtn hbtn-outline" onclick="doPrint('answer')" style="margin-left:4px;">답지 인쇄</button>
 </header>
 
-<main>
-  <div class="placeholder-icon">🚧</div>
-  <div class="placeholder-title">준비 중입니다</div>
-  <div class="placeholder-desc">
-    학생별 출제 기능은 현재 개발 중입니다.<br>
-    곧 만나볼 수 있습니다.
+<!-- 필터 바 -->
+<div id="filterBar">
+  <label>반 필터</label>
+  <select id="classFilter" onchange="applyFilter()">
+    <option value="">전체</option>
+  </select>
+  <span class="filter-count" id="filterCount"></span>
+</div>
+
+<!-- 학생 추가 바 -->
+<div id="addBar">
+  <input type="text" id="newName" placeholder="학생 이름" maxlength="10">
+  <input type="text" id="classInput" placeholder="반 (직접입력 또는 선택)" maxlength="20" list="classList">
+  <datalist id="classList"></datalist>
+  <select id="newVoca">
+    <option value="">— 단어장 선택 —</option>
+  </select>
+  <button class="abtn abtn-add" onclick="addStudent()">+ 학생 추가</button>
+  <span id="addErr" style="font-size:12px;color:#c0392b;display:none;"></span>
+</div>
+
+<!-- 테이블 -->
+<div id="tableWrap">
+  <div class="list-header">
+    <div class="lh" style="text-align:center;">출력</div>
+    <div class="lh">이름</div>
+    <div class="lh">단어장</div>
+    <div class="lh" style="text-align:center;">반</div>
+    <div></div>
+    <div class="lh lh-pass" style="padding-left:8px;">합격 기록 (최대 7)</div>
+    <div></div>
+    <div class="lh lh-slot" style="padding-left:8px;">시험 슬롯 (5개)</div>
   </div>
-</main>
+  <div id="studentList"></div>
+  <div id="emptyState">
+    <div class="ei">👤</div>
+    <p>등록된 학생이 없습니다.<br>위에서 학생을 추가하세요.</p>
+  </div>
+</div>
 
-<footer>Premium Voca Exam System &nbsp;·&nbsp; Denzel0304</footer>
+<!-- 삭제 확인 모달 -->
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal-box">
+    <div class="modal-title">학생 삭제</div>
+    <div class="modal-desc" id="deleteModalDesc"></div>
+    <div class="modal-btns">
+      <button class="mbtn mbtn-cancel" onclick="closeModal('deleteModal')">취소</button>
+      <button class="mbtn mbtn-del" onclick="confirmDelete()">삭제</button>
+    </div>
+  </div>
+</div>
 
+<!-- 완료 모달 -->
+<div class="modal-overlay" id="doneModal">
+  <div class="modal-box">
+    <div class="modal-title">✅ 완료</div>
+    <div class="modal-desc" id="doneModalDesc"></div>
+    <div class="modal-btns">
+      <button class="mbtn mbtn-ok" onclick="closeModal('doneModal')">확인</button>
+    </div>
+  </div>
+</div>
+
+<!-- 인쇄 영역 -->
+<div id="printArea"></div>
+
+<script>
+/* =====================================================
+   데이터 & 상태
+===================================================== */
+const STORAGE_KEY = 'premiumVoca_students_v1';
+const MAX_PASS = 7;
+const SLOT_COUNT = 5;
+
+let vocaIndex = [];   // [{id, title, file}]
+let vocaDBs   = {};   // {id: vocaDB}
+let students  = [];   // 학생 배열 (앞 = 최신)
+let deleteTargetId = null;
+
+/* =====================================================
+   초기화
+===================================================== */
+window.addEventListener('DOMContentLoaded', async () => {
+  await loadVocaIndex();
+  loadData();
+  renderAll();
+});
+
+async function loadVocaIndex() {
+  try {
+    const res = await fetch('data/index.json?v=' + Date.now());
+    vocaIndex = await res.json();
+    const sel = document.getElementById('newVoca');
+    vocaIndex.forEach(v => {
+      const opt = document.createElement('option');
+      opt.value = v.id; opt.textContent = v.title;
+      sel.appendChild(opt);
+    });
+  } catch(e) { console.error('단어장 목록 로드 실패', e); }
+}
+
+async function getVocaDB(vocaId) {
+  if (vocaDBs[vocaId]) return vocaDBs[vocaId];
+  const entry = vocaIndex.find(v => v.id === vocaId);
+  if (!entry) return null;
+  try {
+    const res = await fetch(entry.file + '?v=' + Date.now());
+    vocaDBs[vocaId] = await res.json();
+    return vocaDBs[vocaId];
+  } catch(e) { return null; }
+}
+
+/* =====================================================
+   로컬스토리지
+===================================================== */
+function saveData(showMsg = false) {
+  // 저장 전 현재 DOM 입력값 수집
+  collectAllInputs();
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(students));
+  if (showMsg) showDoneModal('학생 시험 목록이 저장되었습니다.');
+}
+
+function loadData() {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  students = raw ? JSON.parse(raw) : [];
+}
+
+/* =====================================================
+   DOM → 데이터 수집
+===================================================== */
+function collectAllInputs() {
+  document.querySelectorAll('.student-card').forEach(card => {
+    const sid = card.dataset.sid;
+    const st = students.find(s => s.id === sid);
+    if (!st) return;
+    // 출력 체크
+    st.printCheck = card.querySelector('.print-check').checked;
+    // 슬롯 5개 수집
+    card.querySelectorAll('.exam-slot').forEach((slotEl, i) => {
+      const range = slotEl.querySelector('.inp-range')?.value.trim() || '';
+      const total = parseInt(slotEl.querySelector('.inp-total')?.value) || 0;
+      const enKo  = parseInt(slotEl.querySelector('.inp-enko')?.value) || 0;
+      st.slots[i] = { range, total, enKo };
+    });
+  });
+}
+
+/* =====================================================
+   학생 추가
+===================================================== */
+function addStudent() {
+  const name  = document.getElementById('newName').value.trim();
+  const cls   = document.getElementById('classInput').value.trim();
+  const voca  = document.getElementById('newVoca').value;
+  const errEl = document.getElementById('addErr');
+  errEl.style.display = 'none';
+
+  if (!name) { showAddErr('이름을 입력하세요.'); return; }
+  if (!voca) { showAddErr('단어장을 선택하세요.'); return; }
+
+  const vocaEntry = vocaIndex.find(v => v.id === voca);
+  const st = {
+    id: 'st_' + Date.now(),
+    name,
+    class: cls,
+    vocaId: voca,
+    vocaTitle: vocaEntry ? vocaEntry.title : voca,
+    passSlots: [],   // {range, date}
+    slots: Array(SLOT_COUNT).fill(null).map(() => ({ range:'', total:0, enKo:0 })),
+    printCheck: true,
+  };
+
+  students.unshift(st);  // 최신이 맨 위
+  updateClassList();
+  renderAll();
+  saveData();
+
+  document.getElementById('newName').value = '';
+  document.getElementById('classInput').value = '';
+  document.getElementById('newVoca').value = '';
+}
+function showAddErr(msg) {
+  const el = document.getElementById('addErr');
+  el.textContent = msg; el.style.display = 'inline';
+}
+
+/* =====================================================
+   반 목록 갱신
+===================================================== */
+function updateClassList() {
+  const classes = [...new Set(students.map(s => s.class).filter(Boolean))].sort();
+
+  // datalist
+  const dl = document.getElementById('classList');
+  dl.innerHTML = classes.map(c => `<option value="${c}">`).join('');
+
+  // 필터 select
+  const cf = document.getElementById('classFilter');
+  const cur = cf.value;
+  cf.innerHTML = '<option value="">전체</option>' +
+    classes.map(c => `<option value="${c}" ${c===cur?'selected':''}>${c}</option>`).join('');
+}
+
+/* =====================================================
+   필터
+===================================================== */
+function applyFilter() {
+  const cls = document.getElementById('classFilter').value;
+  let visible = 0;
+  document.querySelectorAll('.student-card').forEach(card => {
+    const st = students.find(s => s.id === card.dataset.sid);
+    const match = !cls || st?.class === cls;
+    card.classList.toggle('filtered-out', !match);
+    if (match) visible++;
+  });
+  document.getElementById('filterCount').textContent =
+    cls ? `${visible}명 표시 중` : `전체 ${students.length}명`;
+}
+
+/* =====================================================
+   렌더링
+===================================================== */
+function renderAll() {
+  const list = document.getElementById('studentList');
+  list.innerHTML = '';
+  document.getElementById('emptyState').style.display =
+    students.length === 0 ? 'block' : 'none';
+
+  students.forEach(st => {
+    const card = buildCard(st);
+    list.appendChild(card);
+  });
+
+  updateClassList();
+  applyFilter();
+}
+
+function buildCard(st) {
+  const card = document.createElement('div');
+  card.className = 'student-card';
+  card.dataset.sid = st.id;
+
+  /* ── 출력 체크 ── */
+  card.innerHTML += `
+    <div class="col-check">
+      <input type="checkbox" class="print-check" ${st.printCheck ? 'checked' : ''}
+        title="오늘 인쇄 대상">
+    </div>`;
+
+  /* ── 이름 + 삭제 ── */
+  card.innerHTML += `
+    <div class="col-name">
+      <div class="name-text">${esc(st.name)}</div>
+      ${st.class ? `<span class="class-badge">${esc(st.class)}</span>` : ''}
+      <button class="btn-del" onclick="askDelete('${st.id}')">✕ 삭제</button>
+    </div>`;
+
+  /* ── 단어장 ── */
+  card.innerHTML += `<div class="col-voca">${esc(st.vocaTitle)}</div>`;
+
+  /* ── 반 ── */
+  card.innerHTML += `<div class="col-class">${esc(st.class || '—')}</div>`;
+
+  /* ── 구분선 ── */
+  card.innerHTML += `<div class="col-divider"></div>`;
+
+  /* ── 합격 슬롯 ── */
+  let passHTML = '<div class="col-pass">';
+  if (st.passSlots.length === 0) {
+    passHTML += `<span style="font-size:11px;color:var(--muted);">없음</span>`;
+  } else {
+    st.passSlots.forEach((ps, pi) => {
+      const checked = ps.passed !== false; // 기본 true
+      passHTML += `
+        <div class="pass-slot ${checked ? '' : 'unchecked'}" id="ps_${st.id}_${pi}">
+          <input type="checkbox" ${checked ? 'checked' : ''}
+            onchange="togglePass('${st.id}', ${pi}, this.checked)"
+            title="${checked ? '합격 — 클릭하면 취소' : '미합격 — 클릭하면 합격 처리'}">
+          <div class="pass-range">${esc(ps.range)}</div>
+        </div>`;
+    });
+  }
+  passHTML += '</div>';
+  card.innerHTML += passHTML;
+
+  /* ── 구분선 ── */
+  card.innerHTML += `<div class="col-divider"></div>`;
+
+  /* ── 시험 슬롯 5개 ── */
+  let slotsHTML = '<div class="col-slots">';
+  for (let i = 0; i < SLOT_COUNT; i++) {
+    const sl = st.slots[i] || { range:'', total:0, enKo:0 };
+    const isEmpty = !sl.range;
+    const koEn = Math.max(0, (sl.total || 0) - (sl.enKo || 0));
+    slotsHTML += `
+      <div class="exam-slot ${isEmpty ? 'empty' : ''}" id="slot_${st.id}_${i}">
+        <div class="slot-label">슬롯 ${i+1}</div>
+        <div>
+          <div class="slot-label" style="margin-bottom:2px;">범위</div>
+          <input class="slot-inp inp-range" type="text" placeholder="예: 1-5"
+            value="${esc(sl.range)}"
+            oninput="onSlotInput('${st.id}',${i})"
+            data-sid="${st.id}" data-si="${i}">
+          <div class="slot-err" id="re_${st.id}_${i}"></div>
+        </div>
+        <div class="slot-row">
+          <div>
+            <div class="slot-label">총 개수</div>
+            <input class="slot-inp inp-total" type="number" min="1" placeholder="개수"
+              value="${sl.total || ''}"
+              oninput="onSlotInput('${st.id}',${i})"
+              data-sid="${st.id}" data-si="${i}">
+          </div>
+          <div>
+            <div class="slot-label">영한</div>
+            <input class="slot-inp inp-enko" type="number" min="0" placeholder="영한"
+              value="${sl.enKo || ''}"
+              oninput="onSlotInput('${st.id}',${i})"
+              data-sid="${st.id}" data-si="${i}">
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:4px;">
+          <span class="slot-label">한영:</span>
+          <span class="slot-auto" id="koen_${st.id}_${i}">${sl.total && sl.enKo !== undefined ? koEn : '—'}</span>
+        </div>
+        <div class="slot-err" id="se_${st.id}_${i}"></div>
+      </div>`;
+  }
+  slotsHTML += '</div>';
+  card.innerHTML += slotsHTML;
+
+  return card;
+}
+
+/* =====================================================
+   슬롯 입력 처리 (실시간 검증 + 한영 자동계산)
+===================================================== */
+async function onSlotInput(sid, si) {
+  const card = document.querySelector(`.student-card[data-sid="${sid}"]`);
+  const slotEl = document.getElementById(`slot_${sid}_${si}`);
+  const rangeInp = slotEl.querySelector('.inp-range');
+  const totalInp = slotEl.querySelector('.inp-total');
+  const enKoInp  = slotEl.querySelector('.inp-enko');
+  const koEnEl   = document.getElementById(`koen_${sid}_${si}`);
+  const seEl     = document.getElementById(`se_${sid}_${si}`);
+  const reEl     = document.getElementById(`re_${sid}_${si}`);
+
+  const rangeVal = rangeInp.value.trim();
+  const total    = parseInt(totalInp.value);
+  const enKo     = parseInt(enKoInp.value);
+
+  // 슬롯 empty 스타일
+  slotEl.classList.toggle('empty', !rangeVal);
+
+  seEl.style.display = 'none';
+  reEl.style.display = 'none';
+  rangeInp.classList.remove('err');
+  totalInp.classList.remove('err');
+  enKoInp.classList.remove('err');
+
+  // 범위 검증
+  const st = students.find(s => s.id === sid);
+  if (rangeVal && st) {
+    const days = parseRange(rangeVal);
+    if (!days) {
+      rangeInp.classList.add('err');
+      reEl.textContent = '범위 형식 오류'; reEl.style.display = 'block';
+    } else {
+      const db = await getVocaDB(st.vocaId);
+      if (db) {
+        const inv = days.filter(n => !db.days.find(d => d.day === n));
+        if (inv.length) {
+          rangeInp.classList.add('err');
+          reEl.textContent = `없는 과: Day ${inv.join(',')}`; reEl.style.display = 'block';
+        } else {
+          const maxWords = getWordsFromDays(db, days).length;
+          if (!isNaN(total) && total > maxWords) {
+            totalInp.classList.add('err');
+            seEl.textContent = `최대 ${maxWords}개`; seEl.style.display = 'block';
+          }
+        }
+      }
+    }
+  }
+
+  // 한영 자동계산
+  if (!isNaN(total) && !isNaN(enKo)) {
+    const koEn = total - enKo;
+    if (enKo > total) {
+      enKoInp.classList.add('err');
+      seEl.textContent = `영한은 ${total}개 이하`; seEl.style.display = 'block';
+      koEnEl.textContent = '—';
+    } else {
+      koEnEl.textContent = koEn >= 0 ? `${koEn}개` : '—';
+    }
+  } else {
+    koEnEl.textContent = '—';
+  }
+
+  // 데이터 동기화
+  if (st) {
+    st.slots[si] = { range: rangeVal, total: isNaN(total) ? 0 : total, enKo: isNaN(enKo) ? 0 : enKo };
+  }
+}
+
+/* =====================================================
+   합격 토글
+===================================================== */
+function togglePass(sid, pi, checked) {
+  const st = students.find(s => s.id === sid);
+  if (!st) return;
+  st.passSlots[pi].passed = checked;
+
+  const psEl = document.getElementById(`ps_${sid}_${pi}`);
+  if (psEl) psEl.classList.toggle('unchecked', !checked);
+  saveData();
+}
+
+/* =====================================================
+   삭제
+===================================================== */
+function askDelete(sid) {
+  const st = students.find(s => s.id === sid);
+  if (!st) return;
+  deleteTargetId = sid;
+  document.getElementById('deleteModalDesc').textContent =
+    `"${st.name}" 학생의 모든 정보가 삭제됩니다. 계속하시겠습니까?`;
+  document.getElementById('deleteModal').classList.add('show');
+}
+function confirmDelete() {
+  students = students.filter(s => s.id !== deleteTargetId);
+  deleteTargetId = null;
+  closeModal('deleteModal');
+  renderAll();
+  saveData();
+}
+
+/* =====================================================
+   범위 파싱 & 단어 추출
+===================================================== */
+function parseRange(str) {
+  if (!str || !str.trim()) return null;
+  const parts = str.split(',').map(s => s.trim()).filter(Boolean);
+  const days = new Set();
+  for (const part of parts) {
+    if (part.includes('-')) {
+      const [a, b] = part.split('-').map(Number);
+      if (isNaN(a) || isNaN(b) || a > b) return null;
+      for (let i = a; i <= b; i++) days.add(i);
+    } else {
+      const n = Number(part);
+      if (isNaN(n) || n <= 0) return null;
+      days.add(n);
+    }
+  }
+  return [...days].sort((a,b) => a-b);
+}
+
+function getWordsFromDays(db, dayNums) {
+  const words = [];
+  dayNums.forEach(n => {
+    const day = db.days.find(d => d.day === n);
+    if (day) day.words.forEach(w => words.push({...w, day: n}));
+  });
+  return words;
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i+1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+/* =====================================================
+   인쇄
+===================================================== */
+async function doPrint(mode) {
+  collectAllInputs();
+  saveData();
+
+  const targets = students.filter(st => {
+    const card = document.querySelector(`.student-card[data-sid="${st.id}"]`);
+    if (!card || card.classList.contains('filtered-out')) return false;
+    return card.querySelector('.print-check')?.checked;
+  });
+
+  if (targets.length === 0) {
+    showDoneModal('인쇄할 학생이 없습니다.\n출력 체크박스를 확인하세요.');
+    return;
+  }
+
+  // 각 학생별 시험지 생성
+  const allPages = [];
+  for (const st of targets) {
+    const db = await getVocaDB(st.vocaId);
+    if (!db) continue;
+    const stPages = await buildStudentPages(st, db);
+    allPages.push({ st, pages: stPages });
+  }
+
+  if (allPages.length === 0) {
+    showDoneModal('생성할 시험지가 없습니다.\n슬롯에 범위와 개수를 입력하세요.');
+    return;
+  }
+
+  // 인쇄 HTML 생성
+  const printEl = document.getElementById('printArea');
+  printEl.innerHTML = buildPrintHTML(allPages, mode);
+
+  window.print();
+
+  showDoneModal('학생 시험 목록이 저장되었으며,\n모든 시험지가 프린터로 전송되었습니다.');
+}
+
+async function buildStudentPages(st, db) {
+  const pages = []; // [{questions, isAnswer, label}]
+  const activeSlots = st.slots.filter(sl => sl.range && sl.total > 0);
+
+  for (const sl of activeSlots) {
+    const days = parseRange(sl.range);
+    if (!days) continue;
+    const pool = getWordsFromDays(db, days);
+    if (pool.length === 0) continue;
+    const enKoCount = Math.min(sl.enKo || 0, sl.total);
+    const koEnCount = sl.total - enKoCount;
+    const shuffled = shuffle(pool);
+    const enKoWords = shuffled.slice(0, enKoCount).map(w => ({...w, direction:'enKo'}));
+    const koEnWords = shuffled.slice(enKoCount, enKoCount + koEnCount).map(w => ({...w, direction:'koEn'}));
+    const questions = shuffle([...enKoWords, ...koEnWords]);
+    pages.push({ questions, slot: sl });
+  }
+  return pages;
+}
+
+function buildPrintHTML(allPages, mode) {
+  let html = `
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&family=DM+Mono:wght@400;500&display=swap');
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    .ep {
+      width: 210mm; height: 297mm;
+      padding: 10mm 12mm 9mm 12mm;
+      font-family: 'Noto Sans KR', sans-serif;
+      display: flex; flex-direction: column;
+      overflow: hidden;
+      page-break-after: always;
+      page-break-inside: avoid;
+      position: relative;
+    }
+    .ep.last-ep { page-break-after: auto; }
+    .ep-label {
+      position: absolute; top: 6px; right: 10px;
+      font-size: 9px; background: #8b2e2e; color: #fff;
+      padding: 2px 7px; border-radius: 2px; font-weight: 700;
+    }
+    .ep-header {
+      display: flex; align-items: stretch;
+      border: 2.5px solid #111; margin-bottom: 5px;
+      flex-shrink: 0; height: 52px;
+    }
+    .ep-h-left {
+      flex: 1; padding: 0 14px; font-size: 18px; font-weight: 700;
+      border-right: 1.5px solid #111;
+      display: flex; align-items: center; justify-content: center; text-align: center;
+    }
+    .ep-h-mid {
+      width: 160px; padding: 0 10px; border-right: 1.5px solid #111;
+      display: flex; flex-direction: column; justify-content: center; gap: 2px;
+    }
+    .ep-h-mid .hl { font-size: 8px; font-weight: 700; color: #888; letter-spacing: 0.06em; }
+    .ep-h-mid .hv { font-size: 12px; font-weight: 500; }
+    .ep-h-right {
+      width: 180px; display: flex; flex-direction: column; font-size: 11px;
+    }
+    .ep-h-right .hr {
+      padding: 0 10px; display: flex; gap: 6px; align-items: center;
+      border-bottom: 1px solid #ccc; flex: 1;
+    }
+    .ep-h-right .hr:last-child { border-bottom: none; }
+    .ep-h-right .hk { font-weight: 700; color: #555; min-width: 32px; font-size: 9px; }
+    .ep-body {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0 6px; flex: 1; min-height: 0;
+    }
+    table {
+      width: 100%; border-collapse: collapse; table-layout: fixed;
+      border: 2px solid #111; height: 100%;
+    }
+    th, td {
+      border: 0.6px solid #999; font-size: 13px;
+      padding: 0 6px; line-height: 1.3; overflow: hidden;
+    }
+    th {
+      background: #edeae2; text-align: center; font-weight: 700;
+      font-size: 10px; letter-spacing: 0.05em;
+      padding: 3px 4px; border-bottom: 1.5px solid #888; height: 20px;
+    }
+    .cn { width: 44px; }
+    .cw { width: 42%; }
+    .td-num {
+      text-align: center; font-size: 14px; font-weight: 700;
+      font-family: 'DM Mono', monospace; white-space: nowrap;
+    }
+    .td-w { font-size: 13px; word-break: break-all; }
+    .td-a { font-size: 13px; }
+    .td-a.blank { color: transparent; }
+    tbody tr { height: calc((100% - 20px) / 25); }
+    @page { size: A4 portrait; margin: 0; }
+    @media print {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+  </style>`;
+
+  // 모든 페이지 목록 생성
+  const epList = []; // {html, isAnswer}
+
+  for (const { st, pages } of allPages) {
+    if (pages.length === 0) continue;
+    // 학생별로 슬롯 문항 합산
+    const allQ = [];
+    pages.forEach(p => allQ.push(...p.questions));
+
+    // 50개 단위 페이지 분할
+    for (let i = 0; i < allQ.length; i += 50) {
+      const chunk = allQ.slice(i, i + 50);
+      while (chunk.length < 50) chunk.push(null);
+      const pi = Math.floor(i / 50);
+      const totalPages = Math.ceil(allQ.length / 50);
+      const label = totalPages > 1 ? `${pi+1}` : '';
+
+      // 문제지
+      epList.push({ html: makeEP(chunk, pi, st, false, label), isAnswer: false });
+      // 답지
+      epList.push({ html: makeEP(chunk, pi, st, true,  label), isAnswer: true });
+    }
+  }
+
+  // mode에 따라 필터
+  let filtered;
+  if (mode === 'question')    filtered = epList.filter(e => !e.isAnswer);
+  else if (mode === 'answer') filtered = epList.filter(e => e.isAnswer);
+  else                        filtered = epList; // all: 문제+답지 교대로 이미 정렬됨
+
+  // 마지막 페이지에 last-ep 적용
+  const htmlParts = filtered.map((e, idx) => {
+    if (idx === filtered.length - 1) {
+      return e.html.replace('class="ep"', 'class="ep last-ep"');
+    }
+    return e.html;
+  });
+
+  return html + htmlParts.join('');
+}
+
+function makeEP(slots, pageIndex, st, isAnswer, pageLabel) {
+  const left  = slots.slice(0, 25);
+  const right = slots.slice(25, 50);
+  const startNum = pageIndex * 50 + 1;
+  const typeLabel = isAnswer ? '답지' : '문제지';
+  const fullLabel = pageLabel ? `${typeLabel} ${pageLabel}` : typeLabel;
+
+  return `
+  <div class="ep">
+    <div class="ep-label">${fullLabel}</div>
+    <div class="ep-header">
+      <div class="ep-h-left">${esc(st.vocaTitle)}</div>
+      <div class="ep-h-mid">
+        <div class="hl">ACADEMY</div>
+        <div class="hv">${esc('')}</div>
+      </div>
+      <div class="ep-h-right">
+        <div class="hr"><span class="hk">이름</span><span>${esc(st.name)}</span></div>
+        <div class="hr"><span class="hk">반</span><span>${esc(st.class || '')}</span></div>
+      </div>
+    </div>
+    <div class="ep-body">
+      ${makeTable(left,  startNum,      isAnswer)}
+      ${makeTable(right, startNum + 25, isAnswer)}
+    </div>
+  </div>`;
+}
+
+function makeTable(half, startNum, isAnswer) {
+  let rows = '';
+  half.forEach((q, i) => {
+    const num   = startNum + i;
+    const qText = q ? (q.direction === 'enKo' ? q.en : q.ko) : '';
+    const aText = q ? (q.direction === 'enKo' ? q.ko : q.en) : '';
+    const ansTd = !q
+      ? `<td class="td-a blank">&nbsp;</td>`
+      : isAnswer
+        ? `<td class="td-a">${esc(aText)}</td>`
+        : `<td class="td-a blank">&nbsp;</td>`;
+    rows += `<tr>
+      <td class="td-num">${q ? num : ''}</td>
+      <td class="td-w">${esc(qText)}</td>
+      ${ansTd}
+    </tr>`;
+  });
+  return `<table>
+    <colgroup><col class="cn"><col class="cw"><col></colgroup>
+    <thead><tr><th class="cn">No.</th><th class="cw">단어</th><th>답</th></tr></thead>
+    <tbody>${rows}</tbody>
+  </table>`;
+}
+
+/* =====================================================
+   유틸
+===================================================== */
+function esc(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function showDoneModal(msg) {
+  document.getElementById('doneModalDesc').textContent = msg;
+  document.getElementById('doneModal').classList.add('show');
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('show');
+}
+</script>
 </body>
 </html>
