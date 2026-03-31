@@ -526,7 +526,7 @@ function buildCard(st) {
         <!-- 범위 -->
         <div class="slot-total-row" style="margin-bottom:2px;">
           <div class="slot-label">범위</div>
-          <input class="slot-inp inp-range" type="text" placeholder="1-5"
+          <input class="slot-inp inp-range" type="text" placeholder=""
             value="${esc(showRange)}" ${isPassed?'disabled':''}
             oninput="onSlotInput('${st.id}',${i})">
           <div class="slot-maxwords" id="mw_${st.id}_${i}"></div>
@@ -648,26 +648,27 @@ async function onSlotInput(sid, si) {
   }
 }
 
-/* ── [3][5] 시험 슬롯 합격 체크 ── */
+/* ── 합격 체크 — 슬롯 초기화 + 좌측 당기기 ── */
 function onSlotPassChange(sid, si, checked) {
   const st = students.find(s => s.id === sid);
   if (!st) return;
 
+  if (!checked) { st.slots[si].passed = false; saveData(); renderAll(); return; }
+
   const sl = st.slots[si];
-  if (checked) {
-    if (!sl || !sl.range) {
-      // 범위 없으면 체크 취소
-      document.getElementById(`pass_${sid}_${si}`).checked = false;
-      return;
-    }
-    // 합격 기록으로 이동
-    st.passSlots.push({ range: sl.range, date: new Date().toISOString() });
-    if (st.passSlots.length > MAX_PASS) st.passSlots.shift();
-    // [3][5] 슬롯 완전히 초기화 (빈칸)
-    st.slots[si] = { range:'', total:0, enKo:0, passed:false };
-  } else {
-    st.slots[si].passed = false;
+  if (!sl || !sl.range) {
+    document.getElementById(`pass_${sid}_${si}`).checked = false;
+    return;
   }
+
+  // [2] 합격 기록으로 이동
+  st.passSlots.push({ range: sl.range, date: new Date().toISOString() });
+  if (st.passSlots.length > MAX_PASS) st.passSlots.shift();
+
+  // [3] 해당 슬롯 제거 후 뒤 슬롯들을 앞으로 당기기
+  st.slots.splice(si, 1);
+  // 5개 유지: 빈 슬롯 추가
+  st.slots.push({ range:'', total:0, enKo:0, passed:false });
 
   saveData();
   renderAll();
@@ -732,24 +733,42 @@ async function doPrint(mode) {
 
   // 폰트·렌더링 대기 후 인쇄
   setTimeout(() => {
-    let printed = false;
+    const iWin = iframe.contentWindow;
 
-    function onBeforePrint() {
-      iframe.contentWindow.removeEventListener('beforeprint', onBeforePrint);
-      printed = true;
+    // 브라우저 표준상 beforeprint/afterprint로는 확인/취소 구분 불가
+    // → window focus 복귀 시점으로 판단:
+    //   인쇄 다이얼로그가 뜨면 메인 윈도우가 blur됨
+    //   다이얼로그 닫히면 focus 복귀 → 그 때 저장+메세지
+    let dialogOpened = false;
+
+    function onBlur() {
+      dialogOpened = true;
+      window.removeEventListener('blur', onBlur);
     }
-    function onAfterPrint() {
-      iframe.contentWindow.removeEventListener('afterprint', onAfterPrint);
-      setTimeout(() => document.body.removeChild(iframe), 300);
-      if (printed) {
+    function onFocus() {
+      window.removeEventListener('focus', onFocus);
+      setTimeout(() => {
+        try { document.body.removeChild(iframe); } catch(e) {}
+      }, 300);
+      if (dialogOpened) {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(students));
         showDoneModal('학생 시험 목록이 저장되었으며,\n모든 시험지가 프린터로 전송되었습니다.');
       }
     }
 
-    iframe.contentWindow.addEventListener('beforeprint', onBeforePrint);
-    iframe.contentWindow.addEventListener('afterprint',  onAfterPrint);
-    iframe.contentWindow.print();
+    window.addEventListener('blur',  onBlur);
+    window.addEventListener('focus', onFocus);
+
+    // afterprint 폴백 (일부 브라우저)
+    iWin.addEventListener('afterprint', () => {
+      window.removeEventListener('blur',  onBlur);
+      window.removeEventListener('focus', onFocus);
+      setTimeout(() => { try { document.body.removeChild(iframe); } catch(e) {} }, 300);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(students));
+      showDoneModal('학생 시험 목록이 저장되었으며,\n모든 시험지가 프린터로 전송되었습니다.');
+    });
+
+    iWin.print();
   }, 600);
 }
 
@@ -836,18 +855,21 @@ function buildPrintHTML(allPages, mode) {
   const epList = [];
   for (const { st, pages } of allPages) {
     if (!pages.length) continue;
-    const allQ = [];
-    pages.forEach(p => allQ.push(...p.questions));
-    const rangeStr = pages.map(p => p.slot.range).join(', ');
 
-    for (let i = 0; i < allQ.length; i += 50) {
-      const chunk = allQ.slice(i, i+50);
-      while (chunk.length < 50) chunk.push(null);
-      const pi = Math.floor(i/50);
-      const totalPg = Math.ceil(allQ.length/50);
-      const label = totalPg > 1 ? `${pi+1}` : '';
-      epList.push({ html: makeEP(chunk,pi,st,false,label,rangeStr), isAnswer:false });
-      epList.push({ html: makeEP(chunk,pi,st,true, label,rangeStr), isAnswer:true  });
+    // [5] 슬롯별로 개별 시험지 생성 — 각 슬롯의 실제 범위를 헤더에 표시
+    for (const page of pages) {
+      const slotRangeStr = page.slot.range;  // 해당 슬롯의 범위만
+      const qs = page.questions;
+
+      for (let i = 0; i < qs.length; i += 50) {
+        const chunk = qs.slice(i, i+50);
+        while (chunk.length < 50) chunk.push(null);
+        const pi = Math.floor(i/50);
+        const totalPg = Math.ceil(qs.length/50);
+        const label = totalPg > 1 ? `${pi+1}` : '';
+        epList.push({ html: makeEP(chunk,pi,st,false,label,slotRangeStr), isAnswer:false });
+        epList.push({ html: makeEP(chunk,pi,st,true, label,slotRangeStr), isAnswer:true  });
+      }
     }
   }
 
