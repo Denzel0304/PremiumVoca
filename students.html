@@ -760,6 +760,9 @@ async function doPrint(mode) {
     return;
   }
 
+  // 인쇄 전 무조건 저장
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(students));
+
   const printHTML = buildPrintHTML(allPages, mode);
 
   // iframe으로 완전히 격리 — 현재 페이지 CSS에 영향 없음
@@ -774,37 +777,8 @@ async function doPrint(mode) {
 
   // 폰트·렌더링 대기 후 인쇄
   setTimeout(() => {
-    const iWin = iframe.contentWindow;
-
-    // 브라우저 표준상 beforeprint/afterprint로는 확인/취소 구분 불가
-    // → window focus 복귀 시점으로 판단:
-    //   인쇄 다이얼로그가 뜨면 메인 윈도우가 blur됨
-    //   다이얼로그 닫히면 focus 복귀 → 그 때 저장+메세지
-    let dialogOpened = false;
-
-    function onBlur() {
-      dialogOpened = true;
-      window.removeEventListener('blur', onBlur);
-    }
-    function onFocus() {
-      window.removeEventListener('focus', onFocus);
-      setTimeout(() => { try { document.body.removeChild(iframe); } catch(e) {} }, 300);
-      // [1] 확인창 없음 — 인쇄 다이얼로그가 열렸으면 조용히 저장만
-      if (dialogOpened) localStorage.setItem(STORAGE_KEY, JSON.stringify(students));
-    }
-
-    window.addEventListener('blur',  onBlur);
-    window.addEventListener('focus', onFocus);
-
-    // afterprint 폴백 (일부 브라우저) — [1] 메세지 없이 저장만
-    iWin.addEventListener('afterprint', () => {
-      window.removeEventListener('blur',  onBlur);
-      window.removeEventListener('focus', onFocus);
-      setTimeout(() => { try { document.body.removeChild(iframe); } catch(e) {} }, 300);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(students));
-    });
-
-    iWin.print();
+    iframe.contentWindow.print();
+    setTimeout(() => { try { document.body.removeChild(iframe); } catch(e) {} }, 300);
   }, 600);
 }
 
