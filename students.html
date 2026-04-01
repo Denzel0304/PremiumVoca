@@ -80,14 +80,13 @@ header {
 
 /* ── 메인 테이블 ── */
 #tableWrap { overflow-x: auto; padding: 16px 20px 40px; }
+#studentList { display: flex; flex-direction: column; gap: 8px; }
 
-#studentList { display: flex; flex-direction: column; gap: 8px; min-width: 900px; }
-
-/* [2] 헤더: 출력체크 / 학생정보+합격기록 / 구분선 / 시험슬롯 */
 .list-header {
   display: grid;
-  grid-template-columns: 34px 1fr 3px auto;
+  grid-template-columns: 34px 420px 3px auto;
   align-items: center; padding: 0 8px; gap: 0;
+  min-width: fit-content;
 }
 .list-header .lh {
   font-size: 10px; font-weight: 700; color: var(--muted);
@@ -99,10 +98,11 @@ header {
   background: #fff; border: 1px solid var(--line); border-radius: 4px;
   box-shadow: var(--shadow);
   display: grid;
-  /* [2] 출력체크 / 좌측패널(이름+합격) / 구분선 / 시험슬롯(5개 고정) */
-  grid-template-columns: 34px 1fr 3px auto;
+  /* [1] 좌측 고정 420px + 구분선 + 시험슬롯 */
+  grid-template-columns: 34px 420px 3px auto;
   align-items: stretch;
   transition: border-color 0.15s;
+  min-width: fit-content;
 }
 .student-card:hover { border-color: #b0a898; }
 .student-card.filtered-out { display: none; }
@@ -114,18 +114,35 @@ header {
 }
 .col-check input[type="checkbox"] { width: 17px; height: 17px; accent-color: var(--accent); cursor: pointer; }
 
-/* [2] 좌측 패널: 이름/단어장/반(윗단) + 합격기록(아랫단) */
+/* [1][3] 좌측 패널 고정 420px — 위(이름/단어장/반) + 아래(합격기록) */
 .col-left {
   display: flex; flex-direction: column;
   border-right: 1px solid var(--line);
+  width: 420px; flex-shrink: 0;
 }
+
+/* [3] 윗단 레이블 행 */
+.col-left-labels {
+  display: flex; align-items: center;
+  border-bottom: 1px dashed var(--line);
+  background: var(--paper2);
+}
+.col-left-labels .cl-lbl {
+  font-size: 9px; font-weight: 700; color: var(--muted); letter-spacing: 0.06em;
+  text-transform: uppercase; padding: 2px 9px;
+}
+.cl-lbl-name  { width: 110px; border-right: 1px dashed var(--line); }
+.cl-lbl-voca  { flex: 1;      border-right: 1px dashed var(--line); }
+.cl-lbl-class { width: 70px; text-align: center; }
+
+/* 윗단 데이터 행 */
 .col-left-top {
-  display: flex; align-items: center; gap: 0;
+  display: flex; align-items: stretch; gap: 0;
   border-bottom: 1px solid var(--line);
-  padding: 6px 0;
+  padding: 5px 0;
 }
 .col-name {
-  padding: 0 9px; min-width: 110px;
+  padding: 0 9px; width: 110px; flex-shrink: 0;
   display: flex; flex-direction: column; justify-content: center; gap: 3px;
   border-right: 1px solid var(--line);
 }
@@ -148,25 +165,35 @@ header {
   border-right: 1px solid var(--line);
 }
 .col-class {
-  padding: 0 10px; min-width: 70px;
+  padding: 0 8px; width: 70px; flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;
   font-size: 13px; font-weight: 500; color: var(--ink);
 }
 
-/* [2] 합격기록 아랫단 */
+/* [3] 합격기록 레이블 */
+.col-pass-label {
+  font-size: 9px; font-weight: 700; color: var(--muted);
+  letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 2px 8px;
+  border-bottom: 1px dashed var(--line);
+  background: var(--paper2);
+}
+
+/* [3] 합격기록 — 중앙 정렬 */
 .col-pass {
-  padding: 5px 8px;
-  display: flex; align-items: center; gap: 4px; flex-wrap: nowrap; overflow-x: auto;
-  min-height: 42px;
+  padding: 5px 8px; flex: 1;
+  display: flex; align-items: center; justify-content: flex-start;
+  gap: 4px; flex-wrap: nowrap; overflow-x: auto;
+  min-height: 44px;
 }
 .pass-none { font-size: 11px; color: var(--muted); }
 .pass-slot {
   display: flex; flex-direction: column; align-items: center; gap: 2px;
   background: var(--pass-bg); border: 1px solid var(--pass-border);
-  border-radius: 3px; padding: 4px 5px; min-width: 40px; flex-shrink: 0;
+  border-radius: 3px; padding: 4px 5px; min-width: 38px; flex-shrink: 0;
 }
 .pass-slot input[type="checkbox"] {
-  width: 13px; height: 13px; accent-color: var(--accent2);
+  width: 12px; height: 12px; accent-color: var(--accent2);
   cursor: default; pointer-events: none;
 }
 .pass-range {
@@ -177,11 +204,10 @@ header {
 /* 구분선 */
 .col-divider { background: var(--line); }
 
-/* ── [3] 시험 슬롯 영역 — 5개 고정, 나머지 배경 없음 ── */
+/* ── 시험 슬롯 영역 — 5개 × 110px 고정 ── */
 .col-slots {
   padding: 5px 7px;
   display: flex; align-items: stretch; gap: 5px;
-  /* width 고정: 슬롯 5개 × 110px + gap 4 × 5px + padding 14px = 584px */
   width: 584px; flex-shrink: 0;
 }
 
@@ -192,17 +218,19 @@ header {
   width: 110px; flex-shrink: 0;
 }
 .exam-slot.empty { border-style: dashed; background: #fafaf8; }
-.exam-slot.passed { background: var(--pass-bg); border-color: var(--pass-border); }
 
-/* 합격 체크박스 행 */
+/* [2] 합격 버튼 — 체크박스 대신 버튼 */
 .slot-pass-row {
-  display: flex; align-items: center; gap: 4px;
   padding-bottom: 3px; border-bottom: 1px solid var(--line); margin-bottom: 2px;
 }
-.slot-pass-row input[type="checkbox"] {
-  width: 13px; height: 13px; accent-color: var(--accent2); cursor: pointer; flex-shrink: 0;
+.btn-pass {
+  width: 100%; padding: 2px 0;
+  background: #eaf3ec; border: 1px solid var(--pass-border);
+  border-radius: 2px; color: var(--accent2);
+  font-size: 10px; font-weight: 700; font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer; letter-spacing: 0.04em; transition: all 0.15s;
 }
-.slot-pass-label { font-size: 9px; font-weight: 700; color: var(--accent2); cursor: pointer; }
+.btn-pass:hover { background: var(--accent2); color: #fff; }
 
 .slot-label { font-size: 9px; font-weight: 700; color: var(--muted); letter-spacing: 0.04em; white-space: nowrap; }
 .slot-inp {
@@ -296,9 +324,9 @@ header {
 <div id="tableWrap">
   <div class="list-header">
     <div class="lh" style="text-align:center;">출력</div>
-    <div class="lh" style="padding-left:6px;">학생 정보 (위: 이름·단어장·반 / 아래: 합격 기록)</div>
+    <div class="lh" style="padding-left:6px;">학생 정보 / 합격 기록</div>
     <div></div>
-    <div class="lh" style="padding-left:6px;">시험 슬롯 (5개) — 합격 체크 시 기록 이동</div>
+    <div class="lh" style="padding-left:6px;">시험 슬롯 (5개)</div>
   </div>
   <div id="studentList"></div>
   <div id="emptyState">
@@ -479,7 +507,7 @@ function buildCard(st) {
       <input type="checkbox" class="print-check" ${st.printCheck!==false?'checked':''} title="오늘 인쇄 대상">
     </div>`;
 
-  /* ── [2] 좌측 패널: 윗단(이름/단어장/반) + 아랫단(합격기록) ── */
+  /* ── [3] 좌측 패널: 레이블행 + 데이터행 + 합격기록레이블 + 합격기록 ── */
   let passHTML = '';
   if (!st.passSlots.length) {
     passHTML = `<span class="pass-none">없음</span>`;
@@ -495,6 +523,13 @@ function buildCard(st) {
 
   card.innerHTML += `
     <div class="col-left">
+      <!-- [3] 윗단 레이블 -->
+      <div class="col-left-labels">
+        <div class="cl-lbl cl-lbl-name">이름</div>
+        <div class="cl-lbl cl-lbl-voca">단어장</div>
+        <div class="cl-lbl cl-lbl-class">반</div>
+      </div>
+      <!-- 윗단 데이터 -->
       <div class="col-left-top">
         <div class="col-name">
           <div class="name-text">${esc(st.name)}</div>
@@ -504,16 +539,19 @@ function buildCard(st) {
         <div class="col-voca">${esc(st.vocaTitle)}</div>
         <div class="col-class">${esc(st.class||'—')}</div>
       </div>
+      <!-- [3] 합격기록 레이블 -->
+      <div class="col-pass-label">합격 기록 (최대 7개)</div>
+      <!-- [3] 합격기록 — 중앙 정렬 -->
       <div class="col-pass">${passHTML}</div>
     </div>`;
 
   /* ── 구분선 ── */
   card.innerHTML += `<div class="col-divider"></div>`;
 
-  /* ── 시험 슬롯 5개 ── */
+  /* ── [2] 시험 슬롯 5개 — 합격버튼 방식 ── */
   let slotsHTML = '<div class="col-slots">';
   for (let i = 0; i < SLOT_COUNT; i++) {
-    const sl = st.slots[i] || { range:'', total:0, enKo:0, passed:false };
+    const sl = st.slots[i] || { range:'', total:0, enKo:0 };
     const showRange = sl.range || '';
     const showTotal = sl.total || '';
     const showEnKo  = sl.enKo  || '';
@@ -521,10 +559,9 @@ function buildCard(st) {
 
     slotsHTML += `
       <div class="exam-slot ${!showRange?'empty':''}" id="slot_${st.id}_${i}">
+        <!-- [2] 합격 버튼 -->
         <div class="slot-pass-row">
-          <input type="checkbox" id="pass_${st.id}_${i}"
-            onchange="onSlotPassChange('${st.id}',${i},this.checked)">
-          <label class="slot-pass-label" for="pass_${st.id}_${i}">합격</label>
+          <button class="btn-pass" onclick="onSlotPassChange('${st.id}',${i})">✓ 합격</button>
         </div>
         <div class="slot-total-row" style="margin-bottom:2px;">
           <div class="slot-label">범위</div>
@@ -645,27 +682,28 @@ async function onSlotInput(sid, si) {
   }
 }
 
-/* ── 합격 체크 — 슬롯 초기화 + 좌측 당기기 ── */
-function onSlotPassChange(sid, si, checked) {
+/* ── [2] 합격 버튼 클릭 — 복사·초기화 방식으로 슬롯 당기기 ── */
+function onSlotPassChange(sid, si) {
   const st = students.find(s => s.id === sid);
   if (!st) return;
 
-  if (!checked) { st.slots[si].passed = false; saveData(); renderAll(); return; }
+  // DOM에서 현재 입력값 먼저 수집
+  collectAllInputs();
 
   const sl = st.slots[si];
-  if (!sl || !sl.range) {
-    document.getElementById(`pass_${sid}_${si}`).checked = false;
-    return;
-  }
+  if (!sl || !sl.range) return; // 범위 없으면 무시
 
-  // [2] 합격 기록으로 이동
+  // 합격 기록으로 추가
   st.passSlots.push({ range: sl.range, date: new Date().toISOString() });
   if (st.passSlots.length > MAX_PASS) st.passSlots.shift();
 
-  // [3] 해당 슬롯 제거 후 뒤 슬롯들을 앞으로 당기기
-  st.slots.splice(si, 1);
-  // 5개 유지: 빈 슬롯 추가
-  st.slots.push({ range:'', total:0, enKo:0, passed:false });
+  // [2] 복사·초기화: si부터 마지막-1까지 오른쪽 슬롯을 왼쪽으로 복사
+  for (let i = si; i < SLOT_COUNT - 1; i++) {
+    const next = st.slots[i + 1] || { range:'', total:0, enKo:0 };
+    st.slots[i] = { range: next.range, total: next.total, enKo: next.enKo };
+  }
+  // 마지막 슬롯 초기화
+  st.slots[SLOT_COUNT - 1] = { range:'', total:0, enKo:0 };
 
   saveData();
   renderAll();
