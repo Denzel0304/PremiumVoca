@@ -54,7 +54,7 @@ header {
 }
 .filter-count { font-size: 12px; color: var(--muted); }
 
-/* ── [6] 학생 추가 바 + 목록 저장 버튼 ── */
+/* ── 학생 추가 바 ── */
 #addBar {
   background: var(--paper2); border-bottom: 2px solid var(--line);
   padding: 10px 20px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
@@ -72,11 +72,19 @@ header {
   padding: 6px 16px; border: none; border-radius: 3px; font-size: 13px; font-weight: 700;
   font-family: 'Noto Sans KR', sans-serif; cursor: pointer; white-space: nowrap;
 }
-.abtn-add  { background: var(--accent); color: #fff; }
+.abtn-add        { background: var(--accent); color: #fff; }
 .abtn-add:hover  { background: #6e2222; }
-/* [6] 목록 저장 버튼 */
-.abtn-save { background: #444; color: #fff; }
-.abtn-save:hover { background: #222; }
+.abtn-export        { background: #2e6b3e; color: #fff; }
+.abtn-export:hover  { background: #1e4a2a; }
+.abtn-import        { background: #3a5f8a; color: #fff; }
+.abtn-import:hover  { background: #2a4a6e; }
+
+/* ── 안내 문구 바 ── */
+#infoBar {
+  background: #fffdf7; border-bottom: 1px solid var(--line);
+  padding: 7px 20px;
+  font-size: 11px; color: var(--muted); line-height: 1.6;
+}
 
 /* ── 메인 테이블 ── */
 #tableWrap { overflow-x: auto; padding: 16px 20px 40px; }
@@ -313,15 +321,22 @@ header {
   <span class="filter-count" id="filterCount"></span>
 </div>
 
-<!-- [6] 학생 추가 바 + 목록 저장 버튼 -->
+<!-- 학생 추가 바 -->
 <div id="addBar">
   <input type="text" id="newName" placeholder="학생 이름" maxlength="10">
   <input type="text" id="classInput" placeholder="반 (직접입력 또는 선택)" maxlength="20" list="classList">
   <datalist id="classList"></datalist>
   <select id="newVoca"><option value="">— 단어장 선택 —</option></select>
   <button class="abtn abtn-add" onclick="addStudent()">+ 학생 추가</button>
-  <button class="abtn abtn-save" onclick="saveData(true)">💾 목록 저장</button>
+  <button class="abtn abtn-export" onclick="exportJSON()">📁 파일로 저장</button>
+  <button class="abtn abtn-import" onclick="document.getElementById('importFile').click()">📂 파일 불러오기</button>
+  <input type="file" id="importFile" accept=".json" style="display:none" onchange="importJSON(event)">
   <span id="addErr" style="font-size:12px;color:#c0392b;display:none;"></span>
+</div>
+
+<!-- 안내 문구 -->
+<div id="infoBar">
+  💡 인쇄 버튼을 누르면, 모든 정보는 자동 저장되고, 다음 번에 자동으로 로딩됩니다. 하지만, 브라우저 캐시를 삭제하면 목록은 삭제됩니다. 그럴 경우를 대비해, <strong>파일로 저장하기</strong> 기능을 탑재해두었습니다.
 </div>
 
 <div id="tableWrap">
@@ -405,14 +420,49 @@ async function getVocaDB(vocaId) {
 }
 
 /* ── 저장 / 불러오기 ── */
-function saveData(showMsg = false) {
+function saveData() {
   collectAllInputs();
   localStorage.setItem(STORAGE_KEY, JSON.stringify(students));
-  if (showMsg) showDoneModal('학생 시험 목록이 저장되었습니다.');
 }
 function loadData() {
   const raw = localStorage.getItem(STORAGE_KEY);
   students = raw ? JSON.parse(raw) : [];
+}
+
+/* ── JSON 파일로 저장 ── */
+function exportJSON() {
+  collectAllInputs();
+  const blob = new Blob([JSON.stringify(students, null, 2)], { type: 'application/json' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  const now  = new Date();
+  const ts   = now.getFullYear() + String(now.getMonth()+1).padStart(2,'0') + String(now.getDate()).padStart(2,'0');
+  a.href     = url;
+  a.download = `premiumVoca_students_${ts}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+/* ── JSON 파일 불러오기 ── */
+function importJSON(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (!Array.isArray(data)) throw new Error('형식 오류');
+      students = data;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(students));
+      renderAll();
+      showDoneModal(`${students.length}명의 학생 정보를 불러왔습니다.`);
+    } catch(err) {
+      showDoneModal('파일을 읽을 수 없습니다.
+올바른 JSON 파일인지 확인하세요.');
+    }
+    event.target.value = '';
+  };
+  reader.readAsText(file);
 }
 
 /* ── DOM → 데이터 수집 ── */
