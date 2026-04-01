@@ -186,6 +186,12 @@ header {
   border-bottom: 1px dashed var(--line);
   background: var(--paper2);
 }
+.btn-clear-pass {
+  font-size: 9px; color: #c0392b; background: none; border: none;
+  cursor: pointer; padding: 0 2px; font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 700; letter-spacing: 0; text-transform: none;
+}
+.btn-clear-pass:hover { text-decoration: underline; }
 
 /* [3] 합격기록 — 중앙 정렬 */
 .col-pass {
@@ -488,6 +494,7 @@ function addStudent() {
   const errEl = document.getElementById('addErr');
   errEl.style.display = 'none';
   if (!name) { showAddErr('이름을 입력하세요.'); return; }
+  if (!cls)  { showAddErr('반을 입력하세요.'); return; }
   if (!voca) { showAddErr('단어장을 선택하세요.'); return; }
 
   const vocaEntry = vocaIndex.find(v => v.id === voca);
@@ -592,7 +599,10 @@ function buildCard(st) {
         <div class="col-class">${esc(st.class||'—')}</div>
       </div>
       <!-- [3] 합격기록 레이블 -->
-      <div class="col-pass-label">합격 기록 (최대 7개)</div>
+      <div class="col-pass-label" style="display:flex;align-items:center;justify-content:space-between;">
+        <span>합격 기록 (최대 7개)</span>
+        <button class="btn-clear-pass" onclick="clearPass('${st.id}')" title="합격기록 초기화">✕ 초기화</button>
+      </div>
       <!-- [3] 합격기록 — 중앙 정렬 -->
       <div class="col-pass">${passHTML}</div>
     </div>`;
@@ -732,6 +742,15 @@ async function onSlotInput(sid, si) {
   if (st) {
     st.slots[si] = { ...st.slots[si], range:rangeVal, total:isNaN(total)?0:total, enKo:isNaN(enKo)?0:enKo };
   }
+}
+
+/* ── 합격기록 초기화 ── */
+function clearPass(sid) {
+  const st = students.find(s => s.id === sid);
+  if (!st) return;
+  st.passSlots = [];
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(students));
+  renderAll();
 }
 
 /* ── [2] 합격 버튼 클릭 — 복사·초기화 방식으로 슬롯 당기기 ── */
@@ -913,74 +932,48 @@ function buildPrintHTML(allPages, mode) {
     @media print { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
   </style>`;
 
-  const epList = [];
+  // 문제지 목록 / 답지 목록 분리 수집
+  const qList = []; // 문제지 ep
+  const aList = []; // 답지 ep
+
   for (const { st, pages } of allPages) {
     if (!pages.length) continue;
-
-    // [5] 슬롯별로 개별 시험지 생성 — 각 슬롯의 실제 범위를 헤더에 표시
     for (const page of pages) {
-      const slotRangeStr = page.slot.range;  // 해당 슬롯의 범위만
+      const slotRangeStr = page.slot.range;
       const qs = page.questions;
-
+      const totalPg = Math.ceil(qs.length / 50);
       for (let i = 0; i < qs.length; i += 50) {
-        const chunk = qs.slice(i, i+50);
+        const chunk = qs.slice(i, i + 50);
         while (chunk.length < 50) chunk.push(null);
-        const pi = Math.floor(i/50);
-        const totalPg = Math.ceil(qs.length/50);
-        const label = totalPg > 1 ? `${pi+1}` : '';
-        epList.push({ html: makeEP(chunk,pi,st,false,label,slotRangeStr), isAnswer:false });
-        epList.push({ html: makeEP(chunk,pi,st,true, label,slotRangeStr), isAnswer:true  });
+        const pi = Math.floor(i / 50);
+        const label = totalPg > 1 ? `${pi + 1}` : '';
+        qList.push(makeEP(chunk, pi, st, false, label, slotRangeStr));
+        aList.push(makeEP(chunk, pi, st, true,  label, slotRangeStr));
       }
     }
   }
 
-  let filtered;
-  if (mode==='question')    filtered = epList.filter(e=>!e.isAnswer);
-  else if (mode==='answer') filtered = epList.filter(e=>e.isAnswer);
-  else                      filtered = epList;
-
-  // 기존 로직 유지 + 각 ep 단위로 홀수 페이지면 빈 페이지 삽입
-  // ep 하나 = A4 1장. 경계: mode=all이면 [Q,A,Q,A...] 순서 유지,
-  // mode=question/answer이면 각 ep가 독립. 어느 경우든
-  // 각 슬롯(또는 Q/A쌍) 묶음의 페이지 수가 홀수면 다음 묶음이
-  // 양면 프린터에서 앞 묶음 뒷면에 붙으므로 빈 페이지로 짝수 맞춤.
-  // 묶음 단위: epList의 [Q,A] 쌍 → 각 쌍이 하나의 슬롯
-  // filtered에서 슬롯 경계를 감지하기 위해 epList 원본 구조 활용.
-
-  // 슬롯 단위 묶음 크기를 계산: epList는 [Q,A,Q,A,...] 구조
-  // 각 슬롯의 페이지수 = 연속된 같은 슬롯의 Q(또는 A) 개수
-  // 간단하게: filtered를 순서대로 쌓되, 슬롯이 바뀌는 시점에 홀수면 blank 삽입
-  // slotRangeStr+st.id 조합으로 슬롯 경계 감지
-
+  // mode별 출력 목록 결정
+  let parts = [];
   const blankEP = '<div class="ep" style="visibility:hidden;"></div>';
-  const parts = [];
-  let groupCount = 0; // 현재 묶음 내 ep 수
 
-  // filtered 각 ep에 groupId 부여 (slotRangeStr+stName 기준)
-  // epList에서 가져와야 하므로 filtered에 groupId 태그
-  // epList 순서: [Q0,A0, Q1,A1, ...] — 같은 슬롯의 Q/A는 연속
-  // filtered는 epList의 부분집합(순서 유지)
-  // groupId = epList 인덱스 // 2 (Q/A 쌍 번호)
-  const taggedFiltered = filtered.map((e, fi) => {
-    const origIdx = epList.indexOf(e);
-    return { ...e, groupId: Math.floor(origIdx / 2) };
-  });
+  function appendWithBlank(list) {
+    // list 전체를 추가하고, 마지막이 홀수 페이지면 blank 삽입
+    list.forEach(h => parts.push(h));
+    if (list.length % 2 === 1) parts.push(blankEP);
+  }
 
-  let curGroup = taggedFiltered.length ? taggedFiltered[0].groupId : -1;
-  let curCount = 0;
+  if (mode === 'question') {
+    appendWithBlank(qList);
+  } else if (mode === 'answer') {
+    appendWithBlank(aList);
+  } else {
+    // 모두 인쇄: 문제지 전체 → (홀수면 blank) → 답지 전체
+    appendWithBlank(qList);
+    appendWithBlank(aList);
+  }
 
-  taggedFiltered.forEach((e, idx) => {
-    if (e.groupId !== curGroup) {
-      // 새 묶음 시작 — 이전 묶음이 홀수면 blank 삽입
-      if (curCount % 2 === 1) parts.push(blankEP);
-      curGroup = e.groupId;
-      curCount = 0;
-    }
-    parts.push(e.html);
-    curCount++;
-  });
-
-  // 마지막 페이지 last-ep 처리 (blank 제외)
+  // 마지막 실제 페이지에 last-ep 처리
   for (let i = parts.length - 1; i >= 0; i--) {
     if (!parts[i].includes('visibility:hidden')) {
       parts[i] = parts[i].replace('class="ep"', 'class="ep last-ep"');
