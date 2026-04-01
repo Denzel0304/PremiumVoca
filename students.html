@@ -72,18 +72,16 @@ header {
   padding: 6px 16px; border: none; border-radius: 3px; font-size: 13px; font-weight: 700;
   font-family: 'Noto Sans KR', sans-serif; cursor: pointer; white-space: nowrap;
 }
-.abtn-add        { background: var(--accent); color: #fff; }
-.abtn-add:hover  { background: #6e2222; }
-.abtn-export        { background: #2e6b3e; color: #fff; }
-.abtn-export:hover  { background: #1e4a2a; }
-.abtn-import        { background: #3a5f8a; color: #fff; }
-.abtn-import:hover  { background: #2a4a6e; }
-
+.abtn-add         { background: var(--accent); color: #fff; }
+.abtn-add:hover   { background: #6e2222; }
+.abtn-export      { background: #2e6b3e; color: #fff; }
+.abtn-export:hover{ background: #1e4a2a; }
+.abtn-import      { background: #3a5f8a; color: #fff; }
+.abtn-import:hover{ background: #2a4a6e; }
 /* ── 안내 문구 바 ── */
 #infoBar {
   background: #fffdf7; border-bottom: 1px solid var(--line);
-  padding: 7px 20px;
-  font-size: 11px; color: var(--muted); line-height: 1.6;
+  padding: 7px 20px; font-size: 11px; color: var(--muted); line-height: 1.6;
 }
 
 /* ── 메인 테이블 ── */
@@ -420,19 +418,14 @@ async function getVocaDB(vocaId) {
 }
 
 /* ── 저장 / 불러오기 ── */
-function saveData() {
+function saveData(showMsg = false) {
   collectAllInputs();
   localStorage.setItem(STORAGE_KEY, JSON.stringify(students));
+  if (showMsg) showDoneModal('학생 시험 목록이 저장되었습니다.');
 }
 function loadData() {
   const raw = localStorage.getItem(STORAGE_KEY);
   students = raw ? JSON.parse(raw) : [];
-  // 구버전 데이터 호환 — passSlots / slots 필드 누락 보정
-  students.forEach(st => {
-    if (!st.passSlots) st.passSlots = [];
-    if (!st.slots || !Array.isArray(st.slots)) st.slots = [];
-    while (st.slots.length < 5) st.slots.push({ range:'', total:0, enKo:0, passed:false });
-  });
 }
 
 /* ── JSON 파일로 저장 ── */
@@ -461,10 +454,9 @@ function importJSON(event) {
       students = data;
       localStorage.setItem(STORAGE_KEY, JSON.stringify(students));
       renderAll();
-      showDoneModal(`${students.length}명의 학생 정보를 불러왔습니다.`);
+      showDoneModal(students.length + '명의 학생 정보를 불러왔습니다.');
     } catch(err) {
-      showDoneModal('파일을 읽을 수 없습니다.
-올바른 JSON 파일인지 확인하세요.');
+      showDoneModal('파일을 읽을 수 없습니다.\n올바른 JSON 파일인지 확인하세요.');
     }
     event.target.value = '';
   };
@@ -561,24 +553,57 @@ function buildCard(st) {
   card.className = 'student-card';
   card.dataset.sid = st.id;
 
-  /* ── 합격기록 HTML ── */
+  /* ── 출력 체크 ── */
+  card.innerHTML += `
+    <div class="col-check">
+      <input type="checkbox" class="print-check" ${st.printCheck!==false?'checked':''} title="오늘 인쇄 대상">
+    </div>`;
+
+  /* ── [3] 좌측 패널: 레이블행 + 데이터행 + 합격기록레이블 + 합격기록 ── */
   let passHTML = '';
-  if (!(st.passSlots || []).length) {
+  if (!st.passSlots.length) {
     passHTML = `<span class="pass-none">없음</span>`;
   } else {
-    (st.passSlots || []).forEach((ps, pi) => {
+    st.passSlots.forEach((ps, pi) => {
       passHTML += `
         <div class="pass-slot" id="ps_${st.id}_${pi}" title="합격 기록">
-          <input type="checkbox" checked style="pointer-events:none">
+          <input type="checkbox" checked readonly>
           <div class="pass-range">${esc(ps.range)}</div>
         </div>`;
     });
   }
 
-  /* ── 시험 슬롯 HTML ── */
+  card.innerHTML += `
+    <div class="col-left">
+      <!-- [3] 윗단 레이블 -->
+      <div class="col-left-labels">
+        <div class="cl-lbl cl-lbl-name">이름</div>
+        <div class="cl-lbl cl-lbl-voca">단어장</div>
+        <div class="cl-lbl cl-lbl-class">반</div>
+      </div>
+      <!-- 윗단 데이터 -->
+      <div class="col-left-top">
+        <div class="col-name">
+          <div class="name-text">${esc(st.name)}</div>
+          ${st.class?`<span class="class-badge">${esc(st.class)}</span>`:''}
+          <button class="btn-del" onclick="askDelete('${st.id}')">✕ 삭제</button>
+        </div>
+        <div class="col-voca">${esc(st.vocaTitle)}</div>
+        <div class="col-class">${esc(st.class||'—')}</div>
+      </div>
+      <!-- [3] 합격기록 레이블 -->
+      <div class="col-pass-label">합격 기록 (최대 7개)</div>
+      <!-- [3] 합격기록 — 중앙 정렬 -->
+      <div class="col-pass">${passHTML}</div>
+    </div>`;
+
+  /* ── 구분선 ── */
+  card.innerHTML += `<div class="col-divider"></div>`;
+
+  /* ── [2] 시험 슬롯 5개 — 합격버튼 방식 ── */
   let slotsHTML = '<div class="col-slots">';
   for (let i = 0; i < SLOT_COUNT; i++) {
-    const sl = (st.slots || [])[i] || { range:'', total:0, enKo:0 };
+    const sl = st.slots[i] || { range:'', total:0, enKo:0 };
     const showRange = sl.range || '';
     const showTotal = sl.total || '';
     const showEnKo  = sl.enKo  || '';
@@ -586,6 +611,7 @@ function buildCard(st) {
 
     slotsHTML += `
       <div class="exam-slot ${!showRange?'empty':''}" id="slot_${st.id}_${i}">
+        <!-- [2] 합격 버튼 -->
         <div class="slot-pass-row">
           <button class="btn-pass" onclick="onSlotPassChange('${st.id}',${i})">✓ 합격</button>
         </div>
@@ -619,35 +645,10 @@ function buildCard(st) {
       </div>`;
   }
   slotsHTML += '</div>';
-
-  /* ── 한 번에 조립 ── */
-  card.innerHTML = `
-    <div class="col-check">
-      <input type="checkbox" class="print-check" ${st.printCheck!==false?'checked':''} title="오늘 인쇄 대상">
-    </div>
-    <div class="col-left">
-      <div class="col-left-labels">
-        <div class="cl-lbl cl-lbl-name">이름</div>
-        <div class="cl-lbl cl-lbl-voca">단어장</div>
-        <div class="cl-lbl cl-lbl-class">반</div>
-      </div>
-      <div class="col-left-top">
-        <div class="col-name">
-          <div class="name-text">${esc(st.name)}</div>
-          ${st.class?`<span class="class-badge">${esc(st.class)}</span>`:''}
-          <button class="btn-del" onclick="askDelete('${st.id}')">✕ 삭제</button>
-        </div>
-        <div class="col-voca">${esc(st.vocaTitle)}</div>
-        <div class="col-class">${esc(st.class||'—')}</div>
-      </div>
-      <div class="col-pass-label">합격 기록 (최대 7개)</div>
-      <div class="col-pass">${passHTML}</div>
-    </div>
-    <div class="col-divider"></div>
-    ${slotsHTML}`;
+  card.innerHTML += slotsHTML;
 
   // 렌더 후 총 단어수 표시
-  (st.slots || []).forEach((sl, i) => {
+  st.slots.forEach((sl, i) => {
     if (sl.range) updateMaxWords(st.id, i, st.vocaId, sl.range);
   });
 
@@ -810,6 +811,9 @@ async function doPrint(mode) {
   // 인쇄 전 무조건 저장
   localStorage.setItem(STORAGE_KEY, JSON.stringify(students));
 
+  // 인쇄 전 무조건 자동저장
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(students));
+
   const printHTML = buildPrintHTML(allPages, mode);
 
   // iframe으로 완전히 격리 — 현재 페이지 CSS에 영향 없음
@@ -909,22 +913,20 @@ function buildPrintHTML(allPages, mode) {
     @media print { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
   </style>`;
 
-  // 빈 페이지 HTML — 양면 인쇄 경계 패딩용
-  const blankPage = `<div class="ep" style="background:#fff!important;border:none;box-shadow:none;"></div>`;
-
-  // epList: 각 항목은 { html, isAnswer, groupKey }
-  // groupKey = 학생id + 슬롯index — 경계 감지용
   const epList = [];
   for (const { st, pages } of allPages) {
     if (!pages.length) continue;
+
+    // [5] 슬롯별로 개별 시험지 생성 — 각 슬롯의 실제 범위를 헤더에 표시
     for (const page of pages) {
-      const slotRangeStr = page.slot.range;
+      const slotRangeStr = page.slot.range;  // 해당 슬롯의 범위만
       const qs = page.questions;
-      const totalPg = Math.ceil(qs.length/50);
+
       for (let i = 0; i < qs.length; i += 50) {
         const chunk = qs.slice(i, i+50);
         while (chunk.length < 50) chunk.push(null);
         const pi = Math.floor(i/50);
+        const totalPg = Math.ceil(qs.length/50);
         const label = totalPg > 1 ? `${pi+1}` : '';
         epList.push({ html: makeEP(chunk,pi,st,false,label,slotRangeStr), isAnswer:false });
         epList.push({ html: makeEP(chunk,pi,st,true, label,slotRangeStr), isAnswer:true  });
@@ -937,44 +939,53 @@ function buildPrintHTML(allPages, mode) {
   else if (mode==='answer') filtered = epList.filter(e=>e.isAnswer);
   else                      filtered = epList;
 
-  if (!filtered.length) return html;
+  // 기존 로직 유지 + 각 ep 단위로 홀수 페이지면 빈 페이지 삽입
+  // ep 하나 = A4 1장. 경계: mode=all이면 [Q,A,Q,A...] 순서 유지,
+  // mode=question/answer이면 각 ep가 독립. 어느 경우든
+  // 각 슬롯(또는 Q/A쌍) 묶음의 페이지 수가 홀수면 다음 묶음이
+  // 양면 프린터에서 앞 묶음 뒷면에 붙으므로 빈 페이지로 짝수 맞춤.
+  // 묶음 단위: epList의 [Q,A] 쌍 → 각 쌍이 하나의 슬롯
+  // filtered에서 슬롯 경계를 감지하기 위해 epList 원본 구조 활용.
 
-  // 경계마다 홀수 페이지면 빈 페이지 삽입
-  // mode=all  : 문제지+답지 교차 → 각 답지 뒤가 경계
-  // mode=question/answer : 각 ep 자체가 1장씩 → 마지막 ep 뒤가 경계
-  // 전략: filtered를 "묶음" 단위로 나눠서, 각 묶음의 페이지수가 홀수면 blank 추가
-  // 묶음 = (학생+슬롯) 단위로 문제지묶음 / 답지묶음
-  // epList는 [Q,A,Q,A,...] 순이므로 mode=all 이면 QA쌍이 한 묶음
-  // mode=question/answer 이면 각 ep 하나가 한 묶음 (슬롯 단위)
+  // 슬롯 단위 묶음 크기를 계산: epList는 [Q,A,Q,A,...] 구조
+  // 각 슬롯의 페이지수 = 연속된 같은 슬롯의 Q(또는 A) 개수
+  // 간단하게: filtered를 순서대로 쌓되, 슬롯이 바뀌는 시점에 홀수면 blank 삽입
+  // slotRangeStr+st.id 조합으로 슬롯 경계 감지
 
-  // 묶음 구성: mode=all → [Q,A] 쌍, 그 외 → 개별 ep
-  let groups = [];
-  if (mode === 'all') {
-    // epList 원본에서 Q/A 쌍으로 묶기
-    for (let i = 0; i < epList.length; i += 2) {
-      const q = epList[i];
-      const a = epList[i+1];
-      if (q && a) groups.push([q.html, a.html]);
-      else if (q) groups.push([q.html]);
-    }
-  } else {
-    // 각 ep를 개별 묶음으로
-    filtered.forEach(e => groups.push([e.html]));
-  }
-
-  // 묶음별로 홀수면 blank 추가 → 다음 묶음이 항상 새 장에서 시작
+  const blankEP = '<div class="ep" style="visibility:hidden;"></div>';
   const parts = [];
-  groups.forEach((grp, gi) => {
-    grp.forEach(h => parts.push(h));
-    // 마지막 묶음은 blank 불필요
-    if (gi < groups.length - 1 && grp.length % 2 === 1) {
-      parts.push(blankPage);
-    }
+  let groupCount = 0; // 현재 묶음 내 ep 수
+
+  // filtered 각 ep에 groupId 부여 (slotRangeStr+stName 기준)
+  // epList에서 가져와야 하므로 filtered에 groupId 태그
+  // epList 순서: [Q0,A0, Q1,A1, ...] — 같은 슬롯의 Q/A는 연속
+  // filtered는 epList의 부분집합(순서 유지)
+  // groupId = epList 인덱스 // 2 (Q/A 쌍 번호)
+  const taggedFiltered = filtered.map((e, fi) => {
+    const origIdx = epList.indexOf(e);
+    return { ...e, groupId: Math.floor(origIdx / 2) };
   });
 
-  // 마지막 페이지 last-ep 처리
-  if (parts.length) {
-    parts[parts.length-1] = parts[parts.length-1].replace('class="ep"','class="ep last-ep"');
+  let curGroup = taggedFiltered.length ? taggedFiltered[0].groupId : -1;
+  let curCount = 0;
+
+  taggedFiltered.forEach((e, idx) => {
+    if (e.groupId !== curGroup) {
+      // 새 묶음 시작 — 이전 묶음이 홀수면 blank 삽입
+      if (curCount % 2 === 1) parts.push(blankEP);
+      curGroup = e.groupId;
+      curCount = 0;
+    }
+    parts.push(e.html);
+    curCount++;
+  });
+
+  // 마지막 페이지 last-ep 처리 (blank 제외)
+  for (let i = parts.length - 1; i >= 0; i--) {
+    if (!parts[i].includes('visibility:hidden')) {
+      parts[i] = parts[i].replace('class="ep"', 'class="ep last-ep"');
+      break;
+    }
   }
 
   return html + parts.join('');
