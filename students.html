@@ -427,6 +427,12 @@ function saveData() {
 function loadData() {
   const raw = localStorage.getItem(STORAGE_KEY);
   students = raw ? JSON.parse(raw) : [];
+  // 구버전 데이터 호환 — passSlots / slots 필드 누락 보정
+  students.forEach(st => {
+    if (!st.passSlots) st.passSlots = [];
+    if (!st.slots || !Array.isArray(st.slots)) st.slots = [];
+    while (st.slots.length < 5) st.slots.push({ range:'', total:0, enKo:0, passed:false });
+  });
 }
 
 /* ── JSON 파일로 저장 ── */
@@ -563,7 +569,7 @@ function buildCard(st) {
 
   /* ── [3] 좌측 패널: 레이블행 + 데이터행 + 합격기록레이블 + 합격기록 ── */
   let passHTML = '';
-  if (!st.passSlots.length) {
+  if (!(st.passSlots || []).length) {
     passHTML = `<span class="pass-none">없음</span>`;
   } else {
     st.passSlots.forEach((ps, pi) => {
@@ -650,7 +656,7 @@ function buildCard(st) {
   card.innerHTML += slotsHTML;
 
   // 렌더 후 총 단어수 표시
-  st.slots.forEach((sl, i) => {
+  (st.slots || []).forEach((sl, i) => {
     if (sl.range) updateMaxWords(st.id, i, st.vocaId, sl.range);
   });
 
