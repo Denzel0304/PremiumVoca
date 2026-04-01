@@ -95,14 +95,14 @@ header {
 
 /* ── 학생 행 카드 ── */
 .student-card {
-  background: #fff; border: 1px solid var(--line); border-radius: 4px;
+  background: transparent; border: 1px solid var(--line); border-radius: 4px;
   box-shadow: var(--shadow);
   display: grid;
-  /* [1] 좌측 고정 420px + 구분선 + 시험슬롯 */
-  grid-template-columns: 34px 420px 3px auto;
+  /* 좌측 고정 420px + 구분선 + 시험슬롯(고정폭) */
+  grid-template-columns: 34px 420px 3px fit-content(600px);
   align-items: stretch;
   transition: border-color 0.15s;
-  min-width: fit-content;
+  width: fit-content;
 }
 .student-card:hover { border-color: #b0a898; }
 .student-card.filtered-out { display: none; }
@@ -111,6 +111,7 @@ header {
 .col-check {
   display: flex; align-items: center; justify-content: center;
   padding: 6px 0; border-right: 1px solid var(--line);
+  background: #fff;
 }
 .col-check input[type="checkbox"] { width: 17px; height: 17px; accent-color: var(--accent); cursor: pointer; }
 
@@ -119,6 +120,7 @@ header {
   display: flex; flex-direction: column;
   border-right: 1px solid var(--line);
   width: 420px; flex-shrink: 0;
+  background: #fff; border-radius: 0;
 }
 
 /* [3] 윗단 레이블 행 */
@@ -209,6 +211,7 @@ header {
   padding: 5px 7px;
   display: flex; align-items: stretch; gap: 5px;
   width: 584px; flex-shrink: 0;
+  background: #fff;
 }
 
 .exam-slot {
@@ -423,7 +426,8 @@ function collectAllInputs() {
       const range = slotEl.querySelector('.inp-range')?.value.trim() || '';
       const total = parseInt(slotEl.querySelector('.inp-total')?.value) || 0;
       const enKo  = parseInt(slotEl.querySelector('.inp-enko')?.value)  || 0;
-      st.slots[i] = { range, total, enKo, passed: false };
+      const prevPassed = st.slots[i]?.passed ?? false;  // 기존 passed 값 보존
+      st.slots[i] = { range, total, enKo, passed: prevPassed };
     });
   });
 }
@@ -697,15 +701,17 @@ function onSlotPassChange(sid, si) {
   st.passSlots.push({ range: sl.range, date: new Date().toISOString() });
   if (st.passSlots.length > MAX_PASS) st.passSlots.shift();
 
-  // [2] 복사·초기화: si부터 마지막-1까지 오른쪽 슬롯을 왼쪽으로 복사
+  // 복사·초기화: si부터 마지막-1까지 오른쪽 슬롯을 왼쪽으로 복사
   for (let i = si; i < SLOT_COUNT - 1; i++) {
     const next = st.slots[i + 1] || { range:'', total:0, enKo:0 };
-    st.slots[i] = { range: next.range, total: next.total, enKo: next.enKo };
+    st.slots[i] = { range: next.range, total: next.total, enKo: next.enKo, passed: false };
   }
   // 마지막 슬롯 초기화
-  st.slots[SLOT_COUNT - 1] = { range:'', total:0, enKo:0 };
+  st.slots[SLOT_COUNT - 1] = { range:'', total:0, enKo:0, passed: false };
 
-  saveData();
+  // saveData() 대신 직접 저장 — saveData 내부의 collectAllInputs()가
+  // 아직 갱신 전인 DOM을 다시 읽어서 슬롯 데이터를 덮어쓰는 것을 방지
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(students));
   renderAll();
 }
 
