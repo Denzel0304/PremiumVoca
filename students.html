@@ -932,9 +932,9 @@ function buildPrintHTML(allPages, mode) {
     @media print { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
   </style>`;
 
-  // 문제지 목록 / 답지 목록 분리 수집
-  const qList = []; // 문제지 ep
-  const aList = []; // 답지 ep
+  // 슬롯 단위 묶음으로 수집
+  // groups: [ { qPages:[], aPages:[] }, ... ]  — 학생×슬롯 단위
+  const groups = [];
 
   for (const { st, pages } of allPages) {
     if (!pages.length) continue;
@@ -942,35 +942,41 @@ function buildPrintHTML(allPages, mode) {
       const slotRangeStr = page.slot.range;
       const qs = page.questions;
       const totalPg = Math.ceil(qs.length / 50);
+      const qPages = [], aPages = [];
       for (let i = 0; i < qs.length; i += 50) {
         const chunk = qs.slice(i, i + 50);
         while (chunk.length < 50) chunk.push(null);
         const pi = Math.floor(i / 50);
         const label = totalPg > 1 ? `${pi + 1}` : '';
-        qList.push(makeEP(chunk, pi, st, false, label, slotRangeStr));
-        aList.push(makeEP(chunk, pi, st, true,  label, slotRangeStr));
+        qPages.push(makeEP(chunk, pi, st, false, label, slotRangeStr));
+        aPages.push(makeEP(chunk, pi, st, true,  label, slotRangeStr));
       }
+      groups.push({ qPages, aPages });
     }
   }
 
-  // mode별 출력 목록 결정
-  let parts = [];
   const blankEP = '<div class="ep" style="visibility:hidden;"></div>';
+  const parts = [];
 
-  function appendWithBlank(list) {
-    // list 전체를 추가하고, 마지막이 홀수 페이지면 blank 삽입
-    list.forEach(h => parts.push(h));
-    if (list.length % 2 === 1) parts.push(blankEP);
+  // 묶음 하나를 parts에 추가하고, 홀수면 blank 삽입
+  function appendGroup(pages) {
+    if (!pages.length) return;
+    pages.forEach(h => parts.push(h));
+    if (pages.length % 2 === 1) parts.push(blankEP);
   }
 
   if (mode === 'question') {
-    appendWithBlank(qList);
+    // 학생×슬롯 순서대로 문제지 묶음
+    groups.forEach(g => appendGroup(g.qPages));
   } else if (mode === 'answer') {
-    appendWithBlank(aList);
+    // 학생×슬롯 순서대로 답지 묶음
+    groups.forEach(g => appendGroup(g.aPages));
   } else {
-    // 모두 인쇄: 문제지 전체 → (홀수면 blank) → 답지 전체
-    appendWithBlank(qList);
-    appendWithBlank(aList);
+    // 모두 인쇄: 슬롯 단위로 문제지 → 답지 쌍
+    groups.forEach(g => {
+      appendGroup(g.qPages);
+      appendGroup(g.aPages);
+    });
   }
 
   // 마지막 실제 페이지에 last-ep 처리
