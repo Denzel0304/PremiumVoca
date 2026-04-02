@@ -479,7 +479,8 @@ function collectAllInputs() {
     card.querySelectorAll('.exam-slot').forEach((slotEl, i) => {
       const range = slotEl.querySelector('.inp-range')?.value.trim() || '';
       const total = parseInt(slotEl.querySelector('.inp-total')?.value) || 0;
-      const enKo  = parseInt(slotEl.querySelector('.inp-enko')?.value)  || 0;
+      const enKoRaw = slotEl.querySelector('.inp-enko')?.value ?? '';
+      const enKo  = enKoRaw.trim() === '' ? null : (parseInt(enKoRaw) || 0);
       const prevPassed = st.slots[i]?.passed ?? false;  // 기존 passed 값 보존
       st.slots[i] = { range, total, enKo, passed: prevPassed };
     });
@@ -731,7 +732,9 @@ async function onSlotInput(sid, si) {
 
   // 데이터 동기화
   if (st) {
-    st.slots[si] = { ...st.slots[si], range:rangeVal, total:isNaN(total)?0:total, enKo:isNaN(enKo)?0:enKo };
+    const enKoInpVal = enKoInp.value.trim();
+    const enKoSave = enKoInpVal === '' ? null : (isNaN(enKo) ? 0 : enKo);
+    st.slots[si] = { ...st.slots[si], range:rangeVal, total:isNaN(total)?0:total, enKo:enKoSave };
   }
 }
 
@@ -819,12 +822,8 @@ async function doPrint(mode) {
       const missing = [];
       if (!hasRange) missing.push('범위');
       if (!hasTotal) missing.push('총갯수');
-      // 영한: total이 있을 때만 검증. 숫자(0 포함)이면 유효
-      if (hasTotal) {
-        const enKoVal = sl.enKo;
-        const enKoOk = enKoVal !== undefined && enKoVal !== null && enKoVal !== '' && !isNaN(Number(enKoVal));
-        if (!enKoOk) missing.push('영한');
-      }
+      // 영한: null이면 빈칸(누락), 0 포함 숫자이면 유효
+      if (hasTotal && sl.enKo === null) missing.push('영한');
       if (missing.length > 0) {
         warnSlots.push(`${st.name} — 슬롯${i+1}: ${missing.join(', ')} 누락`);
       }
