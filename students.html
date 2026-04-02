@@ -979,6 +979,11 @@ function buildPrintHTML(allPages, mode) {
     });
   }
 
+  // 맨 마지막 빈 페이지 제거 (종이 낭비 방지)
+  while (parts.length && parts[parts.length - 1].includes('visibility:hidden')) {
+    parts.pop();
+  }
+
   // 마지막 실제 페이지에 last-ep 처리
   for (let i = parts.length - 1; i >= 0; i--) {
     if (!parts[i].includes('visibility:hidden')) {
