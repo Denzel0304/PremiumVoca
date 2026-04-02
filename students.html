@@ -805,17 +805,20 @@ async function doPrint(mode) {
     return;
   }
 
-  // 범위는 있는데 총갯수가 0인 슬롯 사전 경고
+  // 범위가 있는 슬롯은 총갯수·영한 모두 입력되어야 인쇄 가능
   const warnSlots = [];
   targets.forEach(st => {
     st.slots.forEach((sl, i) => {
-      if (sl.range && sl.total === 0) {
-        warnSlots.push(`${st.name} — 슬롯${i+1} (범위: ${sl.range})`);
+      if (!sl.range) return; // 빈 슬롯은 건너뜀
+      if (!sl.total || sl.total === 0) {
+        warnSlots.push(`${st.name} — 슬롯${i+1}: 총 갯수가 없습니다 (범위: ${sl.range})`);
+      } else if (sl.enKo === undefined || sl.enKo === null || sl.enKo === '' || isNaN(sl.enKo)) {
+        warnSlots.push(`${st.name} — 슬롯${i+1}: 영한 갯수가 없습니다 (범위: ${sl.range})`);
       }
     });
   });
   if (warnSlots.length > 0) {
-    showDoneModal('총 갯수가 0인 슬롯이 있습니다. 인쇄에서 제외됩니다.\n\n' + warnSlots.join('\n'));
+    showDoneModal('입력이 완전하지 않은 슬롯이 있습니다.\n인쇄를 시작할 수 없습니다.\n\n' + warnSlots.join('\n'));
     return;
   }
 
