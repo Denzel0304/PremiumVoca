@@ -16,14 +16,23 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Noto Sans KR', sans-serif; background: var(--paper); color: var(--ink); min-height: 100vh; }
 
+/* ── 중앙정렬 래퍼 ── */
+.page-inner {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  width: 100%;
+}
+
 /* ── 헤더 ── */
 header {
   background: var(--ink); color: var(--paper);
-  padding: 14px 24px;
-  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  padding: 0;
   border-bottom: 4px solid var(--accent);
   position: sticky; top: 0; z-index: 200;
 }
+header .page-inner { padding: 14px 24px; }
 .header-logo { font-size: 20px; font-weight: 900; letter-spacing: 0.04em; white-space: nowrap; }
 .header-rule { width: 1px; height: 26px; background: #444; flex-shrink: 0; }
 .header-desc { font-size: 12px; color: #aaa49a; font-weight: 300; margin-right: 4px; }
@@ -44,8 +53,9 @@ header {
 /* ── 필터 바 ── */
 #filterBar {
   background: #fff; border-bottom: 1px solid var(--line);
-  padding: 8px 20px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  padding: 8px 0;
 }
+#filterBar .page-inner { gap: 12px; }
 #filterBar label { font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: 0.06em; }
 #classFilter {
   font-family: 'Noto Sans KR', sans-serif; font-size: 13px;
@@ -57,8 +67,9 @@ header {
 /* ── 학생 추가 바 ── */
 #addBar {
   background: var(--paper2); border-bottom: 2px solid var(--line);
-  padding: 10px 20px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  padding: 10px 0;
 }
+#addBar .page-inner { gap: 8px; }
 #addBar input, #addBar select {
   font-family: 'Noto Sans KR', sans-serif; font-size: 13px;
   padding: 6px 10px; border: 1px solid var(--line); border-radius: 3px;
@@ -81,11 +92,13 @@ header {
 /* ── 안내 문구 바 ── */
 #infoBar {
   background: #fffdf7; border-bottom: 1px solid var(--line);
-  padding: 7px 20px; font-size: 11px; color: var(--muted); line-height: 1.6;
+  padding: 7px 0;
 }
+#infoBar .page-inner { font-size: 11px; color: var(--muted); line-height: 1.6; display: block; }
 
 /* ── 메인 테이블 ── */
-#tableWrap { overflow-x: auto; padding: 16px 20px 40px; }
+#tableWrap { overflow-x: auto; padding: 16px 0 40px; }
+#tableWrap .page-inner { display: block; padding-top: 0; padding-bottom: 0; }
 #studentList { display: flex; flex-direction: column; gap: 8px; }
 
 .list-header {
@@ -309,51 +322,60 @@ header {
 
 <!-- 헤더 -->
 <header>
-  <div class="header-logo">Premium Voca</div>
-  <div class="header-rule"></div>
-  <div class="header-desc">학생별 출제</div>
-  <button class="hbtn hbtn-print"   onclick="doPrint('all')">🖨 모두 인쇄</button>
-  <button class="hbtn hbtn-outline" onclick="doPrint('question')">문제지 인쇄</button>
-  <button class="hbtn hbtn-outline" onclick="doPrint('answer')">답지 인쇄</button>
-  <!-- [5] 홈으로 버튼을 답지 인쇄 바로 옆으로 -->
-  <button class="hbtn hbtn-home"    onclick="location.href='index.html'">← 홈으로</button>
+  <div class="page-inner">
+    <div class="header-logo">Premium Voca</div>
+    <div class="header-rule"></div>
+    <div class="header-desc">학생별 출제</div>
+    <button class="hbtn hbtn-print"   onclick="doPrint('all')">🖨 모두 인쇄</button>
+    <button class="hbtn hbtn-outline" onclick="doPrint('question')">문제지 인쇄</button>
+    <button class="hbtn hbtn-outline" onclick="doPrint('answer')">답지 인쇄</button>
+    <button class="hbtn hbtn-home"    onclick="location.href='index.html'">← 홈으로</button>
+  </div>
 </header>
 
 <div id="filterBar">
-  <label>반 필터</label>
-  <select id="classFilter" onchange="applyFilter()"><option value="">전체</option></select>
-  <span class="filter-count" id="filterCount"></span>
+  <div class="page-inner">
+    <label>반 필터</label>
+    <select id="classFilter" onchange="applyFilter()"><option value="">전체</option></select>
+    <span class="filter-count" id="filterCount"></span>
+  </div>
 </div>
 
 <!-- 학생 추가 바 -->
 <div id="addBar">
-  <input type="text" id="newName" placeholder="학생 이름" maxlength="10">
-  <input type="text" id="classInput" placeholder="반 (직접입력 또는 선택)" maxlength="20" list="classList">
-  <datalist id="classList"></datalist>
-  <select id="newVoca"><option value="">— 단어장 선택 —</option></select>
-  <button class="abtn abtn-add" onclick="addStudent()">+ 학생 추가</button>
-  <button class="abtn abtn-export" onclick="exportJSON()">📁 파일로 저장</button>
-  <button class="abtn abtn-import" onclick="document.getElementById('importFile').click()">📂 파일 불러오기</button>
-  <input type="file" id="importFile" accept=".json" style="display:none" onchange="importJSON(event)">
-  <span id="addErr" style="font-size:12px;color:#c0392b;display:none;"></span>
+  <div class="page-inner">
+    <input type="text" id="newName" placeholder="학생 이름" maxlength="10">
+    <input type="text" id="classInput" placeholder="반 (직접입력 또는 선택)" maxlength="20" list="classList">
+    <datalist id="classList"></datalist>
+    <select id="newVoca"><option value="">— 단어장 선택 —</option></select>
+    <button class="abtn abtn-add" onclick="addStudent()">+ 학생 추가</button>
+    <button class="abtn abtn-export" onclick="exportJSON()">📁 파일로 저장</button>
+    <button class="abtn abtn-import" onclick="document.getElementById('importFile').click()">📂 파일 불러오기</button>
+    <input type="file" id="importFile" accept=".json" style="display:none" onchange="importJSON(event)">
+    <span id="addErr" style="font-size:12px;color:#c0392b;display:none;"></span>
+  </div>
 </div>
 
 <!-- 안내 문구 -->
 <div id="infoBar">
-  💡 인쇄 버튼을 누르면, 모든 정보는 자동 저장되고, 다음 번에 자동으로 로딩됩니다. 하지만, 브라우저 캐시를 삭제하면 목록은 삭제됩니다. 그럴 경우를 대비해, <strong>파일로 저장하기</strong> 기능을 탑재해두었습니다.
+  <div class="page-inner">
+    💡 인쇄 버튼을 누르면, 모든 정보는 자동 저장되고, 다음 번에 자동으로 로딩됩니다. 하지만, 브라우저 캐시를 삭제하면 목록은 삭제됩니다. 그럴 경우를 대비해, <strong>파일로 저장하기</strong> 기능을 탑재해두었습니다.
+  </div>
 </div>
 
 <div id="tableWrap">
-  <div class="list-header">
-    <div class="lh" style="text-align:center;">출력</div>
-    <div class="lh" style="padding-left:6px;">학생 정보 / 합격 기록</div>
-    <div></div>
-    <div class="lh" style="padding-left:6px;">시험 슬롯 (5개)</div>
-  </div>
-  <div id="studentList"></div>
-  <div id="emptyState">
-    <div class="ei">👤</div>
-    <p>등록된 학생이 없습니다.<br>위에서 학생을 추가하세요.</p>
+  <div class="page-inner">
+    <div class="list-header">
+      <div class="lh" style="text-align:center;">출력</div>
+      <div class="lh" style="padding-left:6px;">학생 정보 / 합격 기록</div>
+      <div></div>
+      <div class="lh" style="padding-left:6px;">시험 슬롯 (5개)</div>
+    </div>
+    <div id="studentList"></div>
+    <div id="emptyState">
+      <div class="ei">👤</div>
+      <p>등록된 학생이 없습니다.<br>위에서 학생을 추가하세요.</p>
+    </div>
   </div>
 </div>
 
