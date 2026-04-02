@@ -805,20 +805,26 @@ async function doPrint(mode) {
     return;
   }
 
-  // 범위가 있는 슬롯은 총갯수·영한 모두 입력되어야 인쇄 가능
+  // 슬롯은 완전히 비어있거나 3개(범위·총갯수·영한) 모두 입력이어야 함
   const warnSlots = [];
   targets.forEach(st => {
     st.slots.forEach((sl, i) => {
-      if (!sl.range) return; // 빈 슬롯은 건너뜀
-      if (!sl.total || sl.total === 0) {
-        warnSlots.push(`${st.name} — 슬롯${i+1}: 총 갯수가 없습니다 (범위: ${sl.range})`);
-      } else if (sl.enKo === undefined || sl.enKo === null || sl.enKo === '' || isNaN(sl.enKo)) {
-        warnSlots.push(`${st.name} — 슬롯${i+1}: 영한 갯수가 없습니다 (범위: ${sl.range})`);
-      }
+      const hasRange = !!(sl.range && sl.range.trim());
+      const hasTotal = !!(sl.total && sl.total > 0);
+      const hasEnKo  = !(sl.enKo === undefined || sl.enKo === null || sl.enKo === '' || isNaN(Number(sl.enKo)));
+      const filledCount = [hasRange, hasTotal, hasEnKo].filter(Boolean).length;
+      if (filledCount === 0) return; // 완전히 빈 슬롯 — 정상
+      if (filledCount === 3) return; // 완전히 채워진 슬롯 — 정상
+      // 1개 또는 2개만 입력된 경우 — 불완전
+      const missing = [];
+      if (!hasRange) missing.push('범위');
+      if (!hasTotal) missing.push('총갯수');
+      if (!hasEnKo)  missing.push('영한');
+      warnSlots.push(`${st.name} — 슬롯${i+1}: ${missing.join(', ')} 누락`);
     });
   });
   if (warnSlots.length > 0) {
-    showDoneModal('입력이 완전하지 않은 슬롯이 있습니다.\n인쇄를 시작할 수 없습니다.\n\n' + warnSlots.join('\n'));
+    showDoneModal('슬롯 입력이 완전하지 않습니다.\n범위·총갯수·영한 모두 입력하거나 모두 비워야 합니다.\n\n' + warnSlots.join('\n'));
     return;
   }
 
