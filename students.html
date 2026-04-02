@@ -806,21 +806,28 @@ async function doPrint(mode) {
   }
 
   // 슬롯은 완전히 비어있거나 3개(범위·총갯수·영한) 모두 입력이어야 함
+  // 빈 슬롯 기준: range 없고 total = 0 (enKo 기본값도 0이므로 판별에서 제외)
+  // enKo는 0이 유효한 값(한영 100%)이므로 숫자 여부로만 판별
   const warnSlots = [];
   targets.forEach(st => {
     st.slots.forEach((sl, i) => {
       const hasRange = !!(sl.range && sl.range.trim());
       const hasTotal = !!(sl.total && sl.total > 0);
-      const hasEnKo  = !(sl.enKo === undefined || sl.enKo === null || sl.enKo === '' || isNaN(Number(sl.enKo)));
-      const filledCount = [hasRange, hasTotal, hasEnKo].filter(Boolean).length;
-      if (filledCount === 0) return; // 완전히 빈 슬롯 — 정상
-      if (filledCount === 3) return; // 완전히 채워진 슬롯 — 정상
-      // 1개 또는 2개만 입력된 경우 — 불완전
+      // 빈 슬롯: 범위도 없고 총갯수도 0 → 건너뜀
+      if (!hasRange && !hasTotal) return;
+      // 여기까지 왔으면 뭔가 입력된 슬롯 — 범위·총갯수 둘 다 있어야 함
       const missing = [];
       if (!hasRange) missing.push('범위');
       if (!hasTotal) missing.push('총갯수');
-      if (!hasEnKo)  missing.push('영한');
-      warnSlots.push(`${st.name} — 슬롯${i+1}: ${missing.join(', ')} 누락`);
+      // 영한: total이 있을 때만 검증. 숫자(0 포함)이면 유효
+      if (hasTotal) {
+        const enKoVal = sl.enKo;
+        const enKoOk = enKoVal !== undefined && enKoVal !== null && enKoVal !== '' && !isNaN(Number(enKoVal));
+        if (!enKoOk) missing.push('영한');
+      }
+      if (missing.length > 0) {
+        warnSlots.push(`${st.name} — 슬롯${i+1}: ${missing.join(', ')} 누락`);
+      }
     });
   });
   if (warnSlots.length > 0) {
