@@ -506,12 +506,24 @@ function applyVisibility(mode) {
   } else {
     qEls.forEach(el => el.classList.remove('no-print'));
     aEls.forEach(el => el.classList.remove('no-print'));
+
+    // 문제지 페이지 수가 홀수면 문제지·답지 사이에 빈 페이지 삽입
+    if (pages.length % 2 === 1) {
+      const blank = document.createElement('div');
+      blank.className = 'sheet-wrapper blank-spacer';
+      blank.dataset.role = 'blank';
+      blank.innerHTML = '<div class="exam-page" style="background:#fff;"></div>';
+      const firstAnswer = document.querySelector('[data-role="answer"]');
+      document.getElementById('preview').insertBefore(blank, firstAnswer);
+    }
   }
 }
 
 function restoreVisibility() {
   document.querySelectorAll('[data-role]').forEach(el => el.classList.remove('no-print'));
   document.querySelectorAll('.last-print-page').forEach(el => el.classList.remove('last-print-page'));
+  // 삽입했던 빈 페이지 제거
+  document.querySelectorAll('.blank-spacer').forEach(el => el.remove());
 }
 </script>
 </body>
