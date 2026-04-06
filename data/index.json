@@ -1,3 +1,8 @@
 [
-  { "id": "voca01", "title": "프리미엄보카 고등기본1", "file": "data/voca01.json" }
+  { "id": "voca05", "title": "프리미엄보카 중등기본", "file": "data/voca05.json" },
+  { "id": "voca06", "title": "프리미엄보카 중등실력", "file": "data/voca06.json" },
+  { "id": "voca01", "title": "프리미엄보카 고등기본1", "file": "data/voca01.json" },
+  { "id": "voca02", "title": "프리미엄보카 고등기본2", "file": "data/voca02.json" },
+  { "id": "voca03", "title": "프리미엄보카 고등기본3", "file": "data/voca03.json" },
+  { "id": "voca04", "title": "프리미엄보카 고등실력", "file": "data/voca04.json" }
 ]
