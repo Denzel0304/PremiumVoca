@@ -54,12 +54,7 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--paper); color:
   width: min(794px, 100%);
 }
 
-/* [4] 문제지/답지 레이블 — 화면 + 인쇄 모두 표시 */
-.sheet-label {
-  position: absolute; top: 10px; right: 10px;
-  font-size: 10px; background: var(--accent); color: #fff;
-  padding: 2px 8px; border-radius: 2px; font-weight: 700; letter-spacing: 0.1em; z-index: 10;
-}
+
 
 /* =============================================
    시험지 내부 — 화면 + 인쇄 공용
@@ -399,7 +394,7 @@ function makePageHTML(slots, pageIndex, isAnswer) {
   return `
   <div class="exam-page" data-type="${isAnswer ? 'answer' : 'question'}">
     <!-- [4] 레이블을 exam-page 안으로 이동해 인쇄 영역에 포함 -->
-    <div class="sheet-label" style="position:absolute;top:6px;right:10px;">${labelText}${pageLabel}</div>
+    
     <div class="exam-header">
       <div class="exam-header-left">${vocaTitle}</div>
       ${academyHTML}
