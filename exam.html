@@ -135,16 +135,16 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--paper); color:
 }
 .exam-table th, .exam-table td {
   border: 0.6px solid #999;
-  font-size: 13px;           /* [3] 11px → 13px */
+  font-size: 13px;
   padding: 0 6px;
   line-height: 1.1;
-  overflow: hidden;
+  overflow: hidden;                /* ★ 수정: 행 팽창 방지 */
 }
 .exam-table th {
   background: #edeae2;
   text-align: center;
   font-weight: 700;
-  font-size: 10px;           /* 헤더는 그대로 */
+  font-size: 10px;
   letter-spacing: 0.05em;
   padding: 3px 4px;
   border-bottom: 1.5px solid #888;
@@ -159,21 +159,29 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--paper); color:
 /* 번호 폰트 */
 .td-num {
   text-align: center;
-  font-size: 14px;           /* [3] 13px → 14px */
+  font-size: 14px;
   font-weight: 700;
   color: #111;
   font-family: 'DM Mono', monospace;
   white-space: nowrap;
 }
-.td-word { font-size: 13px; word-break: normal; overflow-wrap: break-word; line-height: 1.2; }  /* [3] */
-.td-ans  { font-size: 13px; color: #111; }             /* [3] */
+.td-word {
+  font-size: 13px;
+  word-break: normal;
+  overflow-wrap: anywhere;         /* ★ 수정: break-word → anywhere */
+  line-height: 1.2;
+}
+.td-ans  { font-size: 13px; color: #111; }
 .td-ans.blank { color: transparent; }
 
 /* [2] 답지에서 빈 슬롯(null) 행 — 테두리만, 내용 없음 */
 .td-ans.blank-ans { color: transparent; }
 
-/* tbody 행 균등 분배 */
-.exam-table tbody tr { height: calc((100% - 20px) / 25); }
+/* tbody 행 균등 분배 + 최대 높이 cap */
+.exam-table tbody tr {
+  height: calc((100% - 20px) / 25);
+  max-height: calc((100% - 20px) / 25 * 1.6); /* ★ 수정: 줄바꿈 시 과도한 팽창 방지 */
+}
 
 /* =============================================
    인쇄 전용
