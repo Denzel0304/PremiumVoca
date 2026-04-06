@@ -946,12 +946,7 @@ function buildPrintHTML(allPages, mode) {
       page-break-after:always; page-break-inside:avoid; position:relative;
     }
     .ep.last-ep { page-break-after:auto; }
-    .ep-label {
-      position:absolute; top:6px; right:10px;
-      font-size:9px; background:#8b2e2e; color:#fff;
-      padding:2px 7px; border-radius:2px; font-weight:700;
-      -webkit-print-color-adjust:exact; print-color-adjust:exact;
-    }
+    
     .ep-header {
       display:flex; align-items:stretch;
       border:2.5px solid #111; margin-bottom:5px; flex-shrink:0; height:52px;
@@ -1058,7 +1053,7 @@ function makeEP(slots, pageIndex, st, isAnswer, pageLabel, rangeStr) {
   const fullLabel=pageLabel?`${typeLabel} ${pageLabel}`:typeLabel;
   return `
   <div class="ep">
-    <div class="ep-label">${fullLabel}</div>
+    
     <div class="ep-header">
       <div class="ep-h-left">${esc(st.vocaTitle)}</div>
       <div class="ep-h-mid"><div class="hl">ACADEMY</div><div class="hv"></div></div>
