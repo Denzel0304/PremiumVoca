@@ -21,68 +21,32 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--paper); color:
   max-width: 1300px;
   margin: 0 auto;
   padding: 0 20px;
-  display: flex; 
-  align-items: center; 
-  justify-content: center; /* ← 이 코드가 있어야 진짜 정중앙에 모여요! */
-  gap: 20px; 
-  flex-wrap: wrap;
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
   width: 100%;
 }
 
-/* ── HEADER (높이는 적당하게, 버튼은 예쁘게!) ── */
+/* ── 헤더 ── */
 header {
-  background: var(--ink);
-  color: var(--paper);
-  /* 높이를 너무 과하지 않게 딱 1.5배(42px)로 조절했어요 */
-  padding: 42px 0; 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: var(--ink); color: var(--paper);
+  padding: 0;
   border-bottom: 4px solid var(--accent);
+  position: sticky; top: 0; z-index: 200;
 }
-
-/* 헤더 안의 내용물들을 한 줄로 예쁘게 세우는 바구니예요 */
-header .page-inner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 15px; /* 글자와 선 사이의 간격을 딱 보기 좋게 줄였어요 */
+header .page-inner { padding: 14px 24px; }
+.header-logo { font-size: 20px; font-weight: 900; letter-spacing: 0.04em; white-space: nowrap; }
+.header-rule { width: 1px; height: 26px; background: #444; flex-shrink: 0; }
+.header-desc { font-size: 12px; color: #aaa49a; font-weight: 300; margin-right: 4px; }
+.hbtn {
+  padding: 7px 14px; border-radius: 3px; font-size: 12px; font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif; cursor: pointer; border: none;
+  white-space: nowrap; transition: all 0.15s;
 }
-
-.header-logo {
-  font-size: 40px; /* 너무 컸던 글자를 조금 줄여서 딱 보기 좋게 만들었어요 */
-  font-weight: 900;
-  letter-spacing: 0.04em;
-  line-height: 1;
-}
-
-.header-rule { 
-  width: 1px; 
-  height: 30px; 
-  background: #444; 
-  flex-shrink: 0; 
-}
-
-.header-desc { 
-  font-size: 16px; /* 설명 글자도 적당한 크기로 맞췄어요 */
-  color: #aaa49a; 
-  font-weight: 300; 
-  line-height: 1.4; 
-}
-
-/* 홈으로 버튼 (망가졌던 버튼들을 다시 얌전하게 만들었어요) */
-.header-home {
-  color: #aaa49a;
-  font-size: 14px;
-  text-decoration: none;
-  font-weight: 300;
-  white-space: nowrap;
-  margin-left: 10px;
-}
-
-/* 아래쪽 버튼들이 밀려나지 않게 도와주는 투명 칸막이에요 */
-.hsp { display: none; }
-  
+.hbtn-outline { background: transparent; border: 1px solid #555; color: #fff; }
+.hbtn-outline:hover { background: #333; }
+.hbtn-generate { background: #2e6b3e; color: #fff; }
+.hbtn-generate:hover { background: #1e4a2a; }
+.hbtn-print { background: var(--accent); color: #fff; }
+.hbtn-print:hover { background: #6e2222; }
 /* [5] 홈으로 버튼 — 답지 인쇄 바로 옆 */
 .hbtn-home { background: transparent; border: 1px solid #555; color: #ccc; }
 .hbtn-home:hover { background: #333; }
