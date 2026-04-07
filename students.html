@@ -25,28 +25,41 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--paper); color:
   width: 100%;
 }
 
-/* ── 헤더 ── */
+
+/* ── 헤더 (크기 조정 버전) ── */
 header {
   background: var(--ink); color: var(--paper);
   padding: 0;
   border-bottom: 4px solid var(--accent);
   position: sticky; top: 0; z-index: 200;
 }
-header .page-inner { padding: 14px 24px; }
-.header-logo { font-size: 20px; font-weight: 900; letter-spacing: 0.04em; white-space: nowrap; }
-.header-rule { width: 1px; height: 26px; background: #444; flex-shrink: 0; }
-.header-desc { font-size: 12px; color: #aaa49a; font-weight: 300; margin-right: 4px; }
+/* [변경] 헤더 높이 1.3배 증가를 위해 세로 패딩 조정 (14px -> 18px) */
+header .page-inner { padding: 18px 24px; min-height: 84px; }
+
+/* [변경] 로고 크기 1.5배 (20px -> 30px) */
+.header-logo { font-size: 30px; font-weight: 900; letter-spacing: 0.04em; white-space: nowrap; }
+
+/* [변경] 구분선 높이 조절 */
+.header-rule { width: 1px; height: 34px; background: #444; flex-shrink: 0; margin: 0 4px; }
+
+/* [변경] 설명 텍스트 크기 1.5배 (12px -> 18px) */
+.header-desc { font-size: 18px; color: #aaa49a; font-weight: 300; margin-right: 10px; }
+
+/* [변경] 모든 버튼 크기 1.3배 (폰트 12px -> 15.6px / 패딩 7px -> 9px) */
 .hbtn {
-  padding: 7px 14px; border-radius: 3px; font-size: 12px; font-weight: 700;
+  padding: 9px 18px; border-radius: 4px; font-size: 15.6px; font-weight: 700;
   font-family: 'Noto Sans KR', sans-serif; cursor: pointer; border: none;
   white-space: nowrap; transition: all 0.15s;
+  display: flex; align-items: center; justify-content: center;
 }
+  
 .hbtn-outline { background: transparent; border: 1px solid #555; color: #fff; }
 .hbtn-outline:hover { background: #333; }
 .hbtn-generate { background: #2e6b3e; color: #fff; }
 .hbtn-generate:hover { background: #1e4a2a; }
 .hbtn-print { background: var(--accent); color: #fff; }
 .hbtn-print:hover { background: #6e2222; }
+  
 /* [5] 홈으로 버튼 — 답지 인쇄 바로 옆 */
 .hbtn-home { background: transparent; border: 1px solid #555; color: #ccc; }
 .hbtn-home:hover { background: #333; }
