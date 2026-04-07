@@ -1017,11 +1017,11 @@ function buildPrintHTML(allPages, mode) {
     table.wide th { background:#edeae2 !important; text-align:center; font-weight:700; font-size:10px; letter-spacing:0.05em; padding:3px 4px; border-bottom:1.5px solid #888; height:20px; white-space:nowrap; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
     table.wide .cn { width:44px; }
     /* 번호행: 음영 */
-    table.wide tbody tr.row-q { background:#edeae2 !important; height:calc((100% - 20px)/24); -webkit-print-color-adjust:exact; print-color-adjust:exact; }
-    table.wide tbody tr.row-q td { background:#edeae2 !important; height:calc((100% - 20px)/24); -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    table.wide tbody tr.row-q { background:#edeae2 !important; height:calc((100% - 20px)/24); max-height:calc((100% - 20px)/24); -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    table.wide tbody tr.row-q td { background:#edeae2 !important; height:calc((100% - 20px)/24); max-height:calc((100% - 20px)/24); -webkit-print-color-adjust:exact; print-color-adjust:exact; }
     /* 답 기입행: 흰색 */
-    table.wide tbody tr.row-a { background:#fff !important; height:calc((100% - 20px)/24); }
-    table.wide tbody tr.row-a td { height:calc((100% - 20px)/24); }
+    table.wide tbody tr.row-a { background:#fff !important; height:calc((100% - 20px)/24); max-height:calc((100% - 20px)/24); }
+    table.wide tbody tr.row-a td { height:calc((100% - 20px)/24); max-height:calc((100% - 20px)/24); }
     table.wide .td-num-w { text-align:center; font-size:13px; font-weight:700; font-family:'DM Mono',monospace; white-space:nowrap; vertical-align:middle; }
     table.wide .td-q-w { font-size:12px; overflow-wrap:anywhere; line-height:1.3; vertical-align:middle; }
     table.wide .td-a-w { font-size:12px; vertical-align:middle; }
@@ -1171,14 +1171,14 @@ function makeTableWide(slots, startNum, isAnswer) {
     const qText = q ? (q.direction === 'enKo' ? q.en : q.ko) : '';
     const aText = q ? (q.direction === 'enKo' ? q.ko : q.en) : '';
     // 번호행 (음영): 번호 + 질문 문장
-    rows += `<tr class="row-q"><td class="td-num-w">${q ? num : ''}</td><td class="td-q-w">${esc(qText)}</td></tr>`;
+    rows += `<tr class="row-q"><td class="td-num-w">${q ? num : '&nbsp;'}</td><td class="td-q-w">${qText ? esc(qText) : '&nbsp;'}</td></tr>`;
     // 답 기입행 (흰색): 빈 번호 셀 + 답란
     const ansCell = !q
       ? `<td class="td-a-w blank">&nbsp;</td>`
       : isAnswer
         ? `<td class="td-a-w">${esc(aText)}</td>`
         : `<td class="td-a-w blank">&nbsp;</td>`;
-    rows += `<tr class="row-a"><td style="border-right:0.6px solid #999;"></td>${ansCell}</tr>`;
+    rows += `<tr class="row-a"><td style="border-right:0.6px solid #999;">&nbsp;</td>${ansCell}</tr>`;
   });
   return `<table class="wide">
     <colgroup><col class="cn"><col></colgroup>
