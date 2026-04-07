@@ -223,11 +223,17 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--paper); color:
 .exam-table-wide tbody tr.row-q {
   background: #edeae2;
   height: calc((100% - 20px) / 24);
+  min-height: 18px;
 }
 /* 답기입행: 흰색 */
 .exam-table-wide tbody tr.row-a {
   background: #fff;
   height: calc((100% - 20px) / 24);
+  min-height: 18px;
+}
+/* row-q의 td에도 음영 명시 (td 개별 background 우선순위 대응) */
+.exam-table-wide tbody tr.row-q td {
+  background: #edeae2;
 }
 
 .td-num-w {
@@ -308,6 +314,11 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--paper); color:
 
   /* wide 음영 인쇄 강제 */
   .exam-table-wide tbody tr.row-q {
+    background: #edeae2 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .exam-table-wide tbody tr.row-q td {
     background: #edeae2 !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
