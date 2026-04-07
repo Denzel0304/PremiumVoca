@@ -35,7 +35,6 @@
     gap: 20px;
     border-bottom: 4px solid var(--accent);
   }
-  /* [5] 작은 글씨(header-sub) 제거, 큰 로고만 남기고 크기 키움 */
   .header-logo {
     font-size: 36px;
     font-weight: 900;
@@ -130,7 +129,6 @@
   }
   .range-hint b { color: var(--ink); font-size: 15px; }
 
-  /* [3] 총 단어 수 표시 — 범위 입력 바로 아래 */
   .total-words-msg {
     margin-top: 8px;
     font-size: 15px;
@@ -145,7 +143,7 @@
     display: none;
   }
 
-  /* [3] 영한/한영 입력 영역 */
+  /* ── 영한/한영 입력 영역 ── */
   .direction-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -289,18 +287,17 @@
         연속: <b>1-5</b> &nbsp;|&nbsp; 선택: <b>1,3,7</b> &nbsp;|&nbsp; 혼합: <b>1-5,7,9</b>
       </div>
       <div class="error-msg" id="rangeError"></div>
-      <!-- [3] 범위 선택 시 총 단어 수 즉시 표시 -->
       <div class="total-words-msg" id="totalWordsMsg"></div>
     </div>
 
-    <!-- [3] 출제 개수 + 영한/한영 구성 -->
+    <!-- 출제 개수 -->
     <div style="margin-top:20px;">
       <label class="field-label">총 출제 개수</label>
       <input type="number" id="countInput" placeholder="숫자 입력" min="1">
       <div class="error-msg" id="countError"></div>
     </div>
 
-    <!-- [3] 영한 / 한영 분배 -->
+    <!-- 영한 / 한영 분배 -->
     <div class="direction-row">
       <div class="direction-box">
         <div class="dir-label">영한 (영어 → 한국어)</div>
@@ -313,8 +310,6 @@
       </div>
     </div>
   </div>
-
-  <!-- [7] STEP 4 제거 — 인쇄/저장 옵션은 exam.html로 이동 -->
 
   <div class="action-row">
     <button class="btn btn-outline" onclick="resetAll()">초기화</button>
@@ -464,7 +459,6 @@ function onRangeChange() {
     updateBtn(); return;
   }
   const words = getWordsFromDays(days);
-  // [3] 총 단어 수 범위 아래에 표시
   msgEl.textContent = `선택 범위: Day ${days.join(', ')} — 총 ${words.length}개`;
   msgEl.style.display = 'block';
   document.getElementById('countInput').max = words.length;
@@ -485,7 +479,6 @@ function onCountChange() {
       errEl.style.display = 'block';
     }
   }
-  // 영한 최대값 갱신
   const enKoEl = document.getElementById('enKoCount');
   if (!isNaN(count) && count >= 1) {
     enKoEl.max = count;
@@ -494,7 +487,6 @@ function onCountChange() {
   updateBtn();
 }
 
-// [3] 영한 개수 입력 → 한영 자동 계산
 function onEnKoChange() {
   const count = parseInt(document.getElementById('countInput').value);
   const enKo = parseInt(document.getElementById('enKoCount').value);
@@ -573,12 +565,15 @@ function generateExam() {
   const days = parseRange(rangeVal);
   const pool = shuffle(getWordsFromDays(days));
 
-  // [3] 영한 N개, 한영 M개 분리 추출 후 섞기
   const enKoWords = pool.slice(0, enKoCount).map(w => ({ ...w, direction: 'enKo' }));
   const koEnWords = pool.slice(enKoCount, enKoCount + koEnCount).map(w => ({ ...w, direction: 'koEn' }));
   const questions = shuffle([...enKoWords, ...koEnWords]);
 
+  // ★ vocaId 추가 — exam.html에서 wide 판별에 사용
+  const vocaId = document.getElementById('vocaSelect').value;
+
   const payload = {
+    vocaId,
     vocaTitle: vocaDB.title,
     studentName: document.getElementById('studentName').value.trim(),
     academyName: document.getElementById('academyName').value.trim(),
