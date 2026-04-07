@@ -236,49 +236,7 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--paper); color:
   @page { size: A4 portrait; margin: 0; }
 }
 
-/* ── Wide 레이아웃 (속담·영작 전용) ── */
-.exam-header-wide { height: 44px; }
-.exam-page-wide .exam-header-left { font-size: 17px; }
-.exam-body-wide { flex: 1; min-height: 0; }
-.exam-table-wide {
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: fixed;
-  border: 2px solid #111;
-  height: 100%;
-}
-.exam-table-wide th, .exam-table-wide td {
-  border: 0.6px solid #999;
-  font-size: 10.5px;
-  padding: 0 6px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-.exam-table-wide th {
-  background: #edeae2;
-  text-align: center;
-  font-weight: 700;
-  font-size: 10px;
-  letter-spacing: 0.05em;
-  padding: 3px 4px;
-  border-bottom: 1.5px solid #888;
-  height: 20px;
-  white-space: nowrap;
-}
-.col-word-wide { width: 52%; }
-.col-ans-wide  { width: 38%; }
-.exam-table-wide tbody tr {
-  height: calc((100% - 20px) / 12);
-}
-.exam-table-wide .td-word { font-size: 10.5px; }
-.exam-table-wide .td-ans  { font-size: 10.5px; color: #111; }
-.exam-table-wide .td-ans.blank { color: transparent; }
-.exam-table-wide .td-ans.blank-ans { color: transparent; }
-
-@media print {
-  .exam-table-wide { height: 100%; page-break-inside: avoid; break-inside: avoid; }
-}
+/* ── PDF 저장 옵션 드롭다운 스타일 ── */
 .pdf-dropdown {
   position: relative;
   display: inline-block;
@@ -364,10 +322,7 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--paper); color:
 const raw = sessionStorage.getItem('examPayload');
 if (!raw) { alert('출제 데이터가 없습니다.'); location.href = 'index.html'; }
 const P = JSON.parse(raw);
-const { vocaTitle, vocaId, studentName, academyName, rangeStr, questions, enKoCount, koEnCount } = P;
-
-// ── Wide 레이아웃 여부 (속담·영작 단어장)
-function isWide() { return vocaId === 'voca11' || vocaId === 'voca12'; }
+const { vocaTitle, studentName, academyName, rangeStr, questions, enKoCount, koEnCount } = P;
 
 document.getElementById('tbTitle').textContent = vocaTitle;
 // [9] 범위와 문항 수만 표시
@@ -377,10 +332,11 @@ document.getElementById('tbInfo').textContent =
 // ── [10] 빈 페이지 버그 수정: 실제 문항 수에 맞게 페이지 분할 ──
 function splitPages(qs) {
   const pages = [];
-  const perPage = isWide() ? 12 : 50; // Wide: 12문제/페이지, 일반: 50문제/페이지
-  for (let i = 0; i < qs.length; i += perPage) {
-    const chunk = qs.slice(i, i + perPage);
-    while (chunk.length < perPage) chunk.push(null);
+  // 실제 문항만큼만 페이지를 생성, 50개 단위로 자름
+  for (let i = 0; i < qs.length; i += 50) {
+    const chunk = qs.slice(i, i + 50);
+    // 50개 미만이면 null 패딩 (행 높이 균등 유지)
+    while (chunk.length < 50) chunk.push(null);
     pages.push(chunk);
   }
   return pages;
@@ -430,62 +386,6 @@ function makeTableHTML(half, startNum, isAnswer) {
     </table>`;
 }
 
-// ── Wide 전용: 단일 전폭 테이블 (24행) ──
-function makeTableHTMLWide(slots, startNum, isAnswer) {
-  let rows = '';
-  slots.forEach((q, i) => {
-    const num   = startNum + i;
-    const qText = q ? questionText(q) : '';
-    const aText = q ? answerText(q) : '';
-    let ansTd;
-    if (!q) {
-      ansTd = `<td class="td-ans blank-ans">&nbsp;</td>`;
-    } else if (isAnswer) {
-      ansTd = `<td class="td-ans">${aText}</td>`;
-    } else {
-      ansTd = `<td class="td-ans blank">&nbsp;</td>`;
-    }
-    rows += `<tr>
-      <td class="td-num">${q ? num : ''}</td>
-      <td class="td-word">${qText}</td>
-      ${ansTd}
-    </tr>`;
-  });
-  return `
-    <table class="exam-table exam-table-wide">
-      <colgroup><col class="col-num"><col class="col-word-wide"><col class="col-ans-wide"></colgroup>
-      <thead><tr>
-        <th class="col-num">No.</th>
-        <th class="col-word-wide">문장 / 단어</th>
-        <th class="col-ans-wide">답</th>
-      </tr></thead>
-      <tbody>${rows}</tbody>
-    </table>`;
-}
-
-function makePageHTMLWide(slots, pageIndex, isAnswer) {
-  const startNum  = pageIndex * 12 + 1;
-  const academyHTML = `
-    <div class="exam-header-center">
-      <div class="hlabel">ACADEMY</div>
-      <div class="hval">${academyName || ''}</div>
-    </div>`;
-  return `
-  <div class="exam-page exam-page-wide" data-type="${isAnswer ? 'answer' : 'question'}">
-    <div class="exam-header exam-header-wide">
-      <div class="exam-header-left">${vocaTitle}</div>
-      ${academyHTML}
-      <div class="exam-header-right">
-        <div class="hrow"><span class="hkey">범위</span><span>Day ${rangeStr}</span></div>
-        <div class="hrow"><span class="hkey">이름</span><span>${studentName || ''}</span></div>
-      </div>
-    </div>
-    <div class="exam-body-wide">
-      ${makeTableHTMLWide(slots, startNum, isAnswer)}
-    </div>
-  </div>`;
-}
-
 function makePageHTML(slots, pageIndex, isAnswer) {
   const left  = slots.slice(0, 25);
   const right = slots.slice(25, 50);
@@ -528,9 +428,7 @@ function render() {
     wrap.className = 'sheet-wrapper';
     wrap.dataset.role = 'question';
     wrap.style.position = 'relative';
-    wrap.innerHTML = isWide()
-      ? makePageHTMLWide(slots, pi, false)
-      : makePageHTML(slots, pi, false);
+    wrap.innerHTML = makePageHTML(slots, pi, false);
     preview.appendChild(wrap);
   });
 
@@ -540,9 +438,7 @@ function render() {
     wrap.className = 'sheet-wrapper';
     wrap.dataset.role = 'answer';
     wrap.style.position = 'relative';
-    wrap.innerHTML = isWide()
-      ? makePageHTMLWide(slots, pi, true)
-      : makePageHTML(slots, pi, true);
+    wrap.innerHTML = makePageHTML(slots, pi, true);
     preview.appendChild(wrap);
   });
 }
