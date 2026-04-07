@@ -979,9 +979,42 @@ function buildPrintHTML(allPages, mode) {
     .td-a { font-size:13px; }
     .td-a.blank { color:transparent; }
     tbody tr { height:calc((100% - 20px)/25); max-height:calc((100% - 20px)/25 * 1.6); }
+/* ── Wide 레이아웃 (속담·영작 전용) ── */
+    .ep-wide {
+      width:210mm; height:297mm; padding:10mm 12mm 9mm 12mm;
+      font-family:'Noto Sans KR',sans-serif; background:#fff !important;
+      display:flex; flex-direction:column; overflow:hidden;
+      page-break-after:always; page-break-inside:avoid; position:relative;
+    }
+    .ep-wide.last-ep { page-break-after:auto; }
+    .ep-header-wide {
+      display:flex; align-items:stretch;
+      border:2.5px solid #111; margin-bottom:5px; flex-shrink:0; height:40px;
+    }
+    .ep-wide .ep-h-left { flex:1; padding:0 14px; font-size:16px; font-weight:700; border-right:1.5px solid #111; display:flex; align-items:center; justify-content:center; text-align:center; }
+    .ep-wide .ep-h-mid  { width:160px; padding:0 10px; border-right:1.5px solid #111; display:flex; flex-direction:column; justify-content:center; gap:2px; }
+    .ep-wide .ep-h-mid .hl { font-size:8px; font-weight:700; color:#888; letter-spacing:0.06em; }
+    .ep-wide .ep-h-mid .hv { font-size:12px; font-weight:500; }
+    .ep-wide .ep-h-right { width:180px; display:flex; flex-direction:column; font-size:11px; }
+    .ep-wide .ep-h-right .hr { padding:0 10px; display:flex; gap:6px; align-items:center; border-bottom:1px solid #ccc; flex:1; }
+    .ep-wide .ep-h-right .hr:last-child { border-bottom:none; }
+    .ep-wide .ep-h-right .hk { font-weight:700; color:#555; min-width:32px; font-size:9px; }
+    .ep-body-wide { flex:1; min-height:0; }
+    table.wide { width:100%; border-collapse:collapse; table-layout:fixed; border:2px solid #111; height:100%; background:#fff !important; }
+    table.wide th,table.wide td { border:0.6px solid #999; font-size:12px; padding:0 8px; line-height:1.25; overflow:hidden; background:#fff !important; }
+    table.wide th { background:#edeae2 !important; text-align:center; font-weight:700; font-size:10px; letter-spacing:0.05em; padding:3px 4px; border-bottom:1.5px solid #888; height:20px; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    table.wide .cn{width:44px;} table.wide .cw-wide{width:56%;}
+    table.wide tbody tr { height:calc((100% - 20px)/24); }
+    table.wide .td-num { text-align:center; font-size:14px; font-weight:700; font-family:'DM Mono',monospace; white-space:nowrap; }
+    table.wide .td-w { font-size:12px; word-break:normal; overflow-wrap:anywhere; line-height:1.3; }
+    table.wide .td-a { font-size:12px; }
+    table.wide .td-a.blank { color:transparent; }
     @page { size:A4 portrait; margin:0; }
     @media print { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
   </style>`;
+
+  // Wide 여부 판별
+  function isWideVoca(vocaId) { return vocaId === 'voca11' || vocaId === 'voca12'; }
 
   // 슬롯 단위 묶음으로 수집
   // groups: [ { qPages:[], aPages:[] }, ... ]  — 학생×슬롯 단위
@@ -992,15 +1025,23 @@ function buildPrintHTML(allPages, mode) {
     for (const page of pages) {
       const slotRangeStr = page.slot.range;
       const qs = page.questions;
-      const totalPg = Math.ceil(qs.length / 50);
+      const wide = isWideVoca(st.vocaId);
+      const perPage = wide ? 24 : 50;
+      const totalPg = Math.ceil(qs.length / perPage);
       const qPages = [], aPages = [];
-      for (let i = 0; i < qs.length; i += 50) {
-        const chunk = qs.slice(i, i + 50);
-        while (chunk.length < 50) chunk.push(null);
-        const pi = Math.floor(i / 50);
+      for (let i = 0; i < qs.length; i += perPage) {
+        const chunk = qs.slice(i, i + perPage);
+        while (chunk.length < perPage) chunk.push(null);
+        const pi = Math.floor(i / perPage);
         const label = totalPg > 1 ? `${pi + 1}` : '';
-        qPages.push(makeEP(chunk, pi, st, false, label, slotRangeStr));
-        aPages.push(makeEP(chunk, pi, st, true,  label, slotRangeStr));
+        if (wide) {
+          qPages.push(makeEPWide(chunk, pi, st, false, label, slotRangeStr));
+          aPages.push(makeEPWide(chunk, pi, st, true,  label, slotRangeStr));
+        } else {
+          qPages.push(makeEP(chunk, pi, st, false, label, slotRangeStr));
+          aPages.push(makeEP(chunk, pi, st, true,  label, slotRangeStr));
+        }
+      }
       }
       groups.push({ qPages, aPages });
     }
@@ -1035,10 +1076,14 @@ function buildPrintHTML(allPages, mode) {
     parts.pop();
   }
 
-  // 마지막 실제 페이지에 last-ep 처리
+  // 마지막 실제 페이지에 last-ep 처리 (ep, ep-wide 모두 대응)
   for (let i = parts.length - 1; i >= 0; i--) {
     if (!parts[i].includes('visibility:hidden')) {
-      parts[i] = parts[i].replace('class="ep"', 'class="ep last-ep"');
+      if (parts[i].includes('class="ep-wide"')) {
+        parts[i] = parts[i].replace('class="ep-wide"', 'class="ep-wide last-ep"');
+      } else {
+        parts[i] = parts[i].replace('class="ep"', 'class="ep last-ep"');
+      }
       break;
     }
   }
@@ -1083,6 +1128,43 @@ function makeTable(half, startNum, isAnswer) {
   return `<table>
     <colgroup><col class="cn"><col class="cw"><col></colgroup>
     <thead><tr><th class="cn">No.</th><th class="cw">단어</th><th>답</th></tr></thead>
+    <tbody>${rows}</tbody>
+  </table>`;
+}
+
+// ── Wide 전용 함수 (속담·영작: voca11, voca12) ──
+function makeEPWide(slots, pageIndex, st, isAnswer, pageLabel, rangeStr) {
+  const startNum = pageIndex * 24 + 1;
+  return `
+  <div class="ep-wide">
+    <div class="ep-header-wide">
+      <div class="ep-h-left">${esc(st.vocaTitle)}</div>
+      <div class="ep-h-mid"><div class="hl">ACADEMY</div><div class="hv"></div></div>
+      <div class="ep-h-right">
+        <div class="hr"><span class="hk">범위</span><span>Day ${esc(rangeStr)}</span></div>
+        <div class="hr"><span class="hk">이름</span><span>${esc(st.name)}</span></div>
+      </div>
+    </div>
+    <div class="ep-body-wide">
+      ${makeTableWide(slots, startNum, isAnswer)}
+    </div>
+  </div>`;
+}
+
+function makeTableWide(slots, startNum, isAnswer) {
+  let rows='';
+  slots.forEach((q,i) => {
+    const num=startNum+i;
+    const qText=q?(q.direction==='enKo'?q.en:q.ko):'';
+    const aText=q?(q.direction==='enKo'?q.ko:q.en):'';
+    const ansTd=!q?`<td class="td-a blank">&nbsp;</td>`
+      :isAnswer?`<td class="td-a">${esc(aText)}</td>`
+      :`<td class="td-a blank">&nbsp;</td>`;
+    rows+=`<tr><td class="td-num">${q?num:''}</td><td class="td-w">${esc(qText)}</td>${ansTd}</tr>`;
+  });
+  return `<table class="wide">
+    <colgroup><col class="cn"><col class="cw-wide"><col></colgroup>
+    <thead><tr><th class="cn">No.</th><th class="cw-wide">문장 / 단어</th><th>답</th></tr></thead>
     <tbody>${rows}</tbody>
   </table>`;
 }
