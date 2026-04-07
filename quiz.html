@@ -237,15 +237,14 @@
 </head>
 <body>
 
-<header style="justify-content:center;">
+<header>
   <div>
     <div class="header-logo">Premium Voca</div>
   </div>
   <div class="header-rule"></div>
-  <div style="display:flex;align-items:center;gap:16px;">
-    <div class="header-desc">단어장을 선택하고<br>출제 범위를 설정하세요</div>
-    <a href="index.html" style="display:inline-block;padding:8px 16px;background:var(--accent);color:#fff;font-size:13px;font-weight:700;text-decoration:none;border-radius:3px;white-space:nowrap;">← 홈으로</a>
-  </div>
+  <div class="header-desc">단어장을 선택하고<br>출제 범위를 설정하세요</div>
+  <div style="flex:1;"></div>
+  <a href="index.html" style="color:#aaa49a;font-size:13px;text-decoration:none;font-weight:300;white-space:nowrap;">← 홈으로</a>
 </header>
 
 <main>
@@ -580,6 +579,7 @@ function generateExam() {
   const questions = shuffle([...enKoWords, ...koEnWords]);
 
   const payload = {
+    vocaId: document.getElementById('vocaSelect').value,
     vocaTitle: vocaDB.title,
     studentName: document.getElementById('studentName').value.trim(),
     academyName: document.getElementById('academyName').value.trim(),
