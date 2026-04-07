@@ -18,24 +18,26 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--paper); color:
 /* ── 툴바 ── */
 #toolbar {
   background: var(--ink); color: #fff;
-  padding: 14px 32px;
+  padding: 18px 32px;
   display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap;
   border-bottom: 3px solid var(--accent);
   position: sticky; top: 0; z-index: 100;
 }
-.toolbar-title { font-size: 15px; font-weight: 700; margin-right: 4px; }
+.toolbar-title { font-size: 19.5px; font-weight: 700; margin-right: 4px; }
 .tbtn {
-  padding: 8px 14px; border: 1px solid #555; background: transparent; color: #fff;
-  font-size: 12px; font-family: 'Noto Sans KR', sans-serif; font-weight: 500;
+  padding: 10.4px 18.2px; border: 1px solid #555; background: transparent; color: #fff;
+  font-size: 15.6px; font-family: 'Noto Sans KR', sans-serif; font-weight: 500;
   border-radius: 3px; cursor: pointer; transition: all 0.15s; white-space: nowrap;
 }
 .tbtn:hover { background: #333; }
 .tbtn-primary { background: var(--accent); border-color: var(--accent); }
 .tbtn-primary:hover { background: #6e2222; }
 .tbtn-back { border-color: #888; color: #ccc; }
+.tbtn-save { background: #3a7d4f; border-color: #3a7d4f; color: #fff; }
+.tbtn-save:hover { background: #2e6340; }
 .sep { width: 1px; height: 24px; background: #444; flex-shrink: 0; }
 .tb-spacer { flex: 1; }
-#tbInfo { font-size: 12px; color: #aaa; }
+#tbInfo { font-size: 15.6px; color: #aaa; }
 
 /* ── 프리뷰 영역 ── */
 #preview {
@@ -397,9 +399,9 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--paper); color:
 
   <div class="sep"></div>
 
-  <button class="tbtn" onclick="savePdf('all')">💾 모두 저장</button>
-  <button class="tbtn" onclick="savePdf('question')">문제지 저장</button>
-  <button class="tbtn" onclick="savePdf('answer')">답지 저장</button>
+  <button class="tbtn tbtn-save" onclick="savePdf('all')">💾 모두 저장</button>
+  <button class="tbtn tbtn-save" onclick="savePdf('question')">문제지 저장</button>
+  <button class="tbtn tbtn-save" onclick="savePdf('answer')">답지 저장</button>
 
   <div class="sep"></div>
   <span id="tbInfo"></span>
