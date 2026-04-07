@@ -933,12 +933,17 @@ function buildStudentPages(st, db) {
 }
 
 /* ── 인쇄 HTML ── */
+// ★ wide 단어장 판별
+function isWideVoca(vocaId) { return vocaId === 'voca11' || vocaId === 'voca12'; }
+
 function buildPrintHTML(allPages, mode) {
   let html = `
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&family=DM+Mono:wght@400;500&display=swap');
     * { box-sizing:border-box; margin:0; padding:0; }
     body,html { background:#fff !important; }
+
+    /* ── 일반형 ── */
     .ep {
       width:210mm; height:297mm; padding:10mm 12mm 9mm 12mm;
       font-family:'Noto Sans KR',sans-serif; background:#fff !important;
@@ -946,7 +951,17 @@ function buildPrintHTML(allPages, mode) {
       page-break-after:always; page-break-inside:avoid; position:relative;
     }
     .ep.last-ep { page-break-after:auto; }
-    
+
+    /* ── wide형 ── */
+    .ep-wide {
+      width:210mm; height:297mm; padding:10mm 12mm 9mm 12mm;
+      font-family:'Noto Sans KR',sans-serif; background:#fff !important;
+      display:flex; flex-direction:column; overflow:hidden;
+      page-break-after:always; page-break-inside:avoid; position:relative;
+    }
+    .ep-wide.last-ep { page-break-after:auto; }
+
+    /* ── 헤더 (공용) ── */
     .ep-header {
       display:flex; align-items:stretch;
       border:2.5px solid #111; margin-bottom:5px; flex-shrink:0; height:52px;
@@ -969,6 +984,8 @@ function buildPrintHTML(allPages, mode) {
     }
     .ep-h-right .hr:last-child { border-bottom:none; }
     .ep-h-right .hk { font-weight:700; color:#555; min-width:32px; font-size:9px; }
+
+    /* ── 일반형 body/table ── */
     .ep-body { display:grid; grid-template-columns:1fr 1fr; gap:0 6px; flex:1; min-height:0; }
     table { width:100%; border-collapse:collapse; table-layout:fixed; border:2px solid #111; height:100%; background:#fff !important; }
     th,td { border:0.6px solid #999; font-size:13px; padding:0 6px; line-height:1.3; overflow:hidden; background:#fff !important; }
@@ -979,6 +996,22 @@ function buildPrintHTML(allPages, mode) {
     .td-a { font-size:13px; }
     .td-a.blank { color:transparent; }
     tbody tr { height:calc((100% - 20px)/25); max-height:calc((100% - 20px)/25 * 1.6); }
+
+    /* ── wide형 body/table ── */
+    .ep-body-wide { flex:1; min-height:0; display:flex; flex-direction:column; }
+    table.wide { width:100%; border-collapse:collapse; table-layout:fixed; border:2px solid #111; height:100%; background:#fff !important; }
+    table.wide th,table.wide td { border:0.6px solid #999; font-size:13px; padding:0 10px; line-height:1.3; overflow:hidden; }
+    table.wide th { background:#edeae2 !important; text-align:center; font-weight:700; font-size:10px; letter-spacing:0.05em; padding:3px 4px; border-bottom:1.5px solid #888; height:20px; white-space:nowrap; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    table.wide .cn { width:44px; }
+    /* 번호행: 음영 */
+    table.wide tbody tr.row-q { background:#edeae2 !important; height:calc((100% - 20px)/24); -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    /* 답 기입행: 흰색 */
+    table.wide tbody tr.row-a { background:#fff !important; height:calc((100% - 20px)/24); }
+    table.wide .td-num-w { text-align:center; font-size:13px; font-weight:700; font-family:'DM Mono',monospace; white-space:nowrap; vertical-align:middle; }
+    table.wide .td-q-w { font-size:12px; overflow-wrap:anywhere; line-height:1.3; vertical-align:middle; }
+    table.wide .td-a-w { font-size:12px; vertical-align:middle; }
+    table.wide .td-a-w.blank { color:transparent; }
+
     @page { size:A4 portrait; margin:0; }
     @media print { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
   </style>`;
@@ -992,20 +1025,28 @@ function buildPrintHTML(allPages, mode) {
     for (const page of pages) {
       const slotRangeStr = page.slot.range;
       const qs = page.questions;
-      const totalPg = Math.ceil(qs.length / 50);
+      const wide = isWideVoca(st.vocaId);
+      const perPage = wide ? 12 : 50;
+      const totalPg = Math.ceil(qs.length / perPage);
       const qPages = [], aPages = [];
-      for (let i = 0; i < qs.length; i += 50) {
-        const chunk = qs.slice(i, i + 50);
-        while (chunk.length < 50) chunk.push(null);
-        const pi = Math.floor(i / 50);
+      for (let i = 0; i < qs.length; i += perPage) {
+        const chunk = qs.slice(i, i + perPage);
+        while (chunk.length < perPage) chunk.push(null);
+        const pi = Math.floor(i / perPage);
         const label = totalPg > 1 ? `${pi + 1}` : '';
-        qPages.push(makeEP(chunk, pi, st, false, label, slotRangeStr));
-        aPages.push(makeEP(chunk, pi, st, true,  label, slotRangeStr));
+        if (wide) {
+          qPages.push(makeEPWide(chunk, pi, st, false, label, slotRangeStr));
+          aPages.push(makeEPWide(chunk, pi, st, true,  label, slotRangeStr));
+        } else {
+          qPages.push(makeEP(chunk, pi, st, false, label, slotRangeStr));
+          aPages.push(makeEP(chunk, pi, st, true,  label, slotRangeStr));
+        }
       }
-      groups.push({ qPages, aPages });
+      groups.push({ qPages, aPages, wide });
     }
   }
 
+  // blank 페이지 — wide/일반 구분 없이 visibility:hidden 처리
   const blankEP = '<div class="ep" style="visibility:hidden;"></div>';
   const parts = [];
 
@@ -1017,10 +1058,8 @@ function buildPrintHTML(allPages, mode) {
   }
 
   if (mode === 'question') {
-    // 학생×슬롯 순서대로 문제지 묶음
     groups.forEach(g => appendGroup(g.qPages));
   } else if (mode === 'answer') {
-    // 학생×슬롯 순서대로 답지 묶음
     groups.forEach(g => appendGroup(g.aPages));
   } else {
     // 모두 인쇄: 슬롯 단위로 문제지 → 답지 쌍
@@ -1035,10 +1074,14 @@ function buildPrintHTML(allPages, mode) {
     parts.pop();
   }
 
-  // 마지막 실제 페이지에 last-ep 처리
+  // 마지막 실제 페이지에 last-ep 처리 (ep, ep-wide 모두 대응)
   for (let i = parts.length - 1; i >= 0; i--) {
     if (!parts[i].includes('visibility:hidden')) {
-      parts[i] = parts[i].replace('class="ep"', 'class="ep last-ep"');
+      if (parts[i].includes('class="ep-wide"')) {
+        parts[i] = parts[i].replace('class="ep-wide"', 'class="ep-wide last-ep"');
+      } else {
+        parts[i] = parts[i].replace('class="ep"', 'class="ep last-ep"');
+      }
       break;
     }
   }
@@ -1083,6 +1126,48 @@ function makeTable(half, startNum, isAnswer) {
   return `<table>
     <colgroup><col class="cn"><col class="cw"><col></colgroup>
     <thead><tr><th class="cn">No.</th><th class="cw">단어</th><th>답</th></tr></thead>
+    <tbody>${rows}</tbody>
+  </table>`;
+}
+
+// ── Wide 전용 함수 (속담·영작: voca11, voca12) ──
+function makeEPWide(slots, pageIndex, st, isAnswer, pageLabel, rangeStr) {
+  const startNum = pageIndex * 12 + 1;
+  return `
+  <div class="ep-wide">
+    <div class="ep-header">
+      <div class="ep-h-left">${esc(st.vocaTitle)}</div>
+      <div class="ep-h-mid"><div class="hl">ACADEMY</div><div class="hv"></div></div>
+      <div class="ep-h-right">
+        <div class="hr"><span class="hk">범위</span><span>Day ${esc(rangeStr)}</span></div>
+        <div class="hr"><span class="hk">이름</span><span>${esc(st.name)}</span></div>
+      </div>
+    </div>
+    <div class="ep-body-wide">
+      ${makeTableWide(slots, startNum, isAnswer)}
+    </div>
+  </div>`;
+}
+
+function makeTableWide(slots, startNum, isAnswer) {
+  let rows = '';
+  slots.forEach((q, i) => {
+    const num = startNum + i;
+    const qText = q ? (q.direction === 'enKo' ? q.en : q.ko) : '';
+    const aText = q ? (q.direction === 'enKo' ? q.ko : q.en) : '';
+    // 번호행 (음영): 번호 + 질문 문장
+    rows += `<tr class="row-q"><td class="td-num-w">${q ? num : ''}</td><td class="td-q-w">${esc(qText)}</td></tr>`;
+    // 답 기입행 (흰색): 빈 번호 셀 + 답란
+    const ansCell = !q
+      ? `<td class="td-a-w blank">&nbsp;</td>`
+      : isAnswer
+        ? `<td class="td-a-w">${esc(aText)}</td>`
+        : `<td class="td-a-w blank">&nbsp;</td>`;
+    rows += `<tr class="row-a"><td style="border-right:0.6px solid #999;"></td>${ansCell}</tr>`;
+  });
+  return `<table class="wide">
+    <colgroup><col class="cn"><col></colgroup>
+    <thead><tr><th class="cn">No.</th><th>문장 / 단어 &amp; 답</th></tr></thead>
     <tbody>${rows}</tbody>
   </table>`;
 }
