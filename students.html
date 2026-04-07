@@ -29,46 +29,59 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--paper); color:
   width: 100%;
 }
 
-/* ── HEADER (높이와 글자를 더 크게 바꿨어요!) ── */
-  header {
-    background: var(--ink);
-    color: var(--paper);
-    /* 1. 여기 숫자를 키워서 검은색 부분을 위아래로 더 넓게 만들었어요 */
-    padding: 42px 48px 36px; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    border-bottom: 4px solid var(--accent);
-  }
-  .header-logo {
-    /* 2. Premium Voca 글자 크기를 더 크게 키웠어요 */
-    font-size: 45px; 
-    font-weight: 900;
-    letter-spacing: 0.04em;
-    line-height: 1;
-  }
-  .header-rule { 
-    width: 1px; 
-    /* 세로 줄 높이도 글자 크기에 맞춰서 조금 더 길게 바꿨어요 */
-    height: 44px; 
-    background: #444; 
-    flex-shrink: 0; 
-  }
-  .header-desc { 
-    /* 3. 설명하는 작은 글자들도 더 잘 보이게 키웠어요 */
-    font-size: 18px; 
-    color: #aaa49a; 
-    font-weight: 300; 
-    line-height: 1.6; 
-  }
-  .header-home {
-    color: #aaa49a;
-    font-size: 13px;
-    text-decoration: none;
-    font-weight: 300;
-    white-space: nowrap;
-  }
+/* ── HEADER (높이는 적당하게, 버튼은 예쁘게!) ── */
+header {
+  background: var(--ink);
+  color: var(--paper);
+  /* 높이를 너무 과하지 않게 딱 1.5배(42px)로 조절했어요 */
+  padding: 42px 0; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 4px solid var(--accent);
+}
+
+/* 헤더 안의 내용물들을 한 줄로 예쁘게 세우는 바구니예요 */
+header .page-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px; /* 글자와 선 사이의 간격을 딱 보기 좋게 줄였어요 */
+}
+
+.header-logo {
+  font-size: 40px; /* 너무 컸던 글자를 조금 줄여서 딱 보기 좋게 만들었어요 */
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
+.header-rule { 
+  width: 1px; 
+  height: 30px; 
+  background: #444; 
+  flex-shrink: 0; 
+}
+
+.header-desc { 
+  font-size: 16px; /* 설명 글자도 적당한 크기로 맞췄어요 */
+  color: #aaa49a; 
+  font-weight: 300; 
+  line-height: 1.4; 
+}
+
+/* 홈으로 버튼 (망가졌던 버튼들을 다시 얌전하게 만들었어요) */
+.header-home {
+  color: #aaa49a;
+  font-size: 14px;
+  text-decoration: none;
+  font-weight: 300;
+  white-space: nowrap;
+  margin-left: 10px;
+}
+
+/* 아래쪽 버튼들이 밀려나지 않게 도와주는 투명 칸막이에요 */
+.hsp { display: none; }
   
 /* [5] 홈으로 버튼 — 답지 인쇄 바로 옆 */
 .hbtn-home { background: transparent; border: 1px solid #555; color: #ccc; }
