@@ -223,18 +223,22 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--paper); color:
 .exam-table-wide tbody tr.row-q {
   background: #edeae2;
   height: calc((100% - 20px) / 24);
+  max-height: calc((100% - 20px) / 24);
 }
 .exam-table-wide tbody tr.row-q td {
   background: #edeae2;
   height: calc((100% - 20px) / 24);
+  max-height: calc((100% - 20px) / 24);
 }
 /* 답기입행: 흰색 */
 .exam-table-wide tbody tr.row-a {
   background: #fff;
   height: calc((100% - 20px) / 24);
+  max-height: calc((100% - 20px) / 24);
 }
 .exam-table-wide tbody tr.row-a td {
   height: calc((100% - 20px) / 24);
+  max-height: calc((100% - 20px) / 24);
 }
 
 .td-num-w {
@@ -543,8 +547,8 @@ function makeTableWideHTML(slots, startNum, isAnswer) {
 
     // 번호행 (음영)
     rows += `<tr class="row-q">
-      <td class="td-num-w">${q ? num : ''}</td>
-      <td class="td-q-w">${esc(qText)}</td>
+      <td class="td-num-w">${q ? num : '&nbsp;'}</td>
+      <td class="td-q-w">${qText ? esc(qText) : '&nbsp;'}</td>
     </tr>`;
 
     // 답기입행 (흰색)
@@ -554,7 +558,7 @@ function makeTableWideHTML(slots, startNum, isAnswer) {
         ? `<td class="td-a-w">${esc(aText)}</td>`
         : `<td class="td-a-w blank">&nbsp;</td>`;
     rows += `<tr class="row-a">
-      <td style="border-right:0.6px solid #999;"></td>
+      <td style="border-right:0.6px solid #999;">&nbsp;</td>
       ${ansCell}
     </tr>`;
   });
