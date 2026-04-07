@@ -579,7 +579,6 @@ function generateExam() {
   const questions = shuffle([...enKoWords, ...koEnWords]);
 
   const payload = {
-    vocaId: document.getElementById('vocaSelect').value,
     vocaTitle: vocaDB.title,
     studentName: document.getElementById('studentName').value.trim(),
     academyName: document.getElementById('academyName').value.trim(),
