@@ -1001,14 +1001,17 @@ function buildPrintHTML(allPages, mode) {
     .ep-wide .ep-h-right .hk { font-weight:700; color:#555; min-width:32px; font-size:9px; }
     .ep-body-wide { flex:1; min-height:0; }
     table.wide { width:100%; border-collapse:collapse; table-layout:fixed; border:2px solid #111; height:100%; background:#fff !important; }
-    table.wide th,table.wide td { border:0.6px solid #999; font-size:10.5px; padding:0 6px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; background:#fff !important; }
+    table.wide th,table.wide td { border:0.6px solid #999; font-size:10.5px; padding:0 8px; overflow:hidden; background:#fff !important; }
     table.wide th { background:#edeae2 !important; text-align:center; font-weight:700; font-size:10px; letter-spacing:0.05em; padding:3px 4px; border-bottom:1.5px solid #888; height:20px; white-space:nowrap; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
-    table.wide .cn{width:44px;} table.wide .cw-wide{width:52%;} table.wide .ca-wide{width:38%;}
-    table.wide tbody tr { height:calc((100% - 20px)/12); }
-    table.wide .td-num { text-align:center; font-size:13px; font-weight:700; font-family:'DM Mono',monospace; white-space:nowrap; }
-    table.wide .td-w { font-size:10.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-    table.wide .td-a { font-size:10.5px; }
-    table.wide .td-a.blank { color:transparent; }
+    table.wide .cn { width:44px; }
+    /* 번호행: 음영 */
+    table.wide tbody tr.row-q { background:#edeae2 !important; height:calc((100% - 20px)/24); -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    /* 답 기입행: 흰색 */
+    table.wide tbody tr.row-a { background:#fff !important; height:calc((100% - 20px)/24); }
+    table.wide .td-num-w { text-align:center; font-size:13px; font-weight:700; font-family:'DM Mono',monospace; white-space:nowrap; vertical-align:middle; }
+    table.wide .td-q-w { font-size:10.5px; overflow-wrap:anywhere; line-height:1.2; vertical-align:middle; }
+    table.wide .td-a-w { font-size:10.5px; vertical-align:middle; }
+    table.wide .td-a-w.blank { color:transparent; }
     @page { size:A4 portrait; margin:0; }
     @media print { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
   </style>`;
@@ -1157,14 +1160,17 @@ function makeTableWide(slots, startNum, isAnswer) {
     const num=startNum+i;
     const qText=q?(q.direction==='enKo'?q.en:q.ko):'';
     const aText=q?(q.direction==='enKo'?q.ko:q.en):'';
-    const ansTd=!q?`<td class="td-a blank">&nbsp;</td>`
-      :isAnswer?`<td class="td-a">${esc(aText)}</td>`
-      :`<td class="td-a blank">&nbsp;</td>`;
-    rows+=`<tr><td class="td-num">${q?num:''}</td><td class="td-w">${esc(qText)}</td>${ansTd}</tr>`;
+    // 번호행 (음영): 번호 + 질문 문장
+    rows+=`<tr class="row-q"><td class="td-num-w">${q?num:''}</td><td class="td-q-w">${esc(qText)}</td></tr>`;
+    // 답 기입행 (흰색): 빈 번호 셀 + 답란
+    const ansCell=!q?`<td class="td-a-w blank">&nbsp;</td>`
+      :isAnswer?`<td class="td-a-w">${esc(aText)}</td>`
+      :`<td class="td-a-w blank">&nbsp;</td>`;
+    rows+=`<tr class="row-a"><td style="border-right:0.6px solid #999;"></td>${ansCell}</tr>`;
   });
   return `<table class="wide">
-    <colgroup><col class="cn"><col class="cw-wide"><col class="ca-wide"></colgroup>
-    <thead><tr><th class="cn">No.</th><th class="cw-wide">문장 / 단어</th><th class="ca-wide">답</th></tr></thead>
+    <colgroup><col class="cn"><col></colgroup>
+    <thead><tr><th class="cn">No.</th><th>문장 / 단어 &amp; 답</th></tr></thead>
     <tbody>${rows}</tbody>
   </table>`;
 }
