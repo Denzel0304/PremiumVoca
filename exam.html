@@ -19,7 +19,7 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--paper); color:
 #toolbar {
   background: var(--ink); color: #fff;
   padding: 14px 32px;
-  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap;
   border-bottom: 3px solid var(--accent);
   position: sticky; top: 0; z-index: 100;
 }
@@ -401,7 +401,7 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--paper); color:
   <button class="tbtn" onclick="savePdf('question')">문제지 저장</button>
   <button class="tbtn" onclick="savePdf('answer')">답지 저장</button>
 
-  <div class="tb-spacer"></div>
+  <div class="sep"></div>
   <span id="tbInfo"></span>
 </div>
 
