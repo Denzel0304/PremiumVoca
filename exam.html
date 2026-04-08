@@ -261,6 +261,105 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--paper); color:
 .td-a-w.blank { color: transparent; }
 
 /* =============================================
+   영영형 (voca13~voca18) — 화면 전용
+   ============================================= */
+.exam-page-ei {
+  width: 794px;
+  height: 1123px;
+  padding: 36px 44px 32px 44px;
+  font-family: 'Noto Sans KR', sans-serif;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.exam-body-ei {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.exam-table-ei {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  border: 2px solid #111;
+  height: 100%;
+}
+.exam-table-ei th, .exam-table-ei td {
+  border: 0.6px solid #999;
+  padding: 0 5px;
+  line-height: 1.3;
+  overflow: hidden;
+}
+.exam-table-ei th {
+  background: #edeae2;
+  text-align: center;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  padding: 3px 4px;
+  border-bottom: 1.5px solid #888;
+  height: 20px;
+}
+/* 열 너비: 번호 40px, 단어/뜻 130px, 영영 나머지 */
+.col-ei-num  { width: 40px; }
+.col-ei-word { width: 130px; }
+.col-ei-def  { /* flex remainder */ }
+
+/* 번호 셀 (2행 병합) */
+.td-ei-num {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: #111;
+  font-family: 'DM Mono', monospace;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+/* 영단어 셀 */
+.td-ei-en {
+  font-size: 11px;
+  font-weight: 700;
+  word-break: normal;
+  overflow-wrap: normal;
+  word-wrap: normal;
+  overflow: hidden;
+  vertical-align: middle;
+  border-bottom: 0.6px solid #ccc !important;
+}
+/* 한글 뜻 셀 */
+.td-ei-ko {
+  font-size: 11px;
+  word-break: normal;
+  overflow-wrap: normal;
+  word-wrap: normal;
+  overflow: hidden;
+  vertical-align: middle;
+}
+/* 영영풀이 셀 (2행 병합) */
+.td-ei-meaning {
+  font-size: 10px;
+  word-break: normal;
+  overflow-wrap: normal;
+  word-wrap: break-word;
+  overflow: hidden;
+  vertical-align: middle;
+  line-height: 1.4;
+}
+/* 투명 처리 */
+.td-ei-en.blank   { color: transparent; }
+.td-ei-ko.blank   { color: transparent; }
+.td-ei-meaning.blank { color: transparent; }
+
+/* 행 높이: (전체 - 헤더20px) / 20문항 / 2행 */
+.exam-table-ei tbody tr {
+  height: calc((100% - 20px) / 40);
+  max-height: calc((100% - 20px) / 40);
+}
+
+/* =============================================
    인쇄 전용
    ============================================= */
 @media print {
@@ -318,6 +417,28 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--paper); color:
     break-after: auto !important;
   }
   .exam-table-wide { height: 100%; page-break-inside: avoid; break-inside: avoid; }
+
+  /* 영영형 인쇄 */
+  .exam-page-ei {
+    width: 210mm !important;
+    height: 297mm !important;
+    padding: 10mm 12mm 9mm 12mm !important;
+    overflow: hidden;
+    page-break-after: always;
+    page-break-inside: avoid;
+    break-after: page;
+    break-inside: avoid;
+  }
+  .exam-page-ei.last-print-page {
+    page-break-after: auto !important;
+    break-after: auto !important;
+  }
+  .exam-table-ei { height: 100%; page-break-inside: avoid; break-inside: avoid; }
+  .exam-table-ei th {
+    background: #edeae2 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
 
   /* wide 음영 인쇄 강제 */
   .exam-table-wide tbody tr.row-q {
@@ -433,16 +554,24 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--paper); color:
 const raw = sessionStorage.getItem('examPayload');
 if (!raw) { alert('출제 데이터가 없습니다.'); location.href = 'index.html'; }
 const P = JSON.parse(raw);
-const { vocaId, vocaTitle, studentName, academyName, rangeStr, questions, enKoCount, koEnCount } = P;
+const { vocaId, vocaTitle, studentName, academyName, rangeStr, questions,
+        enKoCount, koEnCount, wordCount, defCount, eiCount } = P;
 
-// ★ wide 단어장 판별
+// ★ 단어장 타입 판별
 function isWideVoca(id) { return id === 'voca11' || id === 'voca12'; }
+function isEiVoca(id)   { return ['voca13','voca14','voca15','voca16','voca17','voca18'].includes(id); }
 const IS_WIDE = isWideVoca(vocaId);
-const PER_PAGE = IS_WIDE ? 12 : 50;
+const IS_EI   = isEiVoca(vocaId);
+const PER_PAGE = IS_WIDE ? 12 : IS_EI ? 20 : 50;
 
 document.getElementById('tbTitle').textContent = vocaTitle;
-document.getElementById('tbInfo').textContent =
-  `Day ${rangeStr} · ${questions.length}문항 (영한 ${enKoCount ?? '?'} / 한영 ${koEnCount ?? '?'})`;
+if (IS_EI) {
+  document.getElementById('tbInfo').textContent =
+    `Day ${rangeStr} · ${questions.length}문항 (단어 ${wordCount ?? '?'} / 뜻 ${defCount ?? '?'} / 영영 ${eiCount ?? '?'})`;
+} else {
+  document.getElementById('tbInfo').textContent =
+    `Day ${rangeStr} · ${questions.length}문항 (영한 ${enKoCount ?? '?'} / 한영 ${koEnCount ?? '?'})`;
+}
 
 // ── 페이지 분할 ──
 function splitPages(qs) {
@@ -591,11 +720,71 @@ function makePageWideHTML(slots, pageIndex, isAnswer) {
 // =============================================
 // 렌더링
 // =============================================
+// =============================================
+// 영영형 함수들 (voca13~voca18)
+// =============================================
+function makeTableEiHTML(slots, startNum, isAnswer) {
+  let rows = '';
+  slots.forEach((q, i) => {
+    const num = startNum + i;
+    const enText      = q ? q.en      : '';
+    const koText      = q ? q.ko      : '';
+    const meaningText = q ? q.meaning : '';
+    const dir         = q ? q.direction : null;
+
+    // 문제지: 제시된 항목만 보임 / 답지: 전부 보임
+    const showEn      = !q ? false : (isAnswer || dir === 'word');
+    const showKo      = !q ? false : (isAnswer || dir === 'def');
+    const showMeaning = !q ? false : (isAnswer || dir === 'ei');
+
+    const enClass      = showEn      ? 'td-ei-en'      : 'td-ei-en blank';
+    const koClass      = showKo      ? 'td-ei-ko'      : 'td-ei-ko blank';
+    const meaningClass = showMeaning ? 'td-ei-meaning'  : 'td-ei-meaning blank';
+
+    // 1행: 번호(rowspan=2) + 영단어 + 영영풀이(rowspan=2)
+    rows += `<tr>
+      <td class="td-ei-num" rowspan="2">${q ? num : ''}</td>
+      <td class="${enClass}">${esc(enText)}&nbsp;</td>
+      <td class="${meaningClass}" rowspan="2">${esc(meaningText)}&nbsp;</td>
+    </tr>`;
+    // 2행: 한글 뜻
+    rows += `<tr>
+      <td class="${koClass}">${esc(koText)}&nbsp;</td>
+    </tr>`;
+  });
+
+  return `
+    <table class="exam-table-ei">
+      <colgroup>
+        <col class="col-ei-num">
+        <col class="col-ei-word">
+        <col class="col-ei-def">
+      </colgroup>
+      <thead><tr>
+        <th class="col-ei-num">No.</th>
+        <th class="col-ei-word">단어 / 뜻</th>
+        <th class="col-ei-def">영영풀이</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+}
+
+function makePageEiHTML(slots, pageIndex, isAnswer) {
+  const startNum = pageIndex * 20 + 1;
+  return `
+  <div class="exam-page-ei" data-type="${isAnswer ? 'answer' : 'question'}">
+    ${makeHeaderHTML()}
+    <div class="exam-body-ei">
+      ${makeTableEiHTML(slots, startNum, isAnswer)}
+    </div>
+  </div>`;
+}
+
 function render() {
   const preview = document.getElementById('preview');
   preview.innerHTML = '';
 
-  const makePageFn = IS_WIDE ? makePageWideHTML : makePageHTML;
+  const makePageFn = IS_EI ? makePageEiHTML : IS_WIDE ? makePageWideHTML : makePageHTML;
 
   // 문제지
   pages.forEach((slots, pi) => {
@@ -620,7 +809,7 @@ function render() {
 
 render();
 
-// ── last-print-page 마킹 (일반형 + wide형 모두 대응) ──
+// ── last-print-page 마킹 (일반형 + wide형 + 영영형 모두 대응) ──
 function markLastPrintPage(mode) {
   document.querySelectorAll('.last-print-page').forEach(el => el.classList.remove('last-print-page'));
 
@@ -684,7 +873,7 @@ function applyVisibility(mode) {
       const blank = document.createElement('div');
       blank.className = 'sheet-wrapper blank-spacer';
       blank.dataset.role = 'blank';
-      const blankPageClass = IS_WIDE ? 'exam-page-wide' : 'exam-page';
+      const blankPageClass = IS_EI ? 'exam-page-ei' : IS_WIDE ? 'exam-page-wide' : 'exam-page';
       blank.innerHTML = `<div class="${blankPageClass}" style="background:#fff;"></div>`;
       const firstAnswer = document.querySelector('[data-role="answer"]');
       document.getElementById('preview').insertBefore(blank, firstAnswer);
