@@ -164,16 +164,27 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--paper); color:
   word-break: normal;
   overflow-wrap: anywhere;
   line-height: 1.2;
-  overflow: hidden;
-  max-height: calc((100% - 20px) / 25);
+  padding: 0 !important;
 }
-.td-ans  { font-size: 13px; color: #111; overflow: hidden; max-height: calc((100% - 20px) / 25); }
+.td-word .cell-wrap {
+  height: calc((100% - 20px) / 25 * 1);
+  overflow: hidden;
+  padding: 0 6px;
+  display: flex;
+  align-items: center;
+}
+.td-ans  { font-size: 13px; color: #111; padding: 0 !important; }
+.td-ans .cell-wrap {
+  height: calc((100% - 20px) / 25 * 1);
+  overflow: hidden;
+  padding: 0 6px;
+  display: flex;
+  align-items: center;
+}
 .td-ans.blank { color: transparent; }
 .td-ans.blank-ans { color: transparent; }
 .exam-table tbody tr {
   height: calc((100% - 20px) / 25);
-  max-height: calc((100% - 20px) / 25);
-  overflow: hidden;
 }
 
 /* =============================================
@@ -403,8 +414,8 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--paper); color:
     break-after: auto !important;
   }
   .exam-table { height: 100%; page-break-inside: avoid; break-inside: avoid; }
-  .exam-table tbody tr { height: calc((100% - 20px) / 25); max-height: calc((100% - 20px) / 25); overflow: hidden; }
-  .exam-table td { overflow: hidden; max-height: calc((100% - 20px) / 25); }
+  .exam-table tbody tr { height: calc((100% - 20px) / 25); }
+  .exam-table .cell-wrap { height: calc((100% - 20px) / 25); overflow: hidden; }
 
   /* wide형 인쇄 */
   .exam-page-wide {
@@ -632,15 +643,15 @@ function makeTableHTML(half, startNum, isAnswer) {
     const aText = q ? answerText(q) : '';
     let ansTd;
     if (!q) {
-      ansTd = `<td class="td-ans blank-ans">&nbsp;</td>`;
+      ansTd = `<td class="td-ans blank-ans"><div class="cell-wrap">&nbsp;</div></td>`;
     } else if (isAnswer) {
-      ansTd = `<td class="td-ans">${esc(aText)}</td>`;
+      ansTd = `<td class="td-ans"><div class="cell-wrap">${esc(aText)}</div></td>`;
     } else {
-      ansTd = `<td class="td-ans blank">&nbsp;</td>`;
+      ansTd = `<td class="td-ans blank"><div class="cell-wrap">&nbsp;</div></td>`;
     }
     rows += `<tr>
       <td class="td-num">${q ? num : ''}</td>
-      <td class="td-word">${esc(qText)}</td>
+      <td class="td-word"><div class="cell-wrap">${esc(qText)}</div></td>
       ${ansTd}
     </tr>`;
   });
