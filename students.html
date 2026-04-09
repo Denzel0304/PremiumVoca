@@ -250,7 +250,7 @@ header .page-inner { padding: 18px 24px; min-height: 84px; }
 .col-slots {
   padding: 5px 7px;
   display: flex; align-items: stretch; gap: 5px;
-  width: 584px; flex-shrink: 0;
+  width: fit-content; flex-shrink: 0; min-width: 584px;
   background: #fff;
 }
 
@@ -1153,7 +1153,7 @@ function buildPrintHTML(allPages, mode) {
     table.ei .td-ei-num { text-align:center; font-size:13px; font-weight:700; font-family:'DM Mono',monospace; white-space:nowrap; vertical-align:middle; }
     table.ei .td-ei-en { font-size:11px; font-weight:700; word-break:normal; overflow-wrap:normal; overflow:hidden; vertical-align:middle; border-bottom:0.6px solid #ccc !important; }
     table.ei .td-ei-ko { font-size:11px; word-break:normal; overflow-wrap:normal; overflow:hidden; vertical-align:middle; }
-    table.ei .td-ei-meaning { font-size:10px; word-break:normal; overflow-wrap:break-word; overflow:hidden; vertical-align:middle; line-height:1.4; }
+    table.ei .td-ei-meaning { font-size:12px; word-break:normal; overflow-wrap:break-word; overflow:hidden; vertical-align:middle; line-height:1.4; }
     table.ei .td-ei-en.blank { color:transparent; }
     table.ei .td-ei-ko.blank { color:transparent; }
     table.ei .td-ei-meaning.blank { color:transparent; }
