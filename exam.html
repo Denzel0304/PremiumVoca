@@ -164,13 +164,16 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--paper); color:
   word-break: normal;
   overflow-wrap: anywhere;
   line-height: 1.2;
+  overflow: hidden;
+  max-height: calc((100% - 20px) / 25);
 }
-.td-ans  { font-size: 13px; color: #111; }
+.td-ans  { font-size: 13px; color: #111; overflow: hidden; max-height: calc((100% - 20px) / 25); }
 .td-ans.blank { color: transparent; }
 .td-ans.blank-ans { color: transparent; }
 .exam-table tbody tr {
   height: calc((100% - 20px) / 25);
-  max-height: calc((100% - 20px) / 25 * 1.6);
+  max-height: calc((100% - 20px) / 25);
+  overflow: hidden;
 }
 
 /* =============================================
@@ -400,6 +403,8 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--paper); color:
     break-after: auto !important;
   }
   .exam-table { height: 100%; page-break-inside: avoid; break-inside: avoid; }
+  .exam-table tbody tr { height: calc((100% - 20px) / 25); max-height: calc((100% - 20px) / 25); overflow: hidden; }
+  .exam-table td { overflow: hidden; max-height: calc((100% - 20px) / 25); }
 
   /* wide형 인쇄 */
   .exam-page-wide {
