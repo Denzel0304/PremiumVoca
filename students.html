@@ -1120,10 +1120,11 @@ function buildPrintHTML(allPages, mode) {
     th { background:#edeae2 !important; text-align:center; font-weight:700; font-size:10px; letter-spacing:0.05em; padding:3px 4px; border-bottom:1.5px solid #888; height:20px; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
     .cn{width:44px;} .cw{width:42%;}
     .td-num { text-align:center; font-size:14px; font-weight:700; font-family:'DM Mono',monospace; white-space:nowrap; }
-    .td-w { font-size:13px; word-break:normal; overflow-wrap:anywhere; line-height:1.2; overflow:hidden; max-height:calc((100% - 20px)/25); }
-    .td-a { font-size:13px; overflow:hidden; max-height:calc((100% - 20px)/25); }
+    .td-w { font-size:13px; word-break:normal; overflow-wrap:anywhere; line-height:1.2; padding:0 !important; }
+    .td-a { font-size:13px; padding:0 !important; }
     .td-a.blank { color:transparent; }
-    tbody tr { height:calc((100% - 20px)/25); max-height:calc((100% - 20px)/25); overflow:hidden; }
+    tbody tr { height:calc((100% - 20px)/25); }
+    .cell-wrap { height:calc((100% - 20px)/25); overflow:hidden; padding:0 6px; display:flex; align-items:center; }
 
     /* ── wide형 body/table ── */
     .ep-body-wide { flex:1; min-height:0; display:flex; flex-direction:column; }
@@ -1268,10 +1269,10 @@ function makeTable(half, startNum, isAnswer) {
     const num=startNum+i;
     const qText=q?(q.direction==='enKo'?q.en:q.ko):'';
     const aText=q?(q.direction==='enKo'?q.ko:q.en):'';
-    const ansTd=!q?`<td class="td-a blank">&nbsp;</td>`
-      :isAnswer?`<td class="td-a">${esc(aText)}</td>`
-      :`<td class="td-a blank">&nbsp;</td>`;
-    rows+=`<tr><td class="td-num">${q?num:''}</td><td class="td-w">${esc(qText)}</td>${ansTd}</tr>`;
+    const ansTd=!q?`<td class="td-a blank"><div class="cell-wrap">&nbsp;</div></td>`
+      :isAnswer?`<td class="td-a"><div class="cell-wrap">${esc(aText)}</div></td>`
+      :`<td class="td-a blank"><div class="cell-wrap">&nbsp;</div></td>`;
+    rows+=`<tr><td class="td-num">${q?num:''}</td><td class="td-w"><div class="cell-wrap">${esc(qText)}</div></td>${ansTd}</tr>`;
   });
   return `<table>
     <colgroup><col class="cn"><col class="cw"><col></colgroup>
